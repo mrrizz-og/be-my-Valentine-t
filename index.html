@@ -3,12 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For My Favorite Person 🌸</title>
+<title>A Story for You 🌸</title>
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
 <style>
 :root {
-    --ink: #5e4638;
-    --paper: #f4eee1;
+    --ink: #4e3629;
+    --parchment: #f2e6d0;
+    --burnt-edge: rgba(89, 57, 34, 0.6);
+    --accent-brown: #7d5a44;
 }
 
 body {
@@ -17,50 +19,63 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Collage-style background inspired by your first image */
-    background-color: #d2b48c;
-    background-image: url("https://www.transparenttextures.com/patterns/aged-paper.png");
+    background-color: #cbb494;
+    background-image: 
+        url("https://www.transparenttextures.com/patterns/aged-paper.png"),
+        linear-gradient(45deg, rgba(0,0,0,0.1) 25%, transparent 25%);
     overflow: hidden;
 }
 
+/* Decorative elements */
+.decor {
+    position: absolute;
+    pointer-events: none;
+    z-index: 10;
+    filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
+    opacity: 0.9;
+}
+.flower-corner { top: -30px; right: -30px; width: 200px; transform: rotate(20deg); }
+
 .book-container {
     perspective: 1500px;
+    z-index: 5;
 }
 
 .book {
-    width: 320px;
-    height: 460px;
+    width: 330px;
+    height: 500px; /* Slightly taller for better spacing */
     position: relative;
-    /* Thick book cover shadow */
-    box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
+    background: #5c4033;
     border-radius: 5px 15px 15px 5px;
+    box-shadow: 25px 25px 60px rgba(0,0,0,0.6);
+    padding: 12px 15px 12px 10px;
 }
 
 .page {
     width: 100%;
     height: 100%;
     position: absolute;
-    background: var(--paper) url("https://www.transparenttextures.com/patterns/parchment.png");
-    padding: 30px;
+    background: var(--parchment) url("https://www.transparenttextures.com/patterns/parchment.png");
+    box-shadow: inset 0 0 40px var(--burnt-edge);
+    padding: 30px 25px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    border-radius: 2px 12px 12px 2px;
+    border-radius: 2px 10px 10px 2px;
     transform-origin: left;
-    transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: transform 1.3s cubic-bezier(0.645, 0.045, 0.355, 1);
     backface-visibility: hidden;
-    border: 1px solid rgba(0,0,0,0.1);
-    box-shadow: inset 3px 0px 20px rgba(0,0,0,0.1);
+    border-left: 2px solid rgba(0,0,0,0.1);
 }
 
-/* --- THE FONTS FROM YOUR PICTURE --- */
+/* Typography */
 h1 {
     font-family: 'Dancing Script', cursive;
-    color: #8b5e3c;
+    color: var(--accent-brown);
     font-size: 2.2rem;
-    margin-bottom: 10px;
+    margin: 5px 0 15px 0;
     font-weight: 700;
 }
 
@@ -68,56 +83,72 @@ p {
     font-family: 'Cormorant Garamond', serif;
     color: var(--ink);
     font-size: 1.3rem;
-    font-style: italic; /* Matches the slant in your image */
+    font-style: italic;
     line-height: 1.4;
-    margin-top: 15px;
+    margin: 20px 0;
 }
 
-/* --- POLAROID STYLE --- */
+/* Polaroid Image Style */
 .img-box {
     width: 90%;
     height: 180px;
-    background: white;
-    padding: 10px 10px 30px 10px; /* Extra bottom space like a Polaroid */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    transform: rotate(-1deg);
+    background: #fff;
+    padding: 10px 10px 40px 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transform: rotate(-1.5deg);
+    border: 1px solid #ddd;
 }
 
 .img-box img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: sepia(0.2);
+    /* Sepia warmth filter */
+    filter: sepia(0.3) contrast(1.1);
 }
 
-/* Button style from the screenshot */
+/* Button Styles */
 button {
     background: #fdfaf3;
-    border: 1px solid #d3c4b1;
-    border-radius: 25px;
-    padding: 8px 25px;
+    border: 2px solid #c2b097;
+    border-radius: 30px;
+    padding: 10px 30px;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--accent-brown);
     cursor: pointer;
-    margin-top: auto;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    transition: 0.3s;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: all 0.2s ease-out;
 }
 
 button:hover {
-    background: #8b5e3c;
+    background: var(--accent-brown);
     color: white;
+    transform: translateY(-2px);
 }
 
+/* New Choice Container Layout */
+.choice {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Spacing between buttons */
+    margin-top: auto;
+    width: 100%;
+    padding-bottom: 20px;
+}
+
+/* The Movable No Button */
 .no-btn {
-    background: #c94a6a !important;
+    background: #a64444 !important;
     color: white !important;
-    position: absolute;
+    border-color: #8a3333 !important;
+    position: relative; /* Necessary for transform movement */
+    z-index: 10;
 }
 
 .flipped { transform: rotateY(-180deg); }
 
-/* Layering */
 #p1 { z-index: 5; }
 #p2 { z-index: 4; }
 #p3 { z-index: 3; }
@@ -127,13 +158,19 @@ button:hover {
 </head>
 <body>
 
+<audio id="bgMusic" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<img src="https://www.pngarts.com/files/12/Dried-Flowers-PNG-Image.png" class="decor flower-corner">
+
 <div class="book-container">
     <div class="book">
 
         <div class="page" id="p1">
             <h1>A quiet truth...</h1>
             <div class="img-box">
-                <img src="https://images.unsplash.com/photo-1516414923984-60143899f89a?auto=format&fit=crop&w=400">
+                <img src="https://images.unsplash.com/photo-1526394112126-909505f0552a?w=500&auto=format&fit=crop">
             </div>
             <p>This book holds the words<br>I've been meaning to say.</p>
             <button onclick="flipPage(1)">Open 💌</button>
@@ -142,16 +179,16 @@ button:hover {
         <div class="page" id="p2">
             <h1>Soft Memories</h1>
             <div class="img-box" style="transform: rotate(2deg);">
-                <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=400">
+                <img src="https://images.unsplash.com/photo-1508612207311-5f6761792164?w=500&auto=format&fit=crop">
             </div>
-            <p>Your presence feels soft,<br>like flowers in spring.</p>
+            <p>Your presence feels soft,<br>like flowers kept in a book.</p>
             <button onclick="flipPage(2)">Next 🌸</button>
         </div>
 
         <div class="page" id="p3">
-            <h1>A New Chapter</h1>
+            <h1>Our Story</h1>
             <div class="img-box">
-                <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=400">
+                 <img src="https://images.unsplash.com/photo-1504018843327-61273576261c?w=500&auto=format&fit=crop">
             </div>
             <p>Every love story is beautiful,<br>but ours feels like home.</p>
             <button onclick="flipPage(3)">Next 📖</button>
@@ -159,19 +196,20 @@ button:hover {
 
         <div class="page" id="p4">
             <h1>The Question</h1>
-            <div class="img-box" style="transform: rotate(-2deg);">
-                <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=400">
+            <div class="img-box" style="transform: rotate(-1.5deg);">
+                 <img src="https://images.unsplash.com/photo-1623864874152-79074f3b313f?w=500&auto=format&fit=crop">
             </div>
             <p>Would you choose me,<br>again and again?</p>
-            <div style="position: relative; width: 100%; height: 50px; margin-top: 10px;">
-                <button onclick="flipPage(4)" style="margin-right: 80px;">Yes ❤️</button>
-                <button id="noBtn" class="no-btn" onmouseenter="moveNo()">No</button>
+            
+            <div class="choice">
+                <button onclick="flipPage(4)">Yes ❤️</button>
+                <button id="noBtn" class="no-btn" onclick="moveNo(event)">No</button>
             </div>
         </div>
 
         <div class="page" id="p5">
             <h1>Forever 🌹</h1>
-            <div class="img-box">
+            <div class="img-box" style="height: 200px;">
                 <img src="https://media.tenor.com/m/6nSJP3Gj1J4AAAAC/cute-cat.gif">
             </div>
             <p>The scrapbook ends here,<br>but my feelings don't.</p>
@@ -181,14 +219,29 @@ button:hover {
 </div>
 
 <script>
+let current = 0;
 function flipPage(n) {
     document.getElementById("p" + n).classList.add("flipped");
+    const music = document.getElementById('bgMusic');
+    if (current === 0) { 
+        music.volume = 0.3; 
+        music.play().catch(() => {}); 
+    }
+    current++;
 }
 
-function moveNo() {
+function moveNo(event) {
+    // Prevents the button from actually being "clicked" in a normal way
+    event.preventDefault();
+    
     const noBtn = document.getElementById("noBtn");
-    const x = Math.random() * 100 - 50;
-    const y = Math.random() * 100 - 50;
+    
+    // Generate larger random jumps so it moves significantly away
+    // Jumps between -150px and +150px on both axes
+    const x = (Math.random() - 0.5) * 300;
+    const y = (Math.random() - 0.5) * 300;
+    
+    // Apply the jump
     noBtn.style.transform = `translate(${x}px, ${y}px)`;
 }
 </script>
