@@ -11,7 +11,7 @@
 body{
     margin:0;
     height:100vh;
-    background:#f7efe5;
+    background:#f6efe7;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -19,33 +19,29 @@ body{
     overflow:hidden;
 }
 
-/* MUSIC */
 audio{display:none}
 
-/* BOOK */
 .book{
     width:320px;
     height:480px;
-    perspective:1500px;
+    perspective:1600px;
     position:relative;
 }
 
-/* PAGE */
 .page{
+    position:absolute;
     width:100%;
     height:100%;
-    position:absolute;
-    background:#fff8ed;
-    border-radius:10px;
-    box-shadow:0 10px 25px rgba(0,0,0,.2);
+    background:#fff8ef;
+    border-radius:12px;
+    box-shadow:0 12px 30px rgba(0,0,0,.25);
+    padding:16px;
     transform-origin:left;
-    transition:transform 1s;
+    transition:transform 1s ease;
     backface-visibility:hidden;
-    padding:18px;
 }
 
-/* SCRAP LOOK */
-.page:before{
+.page::before{
     content:"";
     position:absolute;
     inset:0;
@@ -54,30 +50,28 @@ audio{display:none}
     pointer-events:none;
 }
 
-/* IMAGE */
 .img-box{
     width:100%;
     height:160px;
     border-radius:10px;
     overflow:hidden;
-    background:#f0e0d6;
+    background:#eadfd4;
     margin-bottom:12px;
 }
-.img-box img{
+
+.img-box iframe{
     width:100%;
     height:100%;
-    object-fit:cover;
-    opacity:0;
-    transition:.6s;
+    border:none;
 }
 
-/* TEXT */
 h1{
     font-family:'Dancing Script',cursive;
-    color:#c94a6a;
-    margin:5px 0 10px;
+    color:#c84a6a;
     text-align:center;
+    margin:6px 0 10px;
 }
+
 p{
     font-style:italic;
     color:#555;
@@ -85,41 +79,35 @@ p{
     font-size:15px;
 }
 
-/* BUTTON */
 button{
-    background:#c94a6a;
+    background:#c84a6a;
     color:white;
     border:none;
     border-radius:20px;
     padding:7px 18px;
     cursor:pointer;
-    margin-top:10px;
     font-size:14px;
 }
 
-/* NO BUTTON */
 .no-btn{
-    background:#e07a7a;
+    background:#e27c7c;
     position:absolute;
 }
 
-/* Z-INDEX STACK */
+.flipped{ transform:rotateY(-180deg); }
+
 #p1{z-index:5}
 #p2{z-index:4}
 #p3{z-index:3}
 #p4{z-index:2}
 #p5{z-index:1}
-
-.flipped{
-    transform:rotateY(-180deg);
-}
 </style>
 </head>
 
 <body>
 
 <audio autoplay loop>
-<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
 </audio>
 
 <div class="book">
@@ -128,13 +116,11 @@ button{
 <div class="page" id="p1">
 <h1>A Letter For You</h1>
 <div class="img-box">
-<img src="https://images.unsplash.com/photo-1519681393784-d120267933ba"
-onload="this.style.opacity=1" loading="lazy">
+<iframe src="https://share.google/DpkaZprwMxuBCHwPP"></iframe>
 </div>
 <p>
-This is not just a page,<br>
-it’s a piece of my heart,<br>
-folded gently for you.
+This page holds a quiet truth,<br>
+written only for you.
 </p>
 <button onclick="flip(1)">Open 💌</button>
 </div>
@@ -143,12 +129,11 @@ folded gently for you.
 <div class="page" id="p2">
 <h1>Hey Beautiful</h1>
 <div class="img-box">
-<img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6"
-onload="this.style.opacity=1" loading="lazy">
+<iframe src="https://share.google/PA4ZPPD4oKYuH7aMm"></iframe>
 </div>
 <p>
-Your smile feels like a quiet morning,<br>
-soft, warm, and full of promise.
+Your presence feels soft,<br>
+like flowers in spring.
 </p>
 <button onclick="flip(2)">Next 🌸</button>
 </div>
@@ -157,43 +142,35 @@ soft, warm, and full of promise.
 <div class="page" id="p3">
 <h1>You Are Special</h1>
 <div class="img-box">
-<img src="https://images.unsplash.com/photo-1499084732479-de2c02d45fc4"
-onload="this.style.opacity=1" loading="lazy">
+<iframe src="https://share.google/6YRSSfuxc3xJjnwd3"></iframe>
 </div>
 <p>
 Every love story is beautiful,<br>
-but somehow, ours feels like home.
+but ours feels like home.
 </p>
 <button onclick="flip(3)">Next 📖</button>
 </div>
 
 <!-- PAGE 4 -->
 <div class="page" id="p4">
-<h1>One Question…</h1>
+<h1>One Question</h1>
 <div class="img-box">
-<img src="https://images.unsplash.com/photo-1511988617509-a57c8a288659"
-onload="this.style.opacity=1" loading="lazy">
+<iframe src="https://share.google/gyb29rUvQpQzPzeEu"></iframe>
 </div>
 <p>
-Would you hold my hand,<br>
-not just today,<br>
-but in every small tomorrow?
+Would you choose me,<br>
+again and again?
 </p>
-
 <button onclick="flip(4)">Yes ❤️</button>
 <button class="no-btn" id="noBtn" onmouseenter="moveNo()">No</button>
 </div>
 
 <!-- PAGE 5 -->
 <div class="page" id="p5">
-<h1>YAY ❤️</h1>
-<div class="img-box">
-<img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e"
-onload="this.style.opacity=1" loading="lazy">
-</div>
+<h1>Always You</h1>
 <p>
-This page is my favorite,<br>
-because it begins with you.
+This scrapbook ends here,<br>
+but my feelings don’t.
 </p>
 </div>
 
@@ -206,10 +183,8 @@ function flip(n){
 
 function moveNo(){
     const btn=document.getElementById("noBtn");
-    const maxX=220;
-    const maxY=380;
-    btn.style.left=Math.random()*maxX+"px";
-    btn.style.top=Math.random()*maxY+"px";
+    btn.style.left=Math.random()*220+"px";
+    btn.style.top=Math.random()*380+"px";
 }
 </script>
 
