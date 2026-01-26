@@ -3,196 +3,222 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> Scrapbook for you 🌸</title>
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500&display=swap" rel="stylesheet">
+<title>Classified: Scrapbook 📜</title>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Quicksand:wght@500&display=swap" rel="stylesheet">
 <style>
-body{
-    margin:0;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:#f5e9df;
-    font-family:'Quicksand', sans-serif;
-    overflow:hidden;
+:root {
+    --paper-color: #f2e8c9;
+    --ink-color: #2c2c2c;
+    --accent-color: #8b4513; /* Burnt Sienna */
+    --compiler-green: #2d5a27;
 }
-audio{display:none}
-.book-container{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    width:100%;
-    height:100%;
+
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Dark desk/wood background to make the paper pop */
+    background: #1a1a1a;
+    font-family: 'Quicksand', sans-serif;
+    overflow: hidden;
 }
-.book{
-    width:300px;
-    height:440px;
-    perspective:1200px;
-    position:relative;
+
+audio { display: none }
+
+.book-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
 }
-.page{
-    width:100%;
-    height:100%;
-    position:absolute;
-    background:#fff8ef;
-    border-radius:14px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.2);
-    padding:16px;
-    transform-origin:left;
-    transition:transform 1s ease;
-    backface-visibility:hidden;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
+
+.book {
+    width: 320px;
+    height: 460px;
+    perspective: 1500px;
+    position: relative;
 }
-.page::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:url("https://www.transparenttextures.com/patterns/paper-fibers.png");
-    opacity:.4;
-    pointer-events:none;
+
+.page {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: var(--paper-color);
+    /* Old paper texture overlay */
+    background-image: url("https://www.transparenttextures.com/patterns/parchment.png");
+    border-radius: 2px 15px 15px 2px;
+    /* Realistic shadow for depth */
+    box-shadow: inset 3px 0px 20px rgba(0,0,0,0.1), 10px 10px 20px rgba(0,0,0,0.4);
+    padding: 20px;
+    transform-origin: left;
+    transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 1px solid rgba(0,0,0,0.1);
 }
-.img-box{
-    width:90%;
-    height:150px;
-    border-radius:10px;
-    overflow:hidden;
-    background:#eadfd4;
-    margin-bottom:12px;
+
+/* Compiler-style headings */
+h1 {
+    font-family: 'Fira Code', 'Courier New', monospace;
+    color: var(--compiler-green);
+    font-size: 1.4rem;
+    margin: 0 0 15px 0;
+    background: rgba(0,0,0,0.05);
+    padding: 5px 10px;
+    border-radius: 4px;
 }
-.img-box iframe, .img-box img{
-    width:100%;
-    height:100%;
-    border:none;
-    object-fit:cover;
+
+h1::before { content: "> "; opacity: 0.6; }
+
+p {
+    color: var(--ink-color);
+    line-height: 1.6;
+    font-size: 15px;
+    font-weight: 600;
 }
-h1{
-    font-family:'Dancing Script',cursive;
-    color:#c94a6a;
-    margin:6px 0 8px;
+
+/* Vintage Style Buttons */
+button {
+    background: var(--accent-color);
+    color: #f2e8c9;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 4px;
+    padding: 8px 20px;
+    cursor: pointer;
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    margin-top: 10px;
+    transition: all 0.3s;
+    text-transform: uppercase;
 }
-p{
-    font-style:italic;
-    color:#555;
-    line-height:1.5;
-    font-size:14px;
+
+button:hover {
+    filter: brightness(1.2);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
-button{
-    background:#c94a6a;
-    color:white;
-    border:none;
-    border-radius:20px;
-    padding:6px 16px;
-    cursor:pointer;
-    font-size:13px;
-    margin-top:8px;
+
+.img-box {
+    width: 100%;
+    height: 180px;
+    border: 8px solid white;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    margin-bottom: 15px;
+    background: #dfd3b6;
+    transform: rotate(-1deg); /* Slight organic tilt */
 }
-.choice{
-    display:flex;
-    justify-content:center;
-    gap:10px;
-    margin-top:12px;
-    position:relative;
+
+.img-box iframe, .img-box img {
+    width: 100%;
+    height: 100%;
+    border: none;
+    object-fit: cover;
 }
-.no-btn{
-    background:#e27c7c;
-    position:relative;
+
+.choice {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
 }
-.flipped{ transform:rotateY(-180deg); }
-#p1{z-index:5}
-#p2{z-index:4}
-#p3{z-index:3}
-#p4{z-index:2}
-#p5{z-index:1}
+
+.no-btn {
+    background: #963d3d;
+    position: absolute; /* Needed for the "dodging" effect */
+}
+
+.flipped { transform: rotateY(-180deg); }
+
+/* Z-index layering */
+#p1 { z-index: 5; }
+#p2 { z-index: 4; }
+#p3 { z-index: 3; }
+#p4 { z-index: 2; }
+#p5 { z-index: 1; }
 </style>
 </head>
 <body>
 
 <audio id="bgMusic" loop>
-<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
 </audio>
 
 <div class="book-container">
-<div class="book">
+    <div class="book">
 
-<!-- PAGE 1 -->
-<div class="page" id="p1">
-<h1>Page 1</h1>
-<div class="img-box">
-<iframe src="https://share.google/gyb29rUvQpQzPzeEu"></iframe>
-</div>
-<p>This page holds a quiet truth,<br>written only for you.</p>
-<button onclick="flipPage(1)">Open 💌</button>
-</div>
+        <div class="page" id="p1">
+            <h1>Initialize_Heart.sh</h1>
+            <div class="img-box">
+                <iframe src="https://share.google/gyb29rUvQpQzPzeEu"></iframe>
+            </div>
+            <p>// Inside this vintage file,<br>lies a truth I've kept compiled.</p>
+            <button onclick="flipPage(1)">Execute 📁</button>
+        </div>
 
-<!-- PAGE 2 -->
-<div class="page" id="p2">
-<h1>Page 2</h1>
-<div class="img-box">
-<iframe src="https://share.google/6YRSSfuxc3xJjnwd3"></iframe>
-</div>
-<p>Your presence feels soft,<br>like flowers in spring.</p>
-<button onclick="flipPage(2)">Next 🌸</button>
-</div>
+        <div class="page" id="p2">
+            <h1>System.log</h1>
+            <div class="img-box">
+                <iframe src="https://share.google/6YRSSfuxc3xJjnwd3"></iframe>
+            </div>
+            <p>Every time you walk into the room,<br>my heart's CPU usage spikes.</p>
+            <button onclick="flipPage(2)">Continue_</button>
+        </div>
 
-<!-- PAGE 3 -->
-<div class="page" id="p3">
-<h1>Page 3</h1>
-<div class="img-box">
-<iframe src="https://share.google/PA4ZPPD4oKYuH7aMm"></iframe>
-</div>
-<p>Every love story is beautiful,<br>but ours feels like home.</p>
-<button onclick="flipPage(3)">Next 📖</button>
-</div>
+        <div class="page" id="p3">
+            <h1>Memory_Dump</h1>
+            <div class="img-box">
+                <iframe src="https://share.google/PA4ZPPD4oKYuH7aMm"></iframe>
+            </div>
+            <p>Scanning files... <br>Result: You are the best part <br>of my source code.</p>
+            <button onclick="flipPage(3)">Next_Block</button>
+        </div>
 
-<!-- PAGE 4 -->
-<div class="page" id="p4">
-<h1>Page 4</h1>
-<div class="img-box">
-<iframe src="https://share.google/DpkaZprwMxuBCHwPP"></iframe>
-</div>
-<p>Would you choose me,<br>again and again?</p>
-<div class="choice">
-<button onclick="flipPage(4)">Yes ❤️</button>
-<button class="no-btn" id="noBtn" onmouseenter="moveNo()">No</button>
-</div>
-</div>
+        <div class="page" id="p4">
+            <h1>Final_Query?</h1>
+            <div class="img-box">
+                <iframe src="https://share.google/DpkaZprwMxuBCHwPP"></iframe>
+            </div>
+            <p>Run program: "Forever_With_Me"?</p>
+            <div class="choice">
+                <button onclick="flipPage(4)">Yes</button>
+                <button class="no-btn" id="noBtn" onmouseenter="moveNo()">No</button>
+            </div>
+        </div>
 
-<!-- PAGE 5 -->
-<div class="page" id="p5">
-<h1>Kitty Surprise 🌹</h1>
-<div class="img-box">
-<img src="https://media.tenor.com/m/6nSJP3Gj1J4AAAAC/cute-cat.gif">
-</div>
-<p>This scrapbook ends here,<br>but my feelings don’t.</p>
-</div>
+        <div class="page" id="p5">
+            <h1>Success.gif</h1>
+            <div class="img-box">
+                <img src="https://media.tenor.com/m/6nSJP3Gj1J4AAAAC/cute-cat.gif">
+            </div>
+            <p>Process Complete.<br>My feelings for you <br>are officially Open Source.</p>
+        </div>
 
-</div>
+    </div>
 </div>
 
 <script>
-let current=0;
-function flipPage(n){
-    document.getElementById("p"+n).classList.add("flipped");
+let current = 0;
+function flipPage(n) {
+    document.getElementById("p" + n).classList.add("flipped");
     const music = document.getElementById('bgMusic');
-    if(current===0){ music.volume=0.4; music.play().catch(()=>{}); }
+    if (current === 0) { 
+        music.volume = 0.3; 
+        music.play().catch(() => { console.log("Music play blocked") }); 
+    }
     current++;
 }
 
-function moveNo(){
-    const yesButton = document.querySelector("#p4 .choice button:first-child");
+function moveNo() {
     const noButton = document.getElementById("noBtn");
-    const yesRect = yesButton.getBoundingClientRect();
-    const bookRect = document.querySelector(".book").getBoundingClientRect();
-    let newLeft = yesButton.offsetLeft + yesButton.offsetWidth + 10;
-    if(newLeft + noButton.offsetWidth > bookRect.width - 10){
-        newLeft = bookRect.width - noButton.offsetWidth - 10;
-    }
-    noButton.style.left = newLeft + "px";
-    noButton.style.top = yesButton.offsetTop + "px";
+    // Generate random positions within the page
+    const x = Math.random() * 150 - 75;
+    const y = Math.random() * 150 - 75;
+    noButton.style.transform = `translate(${x}px, ${y}px)`;
 }
 </script>
 </body>
