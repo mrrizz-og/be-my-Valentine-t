@@ -3,39 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mobile Scrapbook ❤️</title>
+<title>Mobile Scrapbook 🌸</title>
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500&display=swap" rel="stylesheet">
 <style>
 body{
     margin:0;
     height:100vh;
-    background:#f6efe7;
     display:flex;
     justify-content:center;
     align-items:center;
-    font-family:'Quicksand',sans-serif;
+    background:#f5e9df;
+    font-family:'Quicksand', sans-serif;
     overflow:hidden;
 }
-
-/* Hidden music player */
 audio{display:none}
-
-/* Scrapbook container */
+.book-container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:100%;
+    height:100%;
+}
 .book{
-    width:280px;       /* mobile-friendly width */
-    height:420px;      /* mobile-friendly height */
+    width:300px;
+    height:440px;
     perspective:1200px;
     position:relative;
 }
-
-/* Pages */
 .page{
     width:100%;
     height:100%;
     position:absolute;
     background:#fff8ef;
-    border-radius:12px;
-    box-shadow:0 8px 20px rgba(0,0,0,.2);
+    border-radius:14px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
     padding:16px;
     transform-origin:left;
     transition:transform 1s ease;
@@ -43,38 +44,31 @@ audio{display:none}
     display:flex;
     flex-direction:column;
     justify-content:center;
-    align-items:center; /* centralized content */
+    align-items:center;
     text-align:center;
 }
-
 .page::before{
     content:"";
     position:absolute;
     inset:0;
     background:url("https://www.transparenttextures.com/patterns/paper-fibers.png");
-    opacity:.3;
+    opacity:.4;
     pointer-events:none;
 }
-
-/* Image box */
 .img-box{
     width:90%;
-    height:140px;
+    height:150px;
     border-radius:10px;
     overflow:hidden;
     background:#eadfd4;
     margin-bottom:12px;
 }
-
-.img-box img{
+.img-box iframe, .img-box img{
     width:100%;
     height:100%;
+    border:none;
     object-fit:cover;
-    opacity:0;
-    transition:.6s;
 }
-
-/* Headings and text */
 h1{
     font-family:'Dancing Script',cursive;
     color:#c94a6a;
@@ -86,8 +80,6 @@ p{
     line-height:1.5;
     font-size:14px;
 }
-
-/* Buttons */
 button{
     background:#c94a6a;
     color:white;
@@ -98,19 +90,18 @@ button{
     font-size:13px;
     margin-top:8px;
 }
-
-/* No button */
+.choice{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-top:12px;
+    position:relative;
+}
 .no-btn{
     background:#e27c7c;
-    position:absolute;
+    position:relative;
 }
-
-/* Flipped pages */
-.flipped{
-    transform:rotateY(-180deg);
-}
-
-/* Page z-index */
+.flipped{ transform:rotateY(-180deg); }
 #p1{z-index:5}
 #p2{z-index:4}
 #p3{z-index:3}
@@ -120,96 +111,88 @@ button{
 </head>
 <body>
 
-<!-- Background music -->
-<audio autoplay loop>
+<audio id="bgMusic" loop>
 <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
 </audio>
 
+<div class="book-container">
 <div class="book">
 
 <!-- PAGE 1 -->
 <div class="page" id="p1">
-<h1>A Letter For You</h1>
+<h1>Page 1</h1>
 <div class="img-box">
-<img src="https://via.placeholder.com/280x140?text=Page+1+Image" onload="this.style.opacity=1" loading="lazy">
+<iframe src="https://share.google/gyb29rUvQpQzPzeEu"></iframe>
 </div>
-<p>
-This page holds a quiet truth,<br>
-written only for you.
-</p>
-<button onclick="flip(1)">Open 💌</button>
+<p>This page holds a quiet truth,<br>written only for you.</p>
+<button onclick="flipPage(1)">Open 💌</button>
 </div>
 
 <!-- PAGE 2 -->
 <div class="page" id="p2">
-<h1>Hey Beautiful</h1>
+<h1>Page 2</h1>
 <div class="img-box">
-<img src="https://via.placeholder.com/280x140?text=Page+2+Image" onload="this.style.opacity=1" loading="lazy">
+<iframe src="https://share.google/6YRSSfuxc3xJjnwd3"></iframe>
 </div>
-<p>
-Your presence feels soft,<br>
-like flowers in spring.
-</p>
-<button onclick="flip(2)">Next 🌸</button>
+<p>Your presence feels soft,<br>like flowers in spring.</p>
+<button onclick="flipPage(2)">Next 🌸</button>
 </div>
 
 <!-- PAGE 3 -->
 <div class="page" id="p3">
-<h1>You Are Special</h1>
+<h1>Page 3</h1>
 <div class="img-box">
-<img src="https://via.placeholder.com/280x140?text=Page+3+Image" onload="this.style.opacity=1" loading="lazy">
+<iframe src="https://share.google/PA4ZPPD4oKYuH7aMm"></iframe>
 </div>
-<p>
-Every love story is beautiful,<br>
-but ours feels like home.
-</p>
-<button onclick="flip(3)">Next 📖</button>
+<p>Every love story is beautiful,<br>but ours feels like home.</p>
+<button onclick="flipPage(3)">Next 📖</button>
 </div>
 
 <!-- PAGE 4 -->
 <div class="page" id="p4">
-<h1>One Question</h1>
+<h1>Page 4</h1>
 <div class="img-box">
-<img src="https://via.placeholder.com/280x140?text=Page+4+Image" onload="this.style.opacity=1" loading="lazy">
+<iframe src="https://share.google/DpkaZprwMxuBCHwPP"></iframe>
 </div>
-<p>
-Would you choose me,<br>
-again and again?
-</p>
-<div style="position:relative; width:100%; display:flex; justify-content:center; gap:10px; margin-top:10px;">
-<button onclick="flip(4)">Yes ❤️</button>
+<p>Would you choose me,<br>again and again?</p>
+<div class="choice">
+<button onclick="flipPage(4)">Yes ❤️</button>
 <button class="no-btn" id="noBtn" onmouseenter="moveNo()">No</button>
 </div>
 </div>
 
 <!-- PAGE 5 -->
 <div class="page" id="p5">
-<h1>Always You</h1>
+<h1>Kitty Surprise 🌹</h1>
 <div class="img-box">
-<img src="https://via.placeholder.com/280x140?text=Page+5+Image" onload="this.style.opacity=1" loading="lazy">
+<img src="https://media.tenor.com/m/6nSJP3Gj1J4AAAAC/cute-cat.gif">
 </div>
-<p>
-This scrapbook ends here,<br>
-but my feelings don’t.
-</p>
+<p>This scrapbook ends here,<br>but my feelings don’t.</p>
 </div>
 
+</div>
 </div>
 
 <script>
 let current=0;
-
-function flip(n){
+function flipPage(n){
     document.getElementById("p"+n).classList.add("flipped");
+    const music = document.getElementById('bgMusic');
+    if(current===0){ music.volume=0.4; music.play().catch(()=>{}); }
+    current++;
 }
 
-// moving No button
 function moveNo(){
-    const btn=document.getElementById("noBtn");
-    const maxX=180;
-    const maxY=300;
-    btn.style.left=Math.random()*maxX+"px";
-    btn.style.top=Math.random()*maxY+"px";
+    const yesButton = document.querySelector("#p4 .choice button:first-child");
+    const noButton = document.getElementById("noBtn");
+    const yesRect = yesButton.getBoundingClientRect();
+    const bookRect = document.querySelector(".book").getBoundingClientRect();
+    let newLeft = yesButton.offsetLeft + yesButton.offsetWidth + 10;
+    if(newLeft + noButton.offsetWidth > bookRect.width - 10){
+        newLeft = bookRect.width - noButton.offsetWidth - 10;
+    }
+    noButton.style.left = newLeft + "px";
+    noButton.style.top = yesButton.offsetTop + "px";
 }
 </script>
 </body>
