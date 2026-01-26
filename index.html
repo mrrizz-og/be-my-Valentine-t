@@ -27,7 +27,6 @@ body {
     overflow: hidden;
 }
 
-/* Card */
 .card {
     background: white;
     width: 90%;
@@ -48,7 +47,6 @@ h1 {
     font-size: 2.4rem;
 }
 
-/* Image container with reserved space */
 .img-container {
     width: 100%;
     height: 200px;
@@ -64,16 +62,17 @@ h1 {
     object-fit: cover;
 }
 
-/* Poetry */
 .poetry {
-    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #555;
     background: #fff0f5;
     padding: 15px;
     border-radius: 10px;
     border-left: 4px solid #ff3366;
+    margin-bottom: 10px;
 }
 
-/* Buttons */
 .btn {
     background: #ff3366;
     color: white;
@@ -90,10 +89,8 @@ h1 {
 
 .no-btn {
     background: #ff9999;
-    position: relative;
 }
 
-/* Floating hearts */
 .heart {
     position: fixed;
     font-size: 20px;
@@ -113,37 +110,47 @@ h1 {
 <div class="card" id="card1">
     <div style="font-size:80px">💌</div>
     <h1>A Letter for You</h1>
-    <p>I wrote something from my heart...</p>
+    <p>I wrote something simple, honest, and true.</p>
     <button class="btn" onclick="nextCard(2)">Open Letter ✨</button>
 </div>
 
 <div class="card" id="card2">
-    <h1>Hey Beautiful...</h1>
+    <h1>Hey You…</h1>
     <div class="img-container">
         <img src="https://media.tenor.com/m/fT-S_W_i17UAAAAC/peach-goma.gif" loading="lazy">
     </div>
     <div class="poetry">
-        "Phoolon si muskurahat hai tumhari,<br>
-        Dil mein bas gayi hai surat tumhari."
+        You walked into my life quietly,<br>
+        and somehow made everything louder —<br>
+        my smiles, my thoughts,<br>
+        and the way my heart feels at peace.
     </div>
     <button class="btn" onclick="nextCard(3)">Read More ❤️</button>
 </div>
 
 <div class="card" id="card3">
-    <h1>You are Special</h1>
+    <h1>You Matter</h1>
     <div class="img-container">
         <img src="https://media.tenor.com/m/K2sE98F_vXwAAAAC/mochi-peachcat-mochi.gif" loading="lazy">
     </div>
     <div class="poetry">
-        "Every love story is beautiful,<br>but ours is my favorite."
+        In a world that moves too fast,<br>
+        you are my pause.<br>
+        My favorite thought.<br>
+        The calm I didn’t know I needed.
     </div>
-    <button class="btn" onclick="nextCard(4)">Ask the Question 🌹</button>
+    <button class="btn" onclick="nextCard(4)">One Last Question 🌹</button>
 </div>
 
 <div class="card" id="card4">
-    <h1>Will you be my Valentine?</h1>
+    <h1>So tell me…</h1>
     <div class="img-container">
         <img src="https://media.tenor.com/m/6nSJP3Gj1J4AAAAC/cute-cat.gif" loading="lazy">
+    </div>
+    <div class="poetry">
+        If love is choosing someone every day,<br>
+        I choose you.<br>
+        Today. Tomorrow. Always.
     </div>
     <button class="btn" onclick="celebrate()">YES 😍</button>
     <button class="btn no-btn" id="noBtn" onmouseenter="moveButton()">No</button>
@@ -154,7 +161,10 @@ h1 {
     <div class="img-container">
         <img src="https://media.tenor.com/m/17Xq0U8s0OQAAAAC/happy-cat-jumping.gif">
     </div>
-    <div class="poetry"><b>I Love You ❤️</b></div>
+    <div class="poetry">
+        This is just the beginning…<br>
+        and I’m really happy it’s with you ❤️
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -179,7 +189,6 @@ function celebrate(){
     confetti({ particleCount: 180, spread: 80, origin: { y: 0.6 }});
 }
 
-// floating hearts
 setInterval(()=>{
     const h = document.createElement('div');
     h.className='heart';
