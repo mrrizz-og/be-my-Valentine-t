@@ -3,14 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Story for You 🌸</title>
+<title>Our Scrapbook 🌸</title>
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
 <style>
 :root {
     --ink: #4e3629;
-    --parchment: #f2e6d0;
-    --burnt-edge: rgba(89, 57, 34, 0.6);
-    --accent-brown: #7d5a44;
+    --paper: #f2e6d0;
+    --burnt: rgba(89, 57, 34, 0.5);
 }
 
 body {
@@ -19,45 +18,51 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #cbb494;
+    /* Background mimicking the torn paper collage in your image */
+    background-color: #d2b48c;
     background-image: 
-        url("https://www.transparenttextures.com/patterns/aged-paper.png"),
-        linear-gradient(45deg, rgba(0,0,0,0.1) 25%, transparent 25%);
+        url("https://www.transparenttextures.com/patterns/cardboard-flat.png"),
+        linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1));
     overflow: hidden;
+    font-family: 'Cormorant Garamond', serif;
 }
 
-/* Decorative elements */
+/* Scrapbook Decorations from your Image */
 .decor {
     position: absolute;
     pointer-events: none;
     z-index: 10;
-    filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
-    opacity: 0.9;
+    filter: sepia(0.3) drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
 }
-.flower-corner { top: -30px; right: -30px; width: 200px; transform: rotate(20deg); }
+.flower-left { bottom: 20px; left: 10px; width: 140px; transform: rotate(-5deg); }
+.flower-right { top: 10px; right: 10px; width: 150px; transform: rotate(15deg); }
+.scroll-bottom { bottom: -30px; right: -20px; width: 200px; transform: rotate(-10deg); }
 
 .book-container {
     perspective: 1500px;
     z-index: 5;
+    position: relative;
 }
 
 .book {
-    width: 330px;
-    height: 500px; /* Slightly taller for better spacing */
+    width: 340px;
+    height: 500px;
     position: relative;
+    /* Layered leather/paper effect */
     background: #5c4033;
+    padding: 10px;
     border-radius: 5px 15px 15px 5px;
-    box-shadow: 25px 25px 60px rgba(0,0,0,0.6);
-    padding: 12px 15px 12px 10px;
+    box-shadow: 20px 20px 60px rgba(0,0,0,0.5);
 }
 
 .page {
     width: 100%;
     height: 100%;
     position: absolute;
-    background: var(--parchment) url("https://www.transparenttextures.com/patterns/parchment.png");
-    box-shadow: inset 0 0 40px var(--burnt-edge);
-    padding: 30px 25px;
+    background: var(--paper);
+    /* Torn paper/parchment texture */
+    background-image: url("https://www.transparenttextures.com/patterns/parchment.png");
+    padding: 25px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -67,35 +72,36 @@ body {
     transform-origin: left;
     transition: transform 1.3s cubic-bezier(0.645, 0.045, 0.355, 1);
     backface-visibility: hidden;
-    border-left: 2px solid rgba(0,0,0,0.1);
+    /* Distressed edges mimicking your image */
+    box-shadow: inset 0 0 40px var(--burnt), 5px 5px 15px rgba(0,0,0,0.1);
+    border: 1px solid rgba(0,0,0,0.05);
 }
 
-/* Typography */
 h1 {
     font-family: 'Dancing Script', cursive;
-    color: var(--accent-brown);
+    color: #7d5a44;
     font-size: 2.2rem;
-    margin: 5px 0 15px 0;
+    margin: 10px 0;
     font-weight: 700;
 }
 
 p {
-    font-family: 'Cormorant Garamond', serif;
     color: var(--ink);
-    font-size: 1.3rem;
+    font-size: 1.35rem;
     font-style: italic;
-    line-height: 1.4;
-    margin: 20px 0;
+    line-height: 1.3;
+    margin: 10px 0;
 }
 
-/* Polaroid Image Style */
+/* Polaroid Photo Style */
 .img-box {
-    width: 90%;
-    height: 180px;
+    width: 95%;
+    height: 190px;
     background: #fff;
-    padding: 10px 10px 40px 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    padding: 10px 10px 35px 10px;
+    box-shadow: 2px 5px 15px rgba(0,0,0,0.3);
     transform: rotate(-1.5deg);
+    margin-bottom: 10px;
     border: 1px solid #ddd;
 }
 
@@ -103,48 +109,43 @@ p {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /* Sepia warmth filter */
-    filter: sepia(0.3) contrast(1.1);
+    filter: sepia(0.2) contrast(1.1);
 }
 
-/* Button Styles */
-button {
-    background: #fdfaf3;
-    border: 2px solid #c2b097;
-    border-radius: 30px;
-    padding: 10px 30px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--accent-brown);
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    transition: all 0.2s ease-out;
-}
-
-button:hover {
-    background: var(--accent-brown);
-    color: white;
-    transform: translateY(-2px);
-}
-
-/* New Choice Container Layout */
+/* Buttons */
 .choice {
     display: flex;
     justify-content: center;
-    gap: 20px; /* Spacing between buttons */
+    gap: 15px;
     margin-top: auto;
     width: 100%;
     padding-bottom: 20px;
 }
 
-/* The Movable No Button */
+button {
+    background: #fdfaf3;
+    border: 1px solid #c2b097;
+    border-radius: 20px;
+    padding: 8px 25px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #5e4638;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #7d5a44;
+    color: white;
+}
+
 .no-btn {
     background: #a64444 !important;
     color: white !important;
-    border-color: #8a3333 !important;
-    position: relative; /* Necessary for transform movement */
-    z-index: 10;
+    position: relative;
+    z-index: 100;
 }
 
 .flipped { transform: rotateY(-180deg); }
@@ -158,11 +159,8 @@ button:hover {
 </head>
 <body>
 
-<audio id="bgMusic" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-</audio>
-
-<img src="https://www.pngarts.com/files/12/Dried-Flowers-PNG-Image.png" class="decor flower-corner">
+<img src="https://www.pngarts.com/files/12/Dried-Flowers-PNG-Image.png" class="decor flower-left">
+<img src="https://www.pngarts.com/files/12/Dried-Flowers-PNG-Transparent-Image.png" class="decor flower-right">
 
 <div class="book-container">
     <div class="book">
@@ -170,7 +168,7 @@ button:hover {
         <div class="page" id="p1">
             <h1>A quiet truth...</h1>
             <div class="img-box">
-                <img src="https://images.unsplash.com/photo-1526394112126-909505f0552a?w=500&auto=format&fit=crop">
+                <img src="https://images.unsplash.com/photo-1526394112126-909505f0552a?w=500">
             </div>
             <p>This book holds the words<br>I've been meaning to say.</p>
             <button onclick="flipPage(1)">Open 💌</button>
@@ -179,7 +177,7 @@ button:hover {
         <div class="page" id="p2">
             <h1>Soft Memories</h1>
             <div class="img-box" style="transform: rotate(2deg);">
-                <img src="https://images.unsplash.com/photo-1508612207311-5f6761792164?w=500&auto=format&fit=crop">
+                <img src="https://images.unsplash.com/photo-1508612207311-5f6761792164?w=500">
             </div>
             <p>Your presence feels soft,<br>like flowers kept in a book.</p>
             <button onclick="flipPage(2)">Next 🌸</button>
@@ -187,61 +185,46 @@ button:hover {
 
         <div class="page" id="p3">
             <h1>Our Story</h1>
-            <div class="img-box">
-                 <img src="https://images.unsplash.com/photo-1504018843327-61273576261c?w=500&auto=format&fit=crop">
+            <div class="img-box" style="transform: rotate(-1deg);">
+                <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=500">
             </div>
             <p>Every love story is beautiful,<br>but ours feels like home.</p>
             <button onclick="flipPage(3)">Next 📖</button>
         </div>
 
         <div class="page" id="p4">
-            <h1>The Question</h1>
-            <div class="img-box" style="transform: rotate(-1.5deg);">
-                 <img src="https://images.unsplash.com/photo-1623864874152-79074f3b313f?w=500&auto=format&fit=crop">
+            <h1>The Choice</h1>
+            <div class="img-box">
+                <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=500">
             </div>
             <p>Would you choose me,<br>again and again?</p>
-            
             <div class="choice">
                 <button onclick="flipPage(4)">Yes ❤️</button>
-                <button id="noBtn" class="no-btn" onclick="moveNo(event)">No</button>
+                <button id="noBtn" class="no-btn" onclick="moveNo()">No</button>
             </div>
         </div>
 
         <div class="page" id="p5">
             <h1>Forever 🌹</h1>
-            <div class="img-box" style="height: 200px;">
-                <img src="https://media.tenor.com/m/6nSJP3Gj1J4AAAAC/cute-cat.gif">
+            <div class="img-box" style="height: 220px;">
+                <img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=500">
             </div>
-            <p>The scrapbook ends here,<br>but my feelings don't.</p>
+            <p>The pages end here,<br>but my feelings never will.</p>
         </div>
 
     </div>
 </div>
 
 <script>
-let current = 0;
 function flipPage(n) {
     document.getElementById("p" + n).classList.add("flipped");
-    const music = document.getElementById('bgMusic');
-    if (current === 0) { 
-        music.volume = 0.3; 
-        music.play().catch(() => {}); 
-    }
-    current++;
 }
 
-function moveNo(event) {
-    // Prevents the button from actually being "clicked" in a normal way
-    event.preventDefault();
-    
+function moveNo() {
     const noBtn = document.getElementById("noBtn");
-    
-    // Generate larger random jumps so it moves significantly away
-    // Jumps between -150px and +150px on both axes
-    const x = (Math.random() - 0.5) * 300;
-    const y = (Math.random() - 0.5) * 300;
-    
-    // Apply the jump
+    // Moves button significantly on click
+    const x = Math.random() * 300 - 150;
+    const y = Math.random() * 300 - 150;
     noBtn.style.transform = `translate(${x}px, ${y}px)`;
 }
 </script>
