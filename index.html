@@ -3,15 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vintage Memories 🌸</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<title>For My Favorite Person 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
 <style>
 :root {
-    /* Vintage Palette */
-    --sepia-ink: #4a3b2a;
-    --paper-cream: #f3eace;
-    --accent-brown: #8c5e35;
-    --wax-red: #a63d3d;
+    --ink: #5e4638;
+    --paper: #f4eee1;
 }
 
 body {
@@ -20,183 +17,107 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Layered vintage paper background texture */
-    background-color: #d4b483;
-    background-image: url("https://www.transparenttextures.com/patterns/aged-paper.png"), linear-gradient(to bottom right, rgba(0,0,0,0.2), rgba(0,0,0,0.5));
-    background-blend-mode: overlay;
-    font-family: 'Cormorant Garamond', serif;
+    /* Collage-style background inspired by your first image */
+    background-color: #d2b48c;
+    background-image: url("https://www.transparenttextures.com/patterns/aged-paper.png");
     overflow: hidden;
 }
 
-/* --- Decorations placed around the book --- */
-.decoration {
-    position: absolute;
-    pointer-events: none; /* ensures they don't block clicking */
-    z-index: 10;
-    filter: sepia(0.4) contrast(1.1);
-}
-.flowers-top-right {
-    top: -20px;
-    right: -30px;
-    width: 180px;
-    transform: rotate(15deg);
-}
-.flowers-bottom-left {
-    bottom: -20px;
-    left: -40px;
-    width: 200px;
-    transform: rotate(-10deg);
-}
-.scroll-bottom {
-    bottom: -50px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 250px;
-    filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.4));
-}
-/* ----------------------------------------- */
-
-audio { display: none }
-
 .book-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    /* Simulating the thick book cover from the image */
-    padding: 15px 20px 15px 10px;
-    background: #5c4025; /* Leather color */
-    background-image: url("https://www.transparenttextures.com/patterns/leather.png");
-    border-radius: 8px 16px 16px 8px;
-    box-shadow: 
-        inset 0 0 30px rgba(0,0,0,0.8), /* Deep inner shadow */
-        0 15px 30px rgba(0,0,0,0.5); /* Outer drop shadow */
-    border-left: 12px solid #3d2a18; /* Spine */
+    perspective: 1500px;
 }
 
 .book {
-    width: 300px;
-    height: 440px;
-    perspective: 1500px;
+    width: 320px;
+    height: 460px;
     position: relative;
-    z-index: 5;
+    /* Thick book cover shadow */
+    box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
+    border-radius: 5px 15px 15px 5px;
 }
 
 .page {
     width: 100%;
     height: 100%;
     position: absolute;
-    /* Rich aged parchment texture */
-    background-color: var(--paper-cream);
-    background-image: url("https://www.transparenttextures.com/patterns/parchment.png");
-    /* Burned/worn edges effect */
-    box-shadow: inset 0 0 30px rgba(140, 94, 53, 0.3), 5px 5px 15px rgba(0,0,0,0.2);
-    border-radius: 4px 12px 12px 4px;
-    padding: 20px;
+    background: var(--paper) url("https://www.transparenttextures.com/patterns/parchment.png");
+    padding: 30px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border-radius: 2px 12px 12px 2px;
     transform-origin: left;
     transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
     backface-visibility: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    border: 1px solid rgba(74, 59, 42, 0.2);
-    box-sizing: border-box;
+    border: 1px solid rgba(0,0,0,0.1);
+    box-shadow: inset 3px 0px 20px rgba(0,0,0,0.1);
 }
 
-/* Vintage headings */
+/* --- THE FONTS FROM YOUR PICTURE --- */
 h1 {
     font-family: 'Dancing Script', cursive;
-    color: var(--accent-brown);
+    color: #8b5e3c;
     font-size: 2.2rem;
-    margin: 0 0 15px 0;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    margin-bottom: 10px;
+    font-weight: 700;
 }
 
-/* Body text */
 p {
-    color: var(--sepia-ink);
-    line-height: 1.5;
-    font-size: 18px;
-    font-weight: 600;
-    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--ink);
+    font-size: 1.3rem;
+    font-style: italic; /* Matches the slant in your image */
+    line-height: 1.4;
+    margin-top: 15px;
 }
 
-/* Vintage Style Buttons */
+/* --- POLAROID STYLE --- */
+.img-box {
+    width: 90%;
+    height: 180px;
+    background: white;
+    padding: 10px 10px 30px 10px; /* Extra bottom space like a Polaroid */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transform: rotate(-1deg);
+}
+
+.img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: sepia(0.2);
+}
+
+/* Button style from the screenshot */
 button {
-    background: var(--paper-cream);
-    background-image: url("https://www.transparenttextures.com/patterns/aged-paper.png");
-    color: var(--sepia-ink);
-    border: 2px solid var(--accent-brown);
+    background: #fdfaf3;
+    border: 1px solid #d3c4b1;
     border-radius: 25px;
-    padding: 8px 24px;
-    cursor: pointer;
+    padding: 8px 25px;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 16px;
-    font-weight: bold;
-    margin-top: 15px;
-    transition: all 0.3s;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-top: auto;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: 0.3s;
 }
 
 button:hover {
-    background: var(--accent-brown);
-    color: var(--paper-cream);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 10px rgba(0,0,0,0.2);
-}
-
-/* Polaroid-style image frames */
-.img-box {
-    width: 90%;
-    height: 160px;
-    background: #f8f1e0;
-    padding: 8px 8px 25px 8px; /* Extra bottom padding for polaroid look */
-    box-shadow: 2px 4px 12px rgba(0,0,0,0.2);
-    margin-bottom: 15px;
-    transform: rotate(-1deg);
-    transition: transform 0.3s;
-}
-
-.img-box:hover {
-    transform: rotate(0deg) scale(1.02);
-}
-
-.img-box iframe, .img-box img {
-    width: 100%;
-    height: 100%;
-    border: 1px solid rgba(0,0,0,0.1);
-    object-fit: cover;
-    filter: sepia(0.3); /* Slight vintage filter on images */
-}
-
-.choice {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px;
-    position: relative;
-    width: 100%;
-    height: 50px; /* Defined height for the No button area */
+    background: #8b5e3c;
+    color: white;
 }
 
 .no-btn {
-    background: var(--wax-red);
-    color: white;
-    border: none;
-    position: absolute; /* Changed to absolute for better movement */
-    box-shadow: inset 0 -2px 5px rgba(0,0,0,0.3), 0 4px 6px rgba(0,0,0,0.2);
-}
-.no-btn:hover {
-    background: #8a3333;
-    color: white;
-    transform: none; /* Override default hover behavior for the dodging button */
+    background: #c94a6a !important;
+    color: white !important;
+    position: absolute;
 }
 
 .flipped { transform: rotateY(-180deg); }
 
-/* Z-index layering */
+/* Layering */
 #p1 { z-index: 5; }
 #p2 { z-index: 4; }
 #p3 { z-index: 3; }
@@ -206,40 +127,31 @@ button:hover {
 </head>
 <body>
 
-<audio id="bgMusic" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-</audio>
-
-<img src="https://i.imgur.com/4Q52zD8.png" class="decoration flowers-top-right" alt="dried flowers">
-<img src="https://i.imgur.com/4Q52zD8.png" class="decoration flowers-bottom-left" alt="dried flowers branch">
-<img src="https://i.imgur.com/8N5swQc.png" class="decoration scroll-bottom" alt="antique scroll with seal">
-
-
 <div class="book-container">
     <div class="book">
 
         <div class="page" id="p1">
             <h1>A quiet truth...</h1>
             <div class="img-box">
-                <img src="https://picsum.photos/300/200?grayscale" alt="placeholder">
+                <img src="https://images.unsplash.com/photo-1516414923984-60143899f89a?auto=format&fit=crop&w=400">
             </div>
             <p>This book holds the words<br>I've been meaning to say.</p>
             <button onclick="flipPage(1)">Open 💌</button>
         </div>
 
         <div class="page" id="p2">
-            <h1>Vintage Blooms</h1>
-            <div class="img-box">
-                 <img src="https://picsum.photos/301/201?sepia" alt="placeholder">
+            <h1>Soft Memories</h1>
+            <div class="img-box" style="transform: rotate(2deg);">
+                <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=400">
             </div>
-            <p>Your presence feels soft,<br>like pressed flowers in spring.</p>
+            <p>Your presence feels soft,<br>like flowers in spring.</p>
             <button onclick="flipPage(2)">Next 🌸</button>
         </div>
 
         <div class="page" id="p3">
-            <h1>Timeless Tales</h1>
+            <h1>A New Chapter</h1>
             <div class="img-box">
-                 <img src="https://picsum.photos/302/202?sepia" alt="placeholder">
+                <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=400">
             </div>
             <p>Every love story is beautiful,<br>but ours feels like home.</p>
             <button onclick="flipPage(3)">Next 📖</button>
@@ -247,59 +159,37 @@ button:hover {
 
         <div class="page" id="p4">
             <h1>The Question</h1>
-            <div class="img-box">
-                 <img src="https://picsum.photos/303/203?sepia" alt="placeholder">
+            <div class="img-box" style="transform: rotate(-2deg);">
+                <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=400">
             </div>
             <p>Would you choose me,<br>again and again?</p>
-            <div class="choice">
-                <button onclick="flipPage(4)" style="position: relative; z-index: 2;">Yes ❤️</button>
-                <button class="no-btn" id="noBtn" onmouseenter="moveNo()">No</button>
+            <div style="position: relative; width: 100%; height: 50px; margin-top: 10px;">
+                <button onclick="flipPage(4)" style="margin-right: 80px;">Yes ❤️</button>
+                <button id="noBtn" class="no-btn" onmouseenter="moveNo()">No</button>
             </div>
         </div>
 
         <div class="page" id="p5">
-            <h1>Forever Yours 🌹</h1>
-            <div class="img-box" style="height: 200px;">
+            <h1>Forever 🌹</h1>
+            <div class="img-box">
                 <img src="https://media.tenor.com/m/6nSJP3Gj1J4AAAAC/cute-cat.gif">
             </div>
-            <p>The pages end here,<br>but my feelings for you never will.</p>
+            <p>The scrapbook ends here,<br>but my feelings don't.</p>
         </div>
 
     </div>
 </div>
 
 <script>
-let current = 0;
 function flipPage(n) {
     document.getElementById("p" + n).classList.add("flipped");
-    const music = document.getElementById('bgMusic');
-    if (current === 0) { 
-        music.volume = 0.3; 
-        // User interaction required to play audio in most browsers
-        music.play().catch((e) => { console.log("Audio play failed due to browser policy. User needs to interact first."); }); 
-    }
-    current++;
 }
 
 function moveNo() {
-    const noButton = document.getElementById("noBtn");
-    const choiceContainer = document.querySelector('.choice');
-    
-    // Get container dimensions
-    const containerRect = choiceContainer.getBoundingClientRect();
-    const btnRect = noButton.getBoundingClientRect();
-    
-    // Calculate max allowable movement within the container bounds
-    const maxX = containerRect.width - btnRect.width;
-    const maxY = containerRect.height - btnRect.height;
-
-    // Generate random positions 
-    let newX = Math.random() * maxX;
-    let newY = Math.random() * maxY;
-
-    // Apply new position
-    noButton.style.left = `${newX}px`;
-    noButton.style.top = `${newY}px`;
+    const noBtn = document.getElementById("noBtn");
+    const x = Math.random() * 100 - 50;
+    const y = Math.random() * 100 - 50;
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
 }
 </script>
 </body>
