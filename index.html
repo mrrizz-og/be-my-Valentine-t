@@ -5,12 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For You ❤️</title>
 
-<!-- Preload GIFs -->
-<link rel="preload" as="image" href="https://media.tenor.com/m/fT-S_W_i17UAAAAC/peach-goma.gif">
-<link rel="preload" as="image" href="https://media.tenor.com/m/K2sE98F_vXwAAAAC/mochi-peachcat-mochi.gif">
-<link rel="preload" as="image" href="https://media.tenor.com/m/6nSJP3Gj1J4AAAAC/cute-cat.gif">
-<link rel="preload" as="image" href="https://media.tenor.com/m/17Xq0U8s0OQAAAAC/happy-cat-jumping.gif">
-
+<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
@@ -27,11 +22,12 @@ body {
     overflow: hidden;
 }
 
+/* Card */
 .card {
     background: white;
     width: 90%;
     max-width: 400px;
-    padding: 25px;
+    padding: 24px;
     border-radius: 20px;
     box-shadow: 0 12px 30px rgba(0,0,0,0.15);
     text-align: center;
@@ -45,8 +41,10 @@ h1 {
     font-family: 'Dancing Script', cursive;
     color: #ff3366;
     font-size: 2.4rem;
+    margin-bottom: 10px;
 }
 
+/* Image container (slow internet safe) */
 .img-container {
     width: 100%;
     height: 200px;
@@ -54,14 +52,20 @@ h1 {
     overflow: hidden;
     margin-bottom: 15px;
     background: #ffe6ee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .img-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.6s ease;
 }
 
+/* Poetry */
 .poetry {
     font-size: 1.05rem;
     line-height: 1.6;
@@ -70,27 +74,34 @@ h1 {
     padding: 15px;
     border-radius: 10px;
     border-left: 4px solid #ff3366;
-    margin-bottom: 10px;
 }
 
+/* Buttons */
 .btn {
     background: #ff3366;
     color: white;
     border: none;
-    padding: 12px;
-    width: 100%;
+    padding: 10px 20px;
     border-radius: 50px;
-    font-size: 1.1rem;
+    font-size: 1rem;
     margin-top: 12px;
     cursor: pointer;
 }
 
 .btn:active { transform: scale(0.95); }
 
+.choice-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 15px;
+}
+
 .no-btn {
     background: #ff9999;
 }
 
+/* Floating hearts */
 .heart {
     position: fixed;
     font-size: 20px;
@@ -102,28 +113,51 @@ h1 {
     from { transform: translateY(100vh); opacity: 0; }
     to { transform: translateY(-10vh); opacity: 1; }
 }
+
+/* Music toggle */
+.music-btn {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    background: #ff3366;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 999;
+}
 </style>
 </head>
 
 <body>
 
+<!-- Background Music -->
+<audio id="bgMusic" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+</audio>
+
+<button class="music-btn" onclick="toggleMusic()">🎵</button>
+
 <div class="card" id="card1">
     <div style="font-size:80px">💌</div>
     <h1>A Letter for You</h1>
-    <p>I wrote something simple, honest, and true.</p>
+    <p>Something simple. Something real.</p>
     <button class="btn" onclick="nextCard(2)">Open Letter ✨</button>
 </div>
 
 <div class="card" id="card2">
     <h1>Hey You…</h1>
     <div class="img-container">
-        <img src="https://media.tenor.com/m/fT-S_W_i17UAAAAC/peach-goma.gif" loading="lazy">
+        <img src="https://media.tenor.com/m/fT-S_W_i17UAAAAC/peach-goma.gif"
+             loading="lazy"
+             onload="this.style.opacity='1'"
+             onerror="this.src='https://via.placeholder.com/400x200?text=❤️'; this.style.opacity='1'">
     </div>
     <div class="poetry">
         You walked into my life quietly,<br>
-        and somehow made everything louder —<br>
-        my smiles, my thoughts,<br>
-        and the way my heart feels at peace.
+        and somehow changed everything.
     </div>
     <button class="btn" onclick="nextCard(3)">Read More ❤️</button>
 </div>
@@ -131,54 +165,76 @@ h1 {
 <div class="card" id="card3">
     <h1>You Matter</h1>
     <div class="img-container">
-        <img src="https://media.tenor.com/m/K2sE98F_vXwAAAAC/mochi-peachcat-mochi.gif" loading="lazy">
+        <img src="https://media.tenor.com/m/K2sE98F_vXwAAAAC/mochi-peachcat-mochi.gif"
+             loading="lazy"
+             onload="this.style.opacity='1'"
+             onerror="this.src='https://via.placeholder.com/400x200?text=❤️'; this.style.opacity='1'">
     </div>
     <div class="poetry">
-        In a world that moves too fast,<br>
-        you are my pause.<br>
-        My favorite thought.<br>
-        The calm I didn’t know I needed.
+        In a fast world,<br>
+        you are my calm.
     </div>
-    <button class="btn" onclick="nextCard(4)">One Last Question 🌹</button>
+    <button class="btn" onclick="nextCard(4)">One Question 🌹</button>
 </div>
 
 <div class="card" id="card4">
     <h1>So tell me…</h1>
     <div class="img-container">
-        <img src="https://media.tenor.com/m/6nSJP3Gj1J4AAAAC/cute-cat.gif" loading="lazy">
+        <img src="https://media.tenor.com/m/6nSJP3Gj1J4AAAAC/cute-cat.gif"
+             loading="lazy"
+             onload="this.style.opacity='1'"
+             onerror="this.src='https://via.placeholder.com/400x200?text=❤️'; this.style.opacity='1'">
     </div>
     <div class="poetry">
-        If love is choosing someone every day,<br>
-        I choose you.<br>
-        Today. Tomorrow. Always.
+        If love is a choice,<br>
+        I choose you.
     </div>
-    <button class="btn" onclick="celebrate()">YES 😍</button>
-    <button class="btn no-btn" id="noBtn" onmouseenter="moveButton()">No</button>
+    <div class="choice-buttons">
+        <button class="btn" onclick="celebrate()">Yes 😍</button>
+        <button class="btn no-btn" id="noBtn" onmouseenter="moveButton()">No</button>
+    </div>
 </div>
 
 <div class="card" id="card5">
     <h1>YAYYY! 🥳</h1>
     <div class="img-container">
-        <img src="https://media.tenor.com/m/17Xq0U8s0OQAAAAC/happy-cat-jumping.gif">
+        <img src="https://media.tenor.com/m/17Xq0U8s0OQAAAAC/happy-cat-jumping.gif"
+             onload="this.style.opacity='1'"
+             onerror="this.src='https://via.placeholder.com/400x200?text=❤️'; this.style.opacity='1'">
     </div>
     <div class="poetry">
         This is just the beginning…<br>
-        and I’m really happy it’s with you ❤️
+        and I’m glad it’s with you ❤️
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
+let musicStarted = false;
+
 function nextCard(id){
     document.querySelectorAll('.card').forEach(c => c.style.display='none');
     document.getElementById('card'+id).style.display='block';
+
+    if (!musicStarted) {
+        const music = document.getElementById('bgMusic');
+        music.volume = 0.4;
+        music.play().catch(()=>{});
+        musicStarted = true;
+    }
+}
+
+function toggleMusic(){
+    const music = document.getElementById('bgMusic');
+    music.paused ? music.play() : music.pause();
 }
 
 function moveButton(){
     const btn = document.getElementById('noBtn');
-    const maxX = window.innerWidth - btn.offsetWidth - 20;
-    const maxY = window.innerHeight - btn.offsetHeight - 20;
+    const pad = 20;
+    const maxX = window.innerWidth - btn.offsetWidth - pad;
+    const maxY = window.innerHeight - btn.offsetHeight - pad;
     btn.style.position = 'fixed';
     btn.style.left = Math.random() * maxX + 'px';
     btn.style.top = Math.random() * maxY + 'px';
@@ -189,12 +245,13 @@ function celebrate(){
     confetti({ particleCount: 180, spread: 80, origin: { y: 0.6 }});
 }
 
+// floating hearts
 setInterval(()=>{
     const h = document.createElement('div');
-    h.className='heart';
-    h.textContent='❤️';
-    h.style.left=Math.random()*100+'vw';
-    h.style.animationDuration=(Math.random()*3+3)+'s';
+    h.className = 'heart';
+    h.textContent = '❤️';
+    h.style.left = Math.random() * 100 + 'vw';
+    h.style.animationDuration = (Math.random()*3 + 3) + 's';
     document.body.appendChild(h);
     setTimeout(()=>h.remove(),5000);
 },400);
