@@ -3,14 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Classified: Scrapbook 📜</title>
-<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Quicksand:wght@500&display=swap" rel="stylesheet">
+<title>Vintage Memories 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-    --paper-color: #f2e8c9;
-    --ink-color: #2c2c2c;
-    --accent-color: #8b4513; /* Burnt Sienna */
-    --compiler-green: #2d5a27;
+    /* Vintage Palette */
+    --sepia-ink: #4a3b2a;
+    --paper-cream: #f3eace;
+    --accent-brown: #8c5e35;
+    --wax-red: #a63d3d;
 }
 
 body {
@@ -19,11 +20,41 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Dark desk/wood background to make the paper pop */
-    background: #1a1a1a;
-    font-family: 'Quicksand', sans-serif;
+    /* Layered vintage paper background texture */
+    background-color: #d4b483;
+    background-image: url("https://www.transparenttextures.com/patterns/aged-paper.png"), linear-gradient(to bottom right, rgba(0,0,0,0.2), rgba(0,0,0,0.5));
+    background-blend-mode: overlay;
+    font-family: 'Cormorant Garamond', serif;
     overflow: hidden;
 }
+
+/* --- Decorations placed around the book --- */
+.decoration {
+    position: absolute;
+    pointer-events: none; /* ensures they don't block clicking */
+    z-index: 10;
+    filter: sepia(0.4) contrast(1.1);
+}
+.flowers-top-right {
+    top: -20px;
+    right: -30px;
+    width: 180px;
+    transform: rotate(15deg);
+}
+.flowers-bottom-left {
+    bottom: -20px;
+    left: -40px;
+    width: 200px;
+    transform: rotate(-10deg);
+}
+.scroll-bottom {
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 250px;
+    filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.4));
+}
+/* ----------------------------------------- */
 
 audio { display: none }
 
@@ -31,27 +62,36 @@ audio { display: none }
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 100%;
+    position: relative;
+    /* Simulating the thick book cover from the image */
+    padding: 15px 20px 15px 10px;
+    background: #5c4025; /* Leather color */
+    background-image: url("https://www.transparenttextures.com/patterns/leather.png");
+    border-radius: 8px 16px 16px 8px;
+    box-shadow: 
+        inset 0 0 30px rgba(0,0,0,0.8), /* Deep inner shadow */
+        0 15px 30px rgba(0,0,0,0.5); /* Outer drop shadow */
+    border-left: 12px solid #3d2a18; /* Spine */
 }
 
 .book {
-    width: 320px;
-    height: 460px;
+    width: 300px;
+    height: 440px;
     perspective: 1500px;
     position: relative;
+    z-index: 5;
 }
 
 .page {
     width: 100%;
     height: 100%;
     position: absolute;
-    background-color: var(--paper-color);
-    /* Old paper texture overlay */
+    /* Rich aged parchment texture */
+    background-color: var(--paper-cream);
     background-image: url("https://www.transparenttextures.com/patterns/parchment.png");
-    border-radius: 2px 15px 15px 2px;
-    /* Realistic shadow for depth */
-    box-shadow: inset 3px 0px 20px rgba(0,0,0,0.1), 10px 10px 20px rgba(0,0,0,0.4);
+    /* Burned/worn edges effect */
+    box-shadow: inset 0 0 30px rgba(140, 94, 53, 0.3), 5px 5px 15px rgba(0,0,0,0.2);
+    border-radius: 4px 12px 12px 4px;
     padding: 20px;
     transform-origin: left;
     transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
@@ -61,75 +101,97 @@ audio { display: none }
     justify-content: center;
     align-items: center;
     text-align: center;
-    border: 1px solid rgba(0,0,0,0.1);
+    border: 1px solid rgba(74, 59, 42, 0.2);
+    box-sizing: border-box;
 }
 
-/* Compiler-style headings */
+/* Vintage headings */
 h1 {
-    font-family: 'Fira Code', 'Courier New', monospace;
-    color: var(--compiler-green);
-    font-size: 1.4rem;
+    font-family: 'Dancing Script', cursive;
+    color: var(--accent-brown);
+    font-size: 2.2rem;
     margin: 0 0 15px 0;
-    background: rgba(0,0,0,0.05);
-    padding: 5px 10px;
-    border-radius: 4px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
 }
 
-h1::before { content: "> "; opacity: 0.6; }
-
+/* Body text */
 p {
-    color: var(--ink-color);
-    line-height: 1.6;
-    font-size: 15px;
+    color: var(--sepia-ink);
+    line-height: 1.5;
+    font-size: 18px;
     font-weight: 600;
+    font-style: italic;
 }
 
 /* Vintage Style Buttons */
 button {
-    background: var(--accent-color);
-    color: #f2e8c9;
-    border: 1px solid rgba(0,0,0,0.2);
-    border-radius: 4px;
-    padding: 8px 20px;
+    background: var(--paper-cream);
+    background-image: url("https://www.transparenttextures.com/patterns/aged-paper.png");
+    color: var(--sepia-ink);
+    border: 2px solid var(--accent-brown);
+    border-radius: 25px;
+    padding: 8px 24px;
     cursor: pointer;
-    font-family: 'Fira Code', monospace;
-    font-size: 12px;
-    margin-top: 10px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 15px;
     transition: all 0.3s;
-    text-transform: uppercase;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 button:hover {
-    filter: brightness(1.2);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    background: var(--accent-brown);
+    color: var(--paper-cream);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0,0,0,0.2);
 }
 
+/* Polaroid-style image frames */
 .img-box {
-    width: 100%;
-    height: 180px;
-    border: 8px solid white;
-    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    width: 90%;
+    height: 160px;
+    background: #f8f1e0;
+    padding: 8px 8px 25px 8px; /* Extra bottom padding for polaroid look */
+    box-shadow: 2px 4px 12px rgba(0,0,0,0.2);
     margin-bottom: 15px;
-    background: #dfd3b6;
-    transform: rotate(-1deg); /* Slight organic tilt */
+    transform: rotate(-1deg);
+    transition: transform 0.3s;
+}
+
+.img-box:hover {
+    transform: rotate(0deg) scale(1.02);
 }
 
 .img-box iframe, .img-box img {
     width: 100%;
     height: 100%;
-    border: none;
+    border: 1px solid rgba(0,0,0,0.1);
     object-fit: cover;
+    filter: sepia(0.3); /* Slight vintage filter on images */
 }
 
 .choice {
     display: flex;
+    justify-content: center;
     gap: 15px;
     margin-top: 20px;
+    position: relative;
+    width: 100%;
+    height: 50px; /* Defined height for the No button area */
 }
 
 .no-btn {
-    background: #963d3d;
-    position: absolute; /* Needed for the "dodging" effect */
+    background: var(--wax-red);
+    color: white;
+    border: none;
+    position: absolute; /* Changed to absolute for better movement */
+    box-shadow: inset 0 -2px 5px rgba(0,0,0,0.3), 0 4px 6px rgba(0,0,0,0.2);
+}
+.no-btn:hover {
+    background: #8a3333;
+    color: white;
+    transform: none; /* Override default hover behavior for the dodging button */
 }
 
 .flipped { transform: rotateY(-180deg); }
@@ -148,54 +210,59 @@ button:hover {
     <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
 </audio>
 
+<img src="https://i.imgur.com/4Q52zD8.png" class="decoration flowers-top-right" alt="dried flowers">
+<img src="https://i.imgur.com/4Q52zD8.png" class="decoration flowers-bottom-left" alt="dried flowers branch">
+<img src="https://i.imgur.com/8N5swQc.png" class="decoration scroll-bottom" alt="antique scroll with seal">
+
+
 <div class="book-container">
     <div class="book">
 
         <div class="page" id="p1">
-            <h1>Initialize_Heart.sh</h1>
+            <h1>A quiet truth...</h1>
             <div class="img-box">
-                <iframe src="https://share.google/gyb29rUvQpQzPzeEu"></iframe>
+                <img src="https://picsum.photos/300/200?grayscale" alt="placeholder">
             </div>
-            <p>// Inside this vintage file,<br>lies a truth I've kept compiled.</p>
-            <button onclick="flipPage(1)">Execute 📁</button>
+            <p>This book holds the words<br>I've been meaning to say.</p>
+            <button onclick="flipPage(1)">Open 💌</button>
         </div>
 
         <div class="page" id="p2">
-            <h1>System.log</h1>
+            <h1>Vintage Blooms</h1>
             <div class="img-box">
-                <iframe src="https://share.google/6YRSSfuxc3xJjnwd3"></iframe>
+                 <img src="https://picsum.photos/301/201?sepia" alt="placeholder">
             </div>
-            <p>Every time you walk into the room,<br>my heart's CPU usage spikes.</p>
-            <button onclick="flipPage(2)">Continue_</button>
+            <p>Your presence feels soft,<br>like pressed flowers in spring.</p>
+            <button onclick="flipPage(2)">Next 🌸</button>
         </div>
 
         <div class="page" id="p3">
-            <h1>Memory_Dump</h1>
+            <h1>Timeless Tales</h1>
             <div class="img-box">
-                <iframe src="https://share.google/PA4ZPPD4oKYuH7aMm"></iframe>
+                 <img src="https://picsum.photos/302/202?sepia" alt="placeholder">
             </div>
-            <p>Scanning files... <br>Result: You are the best part <br>of my source code.</p>
-            <button onclick="flipPage(3)">Next_Block</button>
+            <p>Every love story is beautiful,<br>but ours feels like home.</p>
+            <button onclick="flipPage(3)">Next 📖</button>
         </div>
 
         <div class="page" id="p4">
-            <h1>Final_Query?</h1>
+            <h1>The Question</h1>
             <div class="img-box">
-                <iframe src="https://share.google/DpkaZprwMxuBCHwPP"></iframe>
+                 <img src="https://picsum.photos/303/203?sepia" alt="placeholder">
             </div>
-            <p>Run program: "Forever_With_Me"?</p>
+            <p>Would you choose me,<br>again and again?</p>
             <div class="choice">
-                <button onclick="flipPage(4)">Yes</button>
+                <button onclick="flipPage(4)" style="position: relative; z-index: 2;">Yes ❤️</button>
                 <button class="no-btn" id="noBtn" onmouseenter="moveNo()">No</button>
             </div>
         </div>
 
         <div class="page" id="p5">
-            <h1>Success.gif</h1>
-            <div class="img-box">
+            <h1>Forever Yours 🌹</h1>
+            <div class="img-box" style="height: 200px;">
                 <img src="https://media.tenor.com/m/6nSJP3Gj1J4AAAAC/cute-cat.gif">
             </div>
-            <p>Process Complete.<br>My feelings for you <br>are officially Open Source.</p>
+            <p>The pages end here,<br>but my feelings for you never will.</p>
         </div>
 
     </div>
@@ -208,17 +275,31 @@ function flipPage(n) {
     const music = document.getElementById('bgMusic');
     if (current === 0) { 
         music.volume = 0.3; 
-        music.play().catch(() => { console.log("Music play blocked") }); 
+        // User interaction required to play audio in most browsers
+        music.play().catch((e) => { console.log("Audio play failed due to browser policy. User needs to interact first."); }); 
     }
     current++;
 }
 
 function moveNo() {
     const noButton = document.getElementById("noBtn");
-    // Generate random positions within the page
-    const x = Math.random() * 150 - 75;
-    const y = Math.random() * 150 - 75;
-    noButton.style.transform = `translate(${x}px, ${y}px)`;
+    const choiceContainer = document.querySelector('.choice');
+    
+    // Get container dimensions
+    const containerRect = choiceContainer.getBoundingClientRect();
+    const btnRect = noButton.getBoundingClientRect();
+    
+    // Calculate max allowable movement within the container bounds
+    const maxX = containerRect.width - btnRect.width;
+    const maxY = containerRect.height - btnRect.height;
+
+    // Generate random positions 
+    let newX = Math.random() * maxX;
+    let newY = Math.random() * maxY;
+
+    // Apply new position
+    noButton.style.left = `${newX}px`;
+    noButton.style.top = `${newY}px`;
 }
 </script>
 </body>
