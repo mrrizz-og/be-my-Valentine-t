@@ -1,215 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For You ❤️</title>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
-            font-family: 'Quicksand', sans-serif;
-            overflow: hidden;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You ❤️</title>
 
-        /* The Card Container */
-        .card {
-            background: white;
-            width: 90%;
-            max-width: 400px;
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            text-align: center;
-            border: 5px solid #fff;
-            outline: 3px dashed #ff4d94; 
-            position: relative;
-            
-            /* IMPORTANT: We handle visibility via JS, but default is visible for the first one */
-            display: none; 
-        }
+<!-- Preload GIFs -->
+<link rel="preload" as="image" href="https://media.tenor.com/m/fT-S_W_i17UAAAAC/peach-goma.gif">
+<link rel="preload" as="image" href="https://media.tenor.com/m/K2sE98F_vXwAAAAC/mochi-peachcat-mochi.gif">
+<link rel="preload" as="image" href="https://media.tenor.com/m/6nSJP3Gj1J4AAAAC/cute-cat.gif">
+<link rel="preload" as="image" href="https://media.tenor.com/m/17Xq0U8s0OQAAAAC/happy-cat-jumping.gif">
 
-        /* Force the first card to show immediately */
-        #card1 { display: block; }
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
 
-        h1 {
-            font-family: 'Dancing Script', cursive;
-            color: #ff3366;
-            font-size: 2.5rem;
-            margin: 0 0 15px 0;
-        }
+<style>
+* { box-sizing: border-box; }
 
-        .poetry {
-            font-size: 1.1rem;
-            color: #555;
-            font-style: italic;
-            line-height: 1.6;
-            margin: 15px 0;
-            background: #fff0f5;
-            padding: 15px;
-            border-radius: 10px;
-            border-left: 4px solid #ff3366;
-        }
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ff9a9e, #fecfef);
+    font-family: 'Quicksand', sans-serif;
+    overflow: hidden;
+}
 
-        .img-container {
-            width: 100%;
-            height: 200px;
-            border-radius: 15px;
-            overflow: hidden;
-            margin-bottom: 15px;
-        }
+/* Card */
+.card {
+    background: white;
+    width: 90%;
+    max-width: 400px;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    text-align: center;
+    outline: 3px dashed #ff4d94;
+    display: none;
+}
 
-        .img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; 
-        }
+#card1 { display: block; }
 
-        .btn {
-            background: #ff3366;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: transform 0.2s;
-            margin-top: 10px;
-            width: 100%;
-        }
+h1 {
+    font-family: 'Dancing Script', cursive;
+    color: #ff3366;
+    font-size: 2.4rem;
+}
 
-        .btn:active { transform: scale(0.95); }
+/* Image container with reserved space */
+.img-container {
+    width: 100%;
+    height: 200px;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    background: #ffe6ee;
+}
 
-        /* The No Button */
-        .no-btn {
-            background: #ff9999;
-            position: absolute;
-            width: auto;
-            bottom: 25px;
-            right: 40px; 
-            z-index: 100;
-        }
+.img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
-        /* Floating Hearts */
-        .heart {
-            position: absolute;
-            color: #ff3366;
-            opacity: 0.5;
-            animation: float 6s linear infinite;
-        }
-        @keyframes float {
-            0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
-            50% { opacity: 0.8; }
-            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
-        }
-    </style>
+/* Poetry */
+.poetry {
+    font-style: italic;
+    background: #fff0f5;
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 4px solid #ff3366;
+}
+
+/* Buttons */
+.btn {
+    background: #ff3366;
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    margin-top: 12px;
+    cursor: pointer;
+}
+
+.btn:active { transform: scale(0.95); }
+
+.no-btn {
+    background: #ff9999;
+    position: relative;
+}
+
+/* Floating hearts */
+.heart {
+    position: fixed;
+    font-size: 20px;
+    opacity: 0.6;
+    animation: floatUp linear forwards;
+}
+
+@keyframes floatUp {
+    from { transform: translateY(100vh); opacity: 0; }
+    to { transform: translateY(-10vh); opacity: 1; }
+}
+</style>
 </head>
+
 <body>
 
-    <div class="card" id="card1">
-        <div style="font-size: 80px;">💌</div>
-        <h1>A Letter for You</h1>
-        <p>I wrote something from my heart...</p>
-        <p>Click below to open.</p>
-        <button class="btn" onclick="nextCard(2)">Open Letter ✨</button>
+<div class="card" id="card1">
+    <div style="font-size:80px">💌</div>
+    <h1>A Letter for You</h1>
+    <p>I wrote something from my heart...</p>
+    <button class="btn" onclick="nextCard(2)">Open Letter ✨</button>
+</div>
+
+<div class="card" id="card2">
+    <h1>Hey Beautiful...</h1>
+    <div class="img-container">
+        <img src="https://media.tenor.com/m/fT-S_W_i17UAAAAC/peach-goma.gif" loading="lazy">
     </div>
-
-    <div class="card" id="card2">
-        <h1>Hey Beautiful...</h1>
-        <div class="img-container">
-            <img src="https://media.tenor.com/m/fT-S_W_i17UAAAAC/peach-goma.gif" alt="Cat Flower">
-        </div>
-        <div class="poetry">
-            "Phoolon si muskurahat hai tumhari,<br>
-            Dil mein bas gayi hai surat tumhari."<br>
-            <br>
-            <small>(Your smile is like flowers,<br>your face lives in my heart.)</small>
-        </div>
-        <button class="btn" onclick="nextCard(3)">Read More ❤️</button>
+    <div class="poetry">
+        "Phoolon si muskurahat hai tumhari,<br>
+        Dil mein bas gayi hai surat tumhari."
     </div>
+    <button class="btn" onclick="nextCard(3)">Read More ❤️</button>
+</div>
 
-    <div class="card" id="card3">
-        <h1>You are Special</h1>
-        <div class="img-container">
-             <img src="https://media.tenor.com/m/K2sE98F_vXwAAAAC/mochi-peachcat-mochi.gif" alt="Love Cat">
-        </div>
-        <div class="poetry">
-            "Every love story is beautiful,<br>
-            but ours is my absolute favorite."
-        </div>
-        <button class="btn" onclick="nextCard(4)">Ask the Question 🌹</button>
+<div class="card" id="card3">
+    <h1>You are Special</h1>
+    <div class="img-container">
+        <img src="https://media.tenor.com/m/K2sE98F_vXwAAAAC/mochi-peachcat-mochi.gif" loading="lazy">
     </div>
-
-    <div class="card" id="card4">
-        <h1>Will you be my Valentine?</h1>
-        <div class="img-container">
-            <img src="https://media.tenor.com/m/6nSJP3Gj1J4AAAAC/cute-cat.gif" alt="Asking Cat">
-        </div>
-        <div class="poetry">
-            "Life is better with you by my side."
-        </div>
-        <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
-            <button class="btn" onclick="celebrate()">YES! 😍</button>
-            <button class="btn no-btn" id="noBtn" onmouseover="moveButton()">No</button>
-        </div>
+    <div class="poetry">
+        "Every love story is beautiful,<br>but ours is my favorite."
     </div>
+    <button class="btn" onclick="nextCard(4)">Ask the Question 🌹</button>
+</div>
 
-    <div class="card" id="card5">
-        <h1>YAYYY! 🥳</h1>
-        <div class="img-container">
-            <img src="https://media.tenor.com/m/17Xq0U8s0OQAAAAC/happy-cat-jumping.gif" alt="Happy Cat">
-        </div>
-        <div class="poetry">
-            "I can't wait to see you! ❤️"<br>
-            <b>I Love You!</b>
-        </div>
+<div class="card" id="card4">
+    <h1>Will you be my Valentine?</h1>
+    <div class="img-container">
+        <img src="https://media.tenor.com/m/6nSJP3Gj1J4AAAAC/cute-cat.gif" loading="lazy">
     </div>
+    <button class="btn" onclick="celebrate()">YES 😍</button>
+    <button class="btn no-btn" id="noBtn" onmouseenter="moveButton()">No</button>
+</div>
 
-    <script>
-        function nextCard(id) {
-            // Hide all cards
-            document.querySelectorAll('.card').forEach(card => {
-                card.style.display = 'none';
-            });
-            // Show the specific card
-            document.getElementById('card' + id).style.display = 'block';
-        }
+<div class="card" id="card5">
+    <h1>YAYYY! 🥳</h1>
+    <div class="img-container">
+        <img src="https://media.tenor.com/m/17Xq0U8s0OQAAAAC/happy-cat-jumping.gif">
+    </div>
+    <div class="poetry"><b>I Love You ❤️</b></div>
+</div>
 
-        function moveButton() {
-            var btn = document.getElementById('noBtn');
-            var x = Math.random() * (window.innerWidth - 100);
-            var y = Math.random() * (window.innerHeight - 50);
-            btn.style.position = 'fixed';
-            btn.style.left = x + 'px';
-            btn.style.top = y + 'px';
-        }
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-        function celebrate() {
-            nextCard(5);
-            confetti({
-                particleCount: 150,
-                spread: 70,
-                origin: { y: 0.6 }
-            });
-        }
+<script>
+function nextCard(id){
+    document.querySelectorAll('.card').forEach(c => c.style.display='none');
+    document.getElementById('card'+id).style.display='block';
+}
 
-        // Create background hearts
-        setInterval(() => {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 5000);
-        }, 300);
-    </script>
+function moveButton(){
+    const btn = document.getElementById('noBtn');
+    const maxX = window.innerWidth - btn.offsetWidth - 20;
+    const maxY = window.innerHeight - btn.offsetHeight - 20;
+    btn.style.position = 'fixed';
+    btn.style.left = Math.random() * maxX + 'px';
+    btn.style.top = Math.random() * maxY + 'px';
+}
+
+function celebrate(){
+    nextCard(5);
+    confetti({ particleCount: 180, spread: 80, origin: { y: 0.6 }});
+}
+
+// floating hearts
+setInterval(()=>{
+    const h = document.createElement('div');
+    h.className='heart';
+    h.textContent='❤️';
+    h.style.left=Math.random()*100+'vw';
+    h.style.animationDuration=(Math.random()*3+3)+'s';
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),5000);
+},400);
+</script>
+
 </body>
 </html>
