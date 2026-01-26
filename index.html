@@ -2,212 +2,212 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Special Surprise ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Dancing+Script:wght@700&family=Pacifico&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>A Poem for You ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Noto+Serif+JP:wght@500&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
+        :root {
+            --primary-pink: #ff4d94;
+            --soft-pink: #ffe6f2;
+            --deep-rose: #d81b60;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            background: linear-gradient(135deg, #ffe6f2 0%, #ffdde1 100%);
+            background-color: var(--soft-pink);
+            background-image: radial-gradient(#ffb6d9 0.5px, transparent 0.5px);
+            background-size: 20px 20px;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             font-family: 'Quicksand', sans-serif;
             overflow: hidden;
-            position: relative;
         }
 
-        /* Floating Hearts Background */
-        .heart-bg {
+        /* Floating Animation for background */
+        .floating-emoji {
             position: absolute;
-            color: rgba(255, 102, 179, 0.2);
             font-size: 20px;
-            animation: float 10s infinite linear;
+            opacity: 0.2;
+            animation: floatUp 10s infinite linear;
             z-index: 0;
         }
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            50% { opacity: 0.6; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) rotate(0deg); }
+            100% { transform: translateY(-10vh) rotate(360deg); }
         }
 
-        .container {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 30px;
-            border-radius: 25px;
-            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.2);
-            text-align: center;
+        .book-container {
             width: 90%;
-            max-width: 450px;
-            z-index: 10;
-            border: 4px solid #ffb6d9;
-            display: none;
-            animation: fadeIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .container.active { display: block; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
-
-        /* Opening Card Front */
-        #p0 {
-            cursor: pointer;
-            border: 8px double #ffb6d9;
-            background: #fff;
-            transition: transform 0.3s;
-        }
-        #p0:hover { transform: translateY(-5px) rotate(1deg); }
-        .envelope-icon { font-size: 80px; margin-bottom: 20px; display: block; }
-
-        h1 { font-family: 'Dancing Script', cursive; color: #ff3385; font-size: 2.5rem; margin-bottom: 10px; }
-        .love-line { color: #d81b60; font-style: italic; font-size: 1.1rem; margin-bottom: 20px; line-height: 1.4; }
-
-        .gif-frame {
-            width: 100%;
-            height: 220px;
+            max-width: 420px;
+            background: #fffafa;
             border-radius: 15px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            background: #fff0f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-left: 10px solid var(--deep-rose);
+            z-index: 10;
+            position: relative;
+            display: none; /* Controlled by JS */
+            animation: slideIn 0.6s ease-out;
         }
-        .gif-frame img { width: 100%; height: 100%; object-fit: contain; }
 
-        .yes-btn {
-            padding: 12px 28px;
-            font-size: 1.1rem;
-            background: #ff4d94;
+        .active { display: block !important; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        h1 { font-family: 'Dancing Script', cursive; color: var(--deep-rose); font-size: 2.2rem; margin-bottom: 15px; }
+        
+        .poetry-box {
+            font-family: 'Noto Serif JP', serif;
+            font-style: italic;
+            color: #444;
+            line-height: 1.8;
+            margin: 20px 0;
+            padding: 15px;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+
+        .shayari-text {
+            font-size: 1.2rem;
+            color: var(--deep-rose);
+            font-weight: 600;
+        }
+
+        .gif-display {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .nav-btn {
+            background: var(--primary-pink);
             color: white;
             border: none;
-            border-radius: 50px;
-            cursor: pointer;
+            padding: 12px 25px;
+            border-radius: 25px;
             font-weight: 700;
-            box-shadow: 0 4px 15px rgba(255, 77, 148, 0.3);
+            cursor: pointer;
             transition: 0.3s;
+            margin-top: 10px;
+            width: 100%;
         }
-        .yes-btn:hover { transform: scale(1.1); background: #ff1a75; }
+
+        .nav-btn:hover { background: var(--deep-rose); transform: scale(1.02); }
 
         .no-btn {
-            padding: 10px 22px;
-            font-size: 1rem;
-            background: #66ccff;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 700;
+            background: #999;
+            width: auto;
             position: absolute;
-            transition: all 0.15s ease-out;
+            font-size: 0.9rem;
         }
-
-        .greeting-card {
-            background: #fffafa;
-            border: 2px dashed #ffb6d9;
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-        }
-        .card-text { font-family: 'Pacifico', cursive; color: #ff3385; font-size: 1.2rem; }
     </style>
 </head>
 <body>
 
-    <div class="container active" id="p0" onclick="next(1)">
-        <span class="envelope-icon">✉️</span>
-        <h1>You have a message...</h1>
-        <p class="love-line">Click to open your card</p>
-        <div class="gif-frame">
-            <img src="https://media.tenor.com/m/ZJ8yqP6F8J0AAAAC/love-hearts.gif" alt="Love Hearts">
+    <div class="book-container active" id="c1">
+        <h1>Chapter I: The Spark ✨</h1>
+        <img src="https://media.tenor.com/m/fT-S_W_i17UAAAAC/peach-goma.gif" class="gif-display" alt="Kitty with Flowers">
+        <div class="poetry-box">
+            "In a world full of temporary things,<br>
+            You are a feeling that forever brings."
+        </div>
+        <button class="nav-btn" onclick="show(2)">Turn Page 📖</button>
+    </div>
+
+    <div class="book-container" id="c2">
+        <h1>Chapter II: The Verse 🌹</h1>
+        <div class="poetry-box">
+            <p class="shayari-text">
+                "Mohabbat mein lachak honi chahiye... <br>
+                Zidd toh dushmani mein hoti hai."
+            </p>
+            <br>
+            <p style="font-size: 0.9rem; color: #666;">
+                (In love, there should be grace... <br>
+                For stubbornness belongs to enmity.)
+            </p>
+        </div>
+        <img src="https://media.tenor.com/m/K2sE98F_vXwAAAAC/mochi-peachcat-mochi.gif" class="gif-display" alt="Love Gifs">
+        <button class="nav-btn" onclick="show(3)">Read More 💌</button>
+    </div>
+
+    <div class="book-container" id="c3">
+        <h1>Chapter III: My Heart ❤️</h1>
+        <div class="poetry-box">
+            "Tumhari muskurahat meri pehchan hai,<br>
+            Tumhari khushi hi meri jaan hai."
+        </div>
+        <img src="https://media.tenor.com/m/mXyGf4rY0mMAAAAC/peach-cat-love.gif" class="gif-display">
+        <button class="nav-btn" onclick="show(4)">The Question... 💍</button>
+    </div>
+
+    <div class="book-container" id="c4">
+        <h1>A Final Request... ❤️</h1>
+        <p class="poetry-box">
+            "Will you be the rhyme to my poem and the light to my world?"
+        </p>
+        <div style="height: 100px; position: relative;">
+            <button class="nav-btn" onclick="celebrate()">YES, a thousand times! 😍</button>
+            <button class="nav-btn no-btn" id="runAway">No</button>
         </div>
     </div>
 
-    <div class="container" id="p1">
-        <h1>Hey beautiful! ❤️</h1>
-        <div class="gif-frame">
-            <img src="https://media.tenor.com/m/K2sE98F_vXwAAAAC/mochi-peachcat-mochi.gif" alt="Cute Cat Greeting">
+    <div class="book-container" id="c5">
+        <h1>It's a Date! 🥳</h1>
+        <img src="https://media.tenor.com/m/17Xq0U8s0OQAAAAC/happy-cat-jumping.gif" class="gif-display">
+        <div class="poetry-box">
+            "I promise to make every day feel like a poem."
         </div>
-        <p class="love-line">"I was just sitting here thinking about how much brighter you make my world every single day..."</p>
-        <button class="yes-btn" onclick="next(2)">Read the Card 💌</button>
-    </div>
-
-    <div class="container" id="p2">
-        <h1>For You... 💌</h1>
-        <div class="greeting-card">
-            <p class="card-text">"To the most amazing person I know: Your smile is my favorite sight, and your voice is my favorite sound. I'm so lucky to have you."</p>
-        </div>
-        <div class="gif-frame">
-            <img src="https://media.tenor.com/m/fT-S_W_i17UAAAAC/peach-goma.gif" alt="Kitty with Flowers">
-        </div>
-        <p class="love-line">"I have a very important question to ask you..."</p>
-        <button class="yes-btn" onclick="next(3)">Next ✨</button>
-    </div>
-
-    <div class="container" id="p3">
-        <h1>Will you be my Valentine? ❤️</h1>
-        <div class="gif-frame">
-            <img src="https://media.tenor.com/m/mXyGf4rY0mMAAAAC/peach-cat-love.gif" alt="Cute Love Cat">
-        </div>
-        <p class="love-line">"You're the missing piece to my puzzle. Will you stay by my side?"</p>
-        <div style="height: 60px; position: relative;">
-            <button class="yes-btn" onclick="next(4)">Yes! 😍</button>
-            <button class="no-btn" id="runAway">No</button>
-        </div>
-    </div>
-
-    <div class="container" id="p4">
-        <h1>YAYYY! ❤️🥳</h1>
-        <div class="gif-frame">
-            <img src="https://media.tenor.com/m/17Xq0U8s0OQAAAAC/happy-cat-jumping.gif" alt="Happy Cat">
-        </div>
-        <p class="love-line">"I knew you'd say yes! You've made me the happiest person alive."</p>
-        <p style="color: #ff3385; font-weight: bold; font-size: 1.2rem;">I love you more than words can say! 🌹</p>
+        <p style="color: var(--deep-rose); font-weight: bold;">I love you! 🌹</p>
     </div>
 
     <script>
-        function next(num) {
-            document.querySelectorAll('.container').forEach(c => c.classList.remove('active'));
-            document.getElementById('p' + num).classList.add('active');
-            if(num === 4) {
-                confetti({ particleCount: 200, spread: 90, origin: { y: 0.6 } });
-                setTimeout(() => {
-                    confetti({ particleCount: 100, angle: 60, spread: 55, origin: { x: 0 } });
-                    confetti({ particleCount: 100, angle: 120, spread: 55, origin: { x: 1 } });
-                }, 500);
-            }
+        // Transition Logic
+        function show(chapter) {
+            document.querySelectorAll('.book-container').forEach(c => c.classList.remove('active'));
+            document.getElementById('c' + chapter).classList.add('active');
         }
 
+        // Celebration
+        function celebrate() {
+            show(5);
+            var end = Date.now() + (3 * 1000);
+            (function frame() {
+                confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#ff4d94', '#d81b60'] });
+                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#ff4d94', '#d81b60'] });
+                if (Date.now() < end) { requestAnimationFrame(frame); }
+            }());
+        }
+
+        // Runaway Button logic
         const noBtn = document.getElementById('runAway');
-        
-        function teleport() {
-            const maxX = window.innerWidth - noBtn.offsetWidth - 20;
-            const maxY = window.innerHeight - noBtn.offsetHeight - 20;
-            const randomX = Math.floor(Math.random() * maxX);
-            const randomY = Math.floor(Math.random() * maxY);
+        noBtn.addEventListener('mouseover', move);
+        noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); move(); });
 
-            noBtn.style.position = 'fixed'; 
-            noBtn.style.left = randomX + "px";
-            noBtn.style.top = randomY + "px";
+        function move() {
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
         }
 
-        noBtn.addEventListener('mouseover', teleport);
-        noBtn.addEventListener('click', teleport);
-        noBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            teleport();
-        });
-
-        // Background heart animation
-        for(let i=0; i<25; i++) {
-            let h = document.createElement('div');
-            h.className = 'heart-bg';
-            h.innerHTML = '❤️';
-            h.style.left = Math.random() * 100 + 'vw';
-            h.style.animationDelay = Math.random() * 5 + 's';
-            h.style.fontSize = (Math.random() * 20 + 10) + 'px';
-            document.body.appendChild(h);
+        // Background Decoration
+        for(let i=0; i<20; i++) {
+            const e = document.createElement('div');
+            e.className = 'floating-emoji';
+            e.innerHTML = ['❤️','🌸','✨','🎀'][Math.floor(Math.random()*4)];
+            e.style.left = Math.random() * 100 + 'vw';
+            e.style.animationDelay = Math.random() * 10 + 's';
+            document.body.appendChild(e);
         }
     </script>
 </body>
