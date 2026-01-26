@@ -8,104 +8,112 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box;}
+* { box-sizing: border-box; }
 
-body{
-    margin:0;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:linear-gradient(135deg,#fde2e4,#e8f0ff);
-    font-family:'Poppins',sans-serif;
-    overflow:hidden;
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #fde2e4, #e8f0ff);
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
 }
 
-/* Book */
-.book{
-    width:320px;
-    height:480px;
-    perspective:1200px;
-    position:relative;
+/* Book container */
+.book {
+    position: relative;
+    width: 320px;
+    height: 480px;
+    perspective: 1400px;
 }
 
-/* Page */
-.page{
-    width:100%;
-    height:100%;
-    background:white;
-    border-radius:18px;
-    box-shadow:0 15px 40px rgba(0,0,0,0.15);
-    position:absolute;
-    transform-origin:left;
-    transition:transform 0.8s ease;
-    backface-visibility:hidden;
-    padding:22px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
+/* Pages */
+.page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.18);
+    transform-origin: left;
+    transition: transform 0.9s ease;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    backface-visibility: hidden;
 }
 
-.page h1{
-    font-family:'Playfair Display',serif;
-    color:#ff5c8a;
-    margin-bottom:10px;
+/* Stack order */
+.page:nth-child(1) { z-index: 5; }
+.page:nth-child(2) { z-index: 4; }
+.page:nth-child(3) { z-index: 3; }
+.page:nth-child(4) { z-index: 2; }
+.page:nth-child(5) { z-index: 1; }
+
+/* Flipped state */
+.page.flipped {
+    transform: rotateY(-180deg);
 }
 
-.page p{
-    color:#555;
-    line-height:1.6;
-    font-size:0.95rem;
+/* Text */
+.page h1 {
+    font-family: 'Playfair Display', serif;
+    color: #ff5c8a;
+    margin-bottom: 10px;
 }
 
-/* Turn effect */
-.page.turn{
-    transform:rotateY(-180deg);
+.page p {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.6;
 }
 
-/* Images */
-.img-box{
-    width:100%;
-    height:180px;
-    border-radius:14px;
-    overflow:hidden;
-    background:#fff0f3;
-    margin:15px 0;
+/* Image box */
+.img-box {
+    width: 100%;
+    height: 180px;
+    background: #fff0f3;
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 15px 0;
 }
 
-.img-box img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    opacity:0;
-    transition:opacity .6s ease;
+.img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.6s ease;
 }
 
 /* Button */
-.btn{
-    margin-top:15px;
-    padding:8px 22px;
-    border:none;
-    border-radius:30px;
-    background:#ff5c8a;
-    color:white;
-    font-size:0.95rem;
-    cursor:pointer;
+.btn {
+    margin-top: 14px;
+    padding: 8px 22px;
+    border: none;
+    border-radius: 30px;
+    background: #ff5c8a;
+    color: white;
+    font-size: 0.95rem;
+    cursor: pointer;
 }
 
-/* Flowers */
-.flower{
-    position:fixed;
-    font-size:18px;
-    opacity:.6;
-    animation:floatUp linear forwards;
+/* Floating flowers */
+.flower {
+    position: fixed;
+    font-size: 18px;
+    opacity: 0.6;
+    animation: floatUp linear forwards;
 }
 
-@keyframes floatUp{
-    from{transform:translateY(100vh);opacity:0;}
-    to{transform:translateY(-10vh);opacity:1;}
+@keyframes floatUp {
+    from { transform: translateY(100vh); opacity: 0; }
+    to   { transform: translateY(-10vh); opacity: 1; }
 }
 </style>
 </head>
@@ -114,87 +122,93 @@ body{
 
 <div class="book">
 
-<!-- Page 1 -->
-<div class="page" id="p1">
-    <h1>Hello You 🌸</h1>
+<!-- PAGE 1 -->
+<div class="page">
+    <h1>Hello 🌸</h1>
     <p>
-        This is a tiny book,<br>
-        filled with feelings I couldn’t keep to myself.
+        This is a small book,<br>
+        with feelings written softly.
     </p>
-    <button class="btn" onclick="turnPage(1)">Open</button>
+    <button class="btn" onclick="flipPage()">Open</button>
 </div>
 
-<!-- Page 2 -->
-<div class="page" id="p2">
+<!-- PAGE 2 -->
+<div class="page">
     <h1>A Little Truth</h1>
     <div class="img-box">
-        <img src="https://media.tenor.com/m/peach-goma.gif"
+        <img src="https://media.tenor.com/m/fT-S_W_i17UAAAAC/peach-goma.gif"
              onload="this.style.opacity='1'">
     </div>
     <p>
-        Somewhere between ordinary days,<br>
-        you became my favorite thought.
+        Somewhere between ordinary moments,<br>
+        you became special to me.
     </p>
-    <button class="btn" onclick="turnPage(2)">Next</button>
+    <button class="btn" onclick="flipPage()">Next</button>
 </div>
 
-<!-- Page 3 -->
-<div class="page" id="p3">
-    <h1>You Feel Like Home</h1>
+<!-- PAGE 3 -->
+<div class="page">
+    <h1>You Feel Calm</h1>
     <div class="img-box">
-        <img src="https://media.tenor.com/m/mochi-peachcat.gif"
+        <img src="https://media.tenor.com/m/K2sE98F_vXwAAAAC/mochi-peachcat-mochi.gif"
              onload="this.style.opacity='1'">
     </div>
     <p>
-        In a loud world,<br>
-        you are my quiet happiness.
+        In a noisy world,<br>
+        you feel like peace.
     </p>
-    <button class="btn" onclick="turnPage(3)">Next</button>
+    <button class="btn" onclick="flipPage()">Next</button>
 </div>
 
-<!-- Page 4 -->
-<div class="page" id="p4">
+<!-- PAGE 4 -->
+<div class="page">
     <h1>One Question 🌷</h1>
     <div class="img-box">
-        <img src="https://media.tenor.com/m/cute-cat.gif"
+        <img src="https://media.tenor.com/m/6nSJP3Gj1J4AAAAC/cute-cat.gif"
              onload="this.style.opacity='1'">
     </div>
     <p>
         Would you like to keep turning pages with me?
     </p>
-    <button class="btn" onclick="turnPage(4)">Yes 💗</button>
+    <button class="btn" onclick="flipPage()">Yes 💗</button>
 </div>
 
-<!-- Page 5 -->
-<div class="page" id="p5">
-    <h1>Thank You 🌼</h1>
+<!-- PAGE 5 -->
+<div class="page">
+    <h1>That’s All 🌼</h1>
     <div class="img-box">
-        <img src="https://media.tenor.com/m/happy-cat.gif"
+        <img src="https://media.tenor.com/m/17Xq0U8s0OQAAAAC/happy-cat-jumping.gif"
              onload="this.style.opacity='1'">
     </div>
     <p>
-        This little book ends here,<br>
-        but I hope our story doesn’t.
+        The book ends here,<br>
+        but maybe our story doesn’t.
     </p>
 </div>
 
 </div>
 
 <script>
-function turnPage(n){
-    document.getElementById('p'+n).classList.add('turn');
+let current = 0;
+const pages = document.querySelectorAll('.page');
+
+function flipPage() {
+    if (current < pages.length) {
+        pages[current].classList.add('flipped');
+        current++;
+    }
 }
 
 /* floating flowers */
-setInterval(()=>{
-    const f=document.createElement('div');
-    f.className='flower';
-    f.textContent='🌸';
-    f.style.left=Math.random()*100+'vw';
-    f.style.animationDuration=(Math.random()*3+3)+'s';
+setInterval(() => {
+    const f = document.createElement('div');
+    f.className = 'flower';
+    f.textContent = '🌸';
+    f.style.left = Math.random() * 100 + 'vw';
+    f.style.animationDuration = (Math.random() * 3 + 3) + 's';
     document.body.appendChild(f);
-    setTimeout(()=>f.remove(),5000);
-},600);
+    setTimeout(() => f.remove(), 5000);
+}, 700);
 </script>
 
 </body>
