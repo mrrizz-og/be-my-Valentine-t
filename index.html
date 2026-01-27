@@ -8,9 +8,10 @@
 <style>
     :root {
         --ink: #2b1e16;
-        /* Using your uploaded heart image */
+        /* Main background: Your heart image layered with an old paper texture */
         --custom-bg: url('https://files.catbox.moe/r46o7p.jpg'); 
-        --old-map-img: url('https://www.transparenttextures.com/patterns/old-map.png');
+        --paper-texture: url('https://www.transparenttextures.com/patterns/old-map.png');
+        --old-paper-bg: url('https://www.transparenttextures.com/patterns/parchment.png');
     }
 
     body {
@@ -20,11 +21,10 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #f4ece1;
-        background-image: var(--custom-bg);
+        /* Layered background: Texture + Your Heart Image */
+        background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), var(--old-paper-bg), var(--custom-bg);
         background-size: cover;
         background-position: center;
-        background-repeat: no-repeat;
         perspective: 2500px;
         overflow: hidden;
     }
@@ -51,6 +51,7 @@
         border-radius: 5px 15px 15px 5px;
         box-shadow: 30px 30px 80px rgba(0,0,0,0.8);
         transform-style: preserve-3d;
+        z-index: 5;
     }
 
     .spiral {
@@ -73,7 +74,6 @@
         transform-style: preserve-3d;
         transition: transform 1.3s cubic-bezier(0.645, 0.045, 0.355, 1);
         cursor: pointer;
-        z-index: 10;
     }
 
     .page {
@@ -81,7 +81,7 @@
         width: 100%;
         height: 100%;
         background-color: #dcc8a0;
-        background-image: linear-gradient(rgba(220, 200, 160, 0.8), rgba(220, 200, 160, 0.8)), var(--old-map-img);
+        background-image: linear-gradient(rgba(220, 200, 160, 0.8), rgba(220, 200, 160, 0.8)), var(--paper-texture);
         background-size: cover;
         padding: 30px;
         box-sizing: border-box;
@@ -117,26 +117,25 @@
     }
     .polaroid img { width: 100%; height: 150px; object-fit: cover; filter: sepia(0.4); }
 
-    .btn-wrap { display: flex; justify-content: center; gap: 20px; margin-top: auto; padding-bottom: 25px; z-index: 20; }
+    .btn-wrap { display: flex; justify-content: center; gap: 20px; margin-top: auto; padding-bottom: 25px; }
     button { background: #fdfaf3; border: 2px solid #4a2c16; border-radius: 20px; padding: 10px 22px; font-family: 'Cormorant Garamond', serif; font-weight: bold; cursor: pointer; color: #4a2c16; }
     
     #noBtn {
         background: #8b2e2e; color: white; border: none;
-        transition: all 0.1s ease-out;
         z-index: 9999;
+        /* Smooth but fast teleport transition */
+        transition: left 0.2s ease, top 0.2s ease; 
     }
 
-    #L-Cover { z-index: 8; }
-    #L1 { z-index: 7; } #L2 { z-index: 6; } #L3 { z-index: 5; }
-    #L4 { z-index: 4; } #L5 { z-index: 3; }
+    #L-Cover { z-index: 8; } #L1 { z-index: 7; } #L2 { z-index: 6; } #L3 { z-index: 5; } #L4 { z-index: 4; } #L5 { z-index: 3; }
 </style>
 </head>
 <body>
 
-<img id="c1" class="corner-img tl">
-<img id="c2" class="corner-img tr">
-<img id="c3" class="corner-img bl">
-<img id="c4" class="corner-img br">
+<img class="corner-img tl" src="https://images.unsplash.com/photo-1526394112126-909505f0552a?w=400">
+<img class="corner-img tr" src="https://images.unsplash.com/photo-1470058869958-2a77ade41c02?w=400">
+<img class="corner-img bl" src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=400">
+<img class="corner-img br" src="https://images.unsplash.com/photo-1516589174184-c68526574af4?w=400">
 
 <div class="scrapbook">
     <div class="spiral"></div>
@@ -184,7 +183,7 @@
             <div class="polaroid"><img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=500"></div>
             <p>Will you walk this journey<br>with me, forever?</p>
             <div class="btn-wrap">
-                <button onclick="parentFlip(this)">Yes ❤️</button>
+                <button onclick="document.getElementById('L4').classList.add('turned')">Yes ❤️</button>
                 <button id="noBtn" onmouseover="teleportNo()" onclick="teleportNo()">No</button>
             </div>
         </div>
@@ -194,7 +193,7 @@
     <div class="leaf" id="L5">
         <div class="page front">
             <h1>Always Yours 🌹</h1>
-            <img src="https://media.tenor.com/W7S7F9C66oAAAAAi/cute-cat-flower.gif" style="width: 80%; border-radius: 10px;">
+            <img src="https://media.tenor.com/W7S7F9C66oAAAAAi/cute-cat-flower.gif" style="width: 80%; border-radius: 10px; margin-top: 15px;">
             <p>You've made me the happiest person.</p>
         </div>
         <div class="page back"></div>
@@ -202,44 +201,29 @@
 </div>
 
 <script>
-    function parentFlip(btn) {
-        btn.closest('.leaf').classList.add('turned');
-    }
-
     function teleportNo() {
         const btn = document.getElementById('noBtn');
+        
+        // Use window measurements
+        const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+        const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+        
+        const btnWidth = btn.offsetWidth;
+        const btnHeight = btn.offsetHeight;
+        const padding = 40;
+
+        // Calculate maximum safe positions
+        const maxX = vw - btnWidth - padding;
+        const maxY = vh - btnHeight - padding;
+
+        const randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
+        const randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
+
+        // Immediately switch to fixed and apply coords to prevent disappearance
         btn.style.position = 'fixed';
-        
-        // Safety margin to prevent it from ever touching the edges
-        const margin = 30;
-        
-        // Use the smaller of window size or document size for safety
-        const vw = Math.min(window.innerWidth, document.documentElement.clientWidth);
-        const vh = Math.min(window.innerHeight, document.documentElement.clientHeight);
-        
-        const maxX = vw - btn.offsetWidth - margin;
-        const maxY = vh - btn.offsetHeight - margin;
-
-        const randomX = Math.floor(Math.random() * (maxX - margin)) + margin;
-        const randomY = Math.floor(Math.random() * (maxY - margin)) + margin;
-
         btn.style.left = randomX + 'px';
         btn.style.top = randomY + 'px';
     }
-
-    const poeticPool = [
-        'https://images.unsplash.com/photo-1526394112126-909505f0552a?w=300',
-        'https://images.unsplash.com/photo-1470058869958-2a77ade41c02?w=300',
-        'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=300'
-    ];
-
-    window.onload = () => {
-        const corners = ['c1', 'c2', 'c3', 'c4'];
-        let shuffled = poeticPool.sort(() => 0.5 - Math.random());
-        corners.forEach((id, i) => {
-            if(document.getElementById(id)) document.getElementById(id).src = shuffled[i] || shuffled[0];
-        });
-    };
 </script>
 </body>
 </html>
