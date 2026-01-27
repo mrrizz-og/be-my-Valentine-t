@@ -11,6 +11,7 @@
         --custom-bg: url('https://files.catbox.moe/r46o7p.jpg'); 
         --paper-texture: url('https://www.transparenttextures.com/patterns/old-map.png');
         --old-paper-bg: url('https://www.transparenttextures.com/patterns/parchment.png');
+        /* High quality floral PNG for 3D effect */
         --flower-url: url('https://png.pngtree.com/png-clipart/20220131/original/pngtree-watercolor-flower-border-png-image_7256660.png');
     }
 
@@ -19,74 +20,72 @@
     body, html {
         margin: 0;
         padding: 0;
-        height: 100%;
-        width: 100%;
+        height: 100vh;
+        width: 100vw;
         overflow: hidden; 
         display: flex;
         justify-content: center;
         align-items: center;
-        background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), var(--old-paper-bg), var(--custom-bg);
+        background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), var(--old-paper-bg), var(--custom-bg);
         background-size: cover;
         background-position: center;
-        background-attachment: fixed;
         perspective: 2500px;
     }
 
-    /* --- FULL SCREEN FLORAL FRAME --- */
-    .flower-frame {
+    /* --- 3D FLORAL ENCLOSURE --- */
+    .garden-layer {
         position: fixed;
         top: 0;
         left: 0;
-        width: 100vw;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
         pointer-events: none;
         z-index: 15;
     }
 
-    .flower-cluster {
+    .flower-3d {
         position: absolute;
-        width: 40vw; 
-        height: 40vw;
-        max-width: 450px;
-        max-height: 450px;
         background-image: var(--flower-url);
         background-size: contain;
         background-repeat: no-repeat;
-        filter: drop-shadow(5px 10px 15px rgba(0,0,0,0.4));
+        /* Depth effect using multiple shadows */
+        filter: drop-shadow(10px 10px 20px rgba(0,0,0,0.5)) drop-shadow(-5px -5px 10px rgba(0,0,0,0.2));
     }
-    /* Flowers slightly offset to cover the image edges */
-    .f-tl { top: -60px; left: -60px; }
-    .f-tr { top: -60px; right: -60px; transform: scaleX(-1); }
-    .f-bl { bottom: -60px; left: -60px; transform: scaleY(-1); }
-    .f-br { bottom: -60px; right: -60px; transform: scale(-1); }
 
-    .f-mid-l { top: 50%; left: -120px; transform: translateY(-50%) rotate(90deg); opacity: 0.6; }
-    .f-mid-r { top: 50%; right: -120px; transform: translateY(-50%) rotate(-90deg); opacity: 0.6; }
+    /* Massive Corner Clusters */
+    .f-tl { width: 500px; height: 500px; top: -100px; left: -100px; transform: rotate(-10deg); }
+    .f-tr { width: 500px; height: 500px; top: -100px; right: -100px; transform: scaleX(-1) rotate(-10deg); }
+    .f-bl { width: 500px; height: 500px; bottom: -100px; left: -100px; transform: scaleY(-1) rotate(-10deg); }
+    .f-br { width: 500px; height: 500px; bottom: -100px; right: -100px; transform: scale(-1) rotate(-10deg); }
 
-    /* --- CORNER IMAGES (PEEKING FROM OFF-SCREEN) --- */
+    /* Side Fillers to remove free space */
+    .f-left { width: 400px; height: 400px; top: 30%; left: -150px; transform: rotate(90deg); opacity: 0.9; }
+    .f-right { width: 400px; height: 400px; top: 30%; right: -150px; transform: rotate(-90deg); opacity: 0.9; }
+
+    /* --- PEEKING CORNER IMAGES --- */
     .corner-img {
         position: absolute;
-        width: 220px;
-        height: 220px;
+        width: 250px;
+        height: 250px;
         object-fit: cover;
-        border: 8px solid #fff;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-        z-index: 5;
+        border: 10px solid #fff;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+        z-index: 5; /* Behind flowers */
     }
-    /* Negative margins push them halfway off-screen */
-    .tl { top: -70px; left: -70px; transform: rotate(-15deg); }
-    .tr { top: -70px; right: -70px; transform: rotate(15deg); }
-    .bl { bottom: -70px; left: -70px; transform: rotate(10deg); }
-    .br { bottom: -70px; right: -70px; transform: rotate(-10deg); }
+    /* Pushed half-off screen */
+    .tl { top: -80px; left: -80px; transform: rotate(-15deg); }
+    .tr { top: -80px; right: -80px; transform: rotate(15deg); }
+    .bl { bottom: -80px; left: -80px; transform: rotate(12deg); }
+    .br { bottom: -80px; right: -80px; transform: rotate(-12deg); }
 
-    /* SCRAPBOOK CONTAINER */
+    /* --- SCRAPBOOK --- */
     .scrapbook {
         position: relative;
-        width: 360px;
-        height: 500px;
+        width: 380px;
+        height: 520px;
         background: #2b1e16; 
         border-radius: 5px 15px 15px 5px;
-        box-shadow: 0 30px 70px rgba(0,0,0,0.8);
+        box-shadow: 0 50px 100px rgba(0,0,0,0.9);
         transform-style: preserve-3d;
         z-index: 20; 
     }
@@ -96,8 +95,8 @@
         left: -15px;
         top: 25px;
         height: 85%;
-        width: 25px;
-        background: repeating-linear-gradient(to bottom, transparent, transparent 18px, #999 18px, #111 21px, transparent 21px);
+        width: 30px;
+        background: repeating-linear-gradient(to bottom, transparent, transparent 18px, #777 18px, #111 22px, transparent 22px);
         z-index: 100;
     }
 
@@ -105,11 +104,11 @@
         position: absolute;
         top: 10px;
         right: 10px;
-        width: 335px;
-        height: 480px;
+        width: 355px;
+        height: 500px;
         transform-origin: left;
         transform-style: preserve-3d;
-        transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+        transition: transform 1.3s cubic-bezier(0.645, 0.045, 0.355, 1);
         cursor: pointer;
     }
 
@@ -117,14 +116,14 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        background-color: #dcc8a0;
-        background-image: linear-gradient(rgba(220, 200, 160, 0.8), rgba(220, 200, 160, 0.8)), var(--paper-texture);
+        background-color: #e3d5b8;
+        background-image: linear-gradient(rgba(227, 213, 184, 0.8), rgba(227, 213, 184, 0.8)), var(--paper-texture);
         background-size: cover;
-        padding: 25px;
+        padding: 30px;
         box-sizing: border-box;
         backface-visibility: hidden;
-        clip-path: polygon(1% 1%, 99% 0%, 98% 100%, 0% 98%);
-        box-shadow: inset 0 0 50px rgba(74, 55, 40, 0.5);
+        clip-path: polygon(1% 1%, 98% 0%, 100% 100%, 0% 99%);
+        box-shadow: inset 0 0 60px rgba(74, 55, 40, 0.4);
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -136,42 +135,34 @@
         clip-path: none;
         border-radius: 0 10px 10px 0;
         justify-content: center;
-        border-left: 5px solid #2b1e16;
+        border-left: 6px solid #2b1e16;
     }
 
     .page.back { transform: rotateY(180deg); background: #3d2b1f; clip-path: none; }
     .leaf.turned { transform: rotateY(-180deg); }
 
-    h1 { font-family: 'Dancing Script', cursive; color: #4a2c16; margin: 0; font-size: 2em; }
-    p { font-family: 'Cormorant Garamond', serif; font-size: 1.1em; line-height: 1.4; color: var(--ink); font-weight: 700; }
+    h1 { font-family: 'Dancing Script', cursive; color: #4a2c16; margin: 0; font-size: 2.2em; }
+    p { font-family: 'Cormorant Garamond', serif; font-size: 1.2em; line-height: 1.4; color: var(--ink); font-weight: 700; }
     
     .polaroid {
         background: #fff;
         padding: 10px;
-        box-shadow: 2px 4px 15px rgba(0,0,0,0.3);
-        width: 90%;
+        box-shadow: 2px 8px 20px rgba(0,0,0,0.4);
+        width: 95%;
         border: 1px solid #ddd;
     }
-    .polaroid img { width: 100%; height: 160px; object-fit: cover; filter: sepia(0.3); }
+    .polaroid img { width: 100%; height: 180px; object-fit: cover; filter: sepia(0.2); }
 
-    .btn-wrap { display: flex; justify-content: center; gap: 20px; padding-bottom: 10px; width: 100%; }
+    .btn-wrap { display: flex; justify-content: center; gap: 20px; width: 100%; padding-bottom: 5px;}
     button { 
-        background: #fdfaf3; 
-        border: 2px solid #4a2c16; 
-        border-radius: 25px; 
-        padding: 10px 25px; 
-        font-family: 'Cormorant Garamond', serif; 
-        font-weight: bold; 
-        cursor: pointer; 
-        color: #4a2c16;
-        transition: transform 0.1s ease;
+        background: #fdfaf3; border: 2px solid #4a2c16; border-radius: 25px; padding: 12px 28px; 
+        font-family: 'Cormorant Garamond', serif; font-weight: bold; cursor: pointer; color: #4a2c16;
     }
     
     #noBtn {
         background: #8b2e2e; color: white; border: none;
-        position: relative; /* Starts relative, becomes fixed on teleport */
         z-index: 10000;
-        transition: none; /* Instant jump */
+        transition: none; /* Instant teleport */
     }
 
     #L-Cover { z-index: 8; } #L1 { z-index: 7; } #L2 { z-index: 6; } #L3 { z-index: 5; } #L4 { z-index: 4; } #L5 { z-index: 3; }
@@ -179,13 +170,13 @@
 </head>
 <body>
 
-<div class="flower-frame">
-    <div class="flower-cluster f-tl"></div>
-    <div class="flower-cluster f-tr"></div>
-    <div class="flower-cluster f-bl"></div>
-    <div class="flower-cluster f-br"></div>
-    <div class="flower-cluster f-mid-l"></div>
-    <div class="flower-cluster f-mid-r"></div>
+<div class="garden-layer">
+    <div class="flower-3d f-tl"></div>
+    <div class="flower-3d f-tr"></div>
+    <div class="flower-3d f-bl"></div>
+    <div class="flower-3d f-br"></div>
+    <div class="flower-3d f-left"></div>
+    <div class="flower-3d f-right"></div>
 </div>
 
 <img class="corner-img tl" src="https://images.unsplash.com/photo-1526394112126-909505f0552a?w=400">
@@ -198,9 +189,9 @@
 
     <div class="leaf" id="L-Cover" onclick="this.classList.add('turned')">
         <div class="page cover-page">
-            <h1 style="color: #dcc8a0; font-size: 2.8em;">Our Love</h1>
-            <div class="polaroid" style="width: 75%;"><img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=500"></div>
-            <p style="color: #dcc8a0;">Click to Open</p>
+            <h1 style="color: #dcc8a0; font-size: 3em;">Our Love</h1>
+            <div class="polaroid" style="width: 80%;"><img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=500"></div>
+            <p style="color: #dcc8a0; margin-top: 15px;">Click to Open</p>
         </div>
         <div class="page back"></div>
     </div>
@@ -219,15 +210,6 @@
             <h1>Beautiful You</h1>
             <div class="polaroid"><img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=500"></div>
             <p>"The light you carry turns<br>every page of my life."</p>
-        </div>
-        <div class="page back"></div>
-    </div>
-
-    <div class="leaf" id="L3" onclick="this.classList.add('turned')">
-        <div class="page front">
-            <h1>Loving You</h1>
-            <div class="polaroid"><img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=500"></div>
-            <p>"Loving you is like breathing...<br>Easy, natural, and necessary."</p>
         </div>
         <div class="page back"></div>
     </div>
@@ -259,24 +241,16 @@
     function teleportNo() {
         const btn = document.getElementById('noBtn');
         btn.style.position = 'fixed'; 
-        
-        const btnWidth = btn.offsetWidth;
-        const btnHeight = btn.offsetHeight;
-
-        // Ensure the button stays within the actual viewport minus its own size
-        // Padding of 20px so it's not glued to the edge
-        const padding = 20;
-        const maxX = window.innerWidth - btnWidth - padding;
-        const maxY = window.innerHeight - btnHeight - padding;
-
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        const padding = 100; // Larger padding to stay away from edges
+        const maxX = vw - btn.offsetWidth - padding;
+        const maxY = vh - btn.offsetHeight - padding;
         const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
         const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
-
         btn.style.left = randomX + 'px';
         btn.style.top = randomY + 'px';
     }
-
-    // Capture clicks too in case they are fast or on mobile
     document.getElementById('noBtn').addEventListener('click', (e) => {
         e.preventDefault();
         teleportNo();
