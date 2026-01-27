@@ -11,7 +11,7 @@
         --custom-bg: url('https://files.catbox.moe/r46o7p.jpg'); 
         --paper-texture: url('https://www.transparenttextures.com/patterns/old-map.png');
         --old-paper-bg: url('https://www.transparenttextures.com/patterns/parchment.png');
-        --flower-src: url('https://png.pngtree.com/png-clipart/20220131/original/pngtree-watercolor-flower-border-png-image_7256660.png');
+        --flower-url: url('https://png.pngtree.com/png-clipart/20220131/original/pngtree-watercolor-flower-border-png-image_7256660.png');
     }
 
     body {
@@ -28,8 +28,8 @@
         overflow: hidden;
     }
 
-    /* --- ADDED FLORAL BOUNDARIES --- */
-    .boundary-flowers {
+    /* --- FLORAL BOUNDARIES & CORNERS --- */
+    .boundary-decoration {
         position: fixed;
         top: 0;
         left: 0;
@@ -39,33 +39,33 @@
         z-index: 15;
     }
 
-    /* Top and Bottom vines */
-    .vine-edge {
+    /* Top and Bottom floral trim */
+    .floral-edge {
         position: absolute;
         width: 100%;
-        height: 80px;
+        height: 100px;
         background-image: url('https://www.transparenttextures.com/patterns/flowers.png');
-        opacity: 0.6;
+        opacity: 0.4;
     }
-    .v-top { top: 0; border-bottom: 2px solid rgba(255,255,255,0.1); }
-    .v-bottom { bottom: 0; border-top: 2px solid rgba(255,255,255,0.1); }
+    .edge-t { top: 0; }
+    .edge-b { bottom: 0; }
 
-    /* High-volume corner flower clusters */
+    /* High-volume corner clusters */
     .flower-cluster {
         position: absolute;
-        width: 350px; /* Increased size for high volume */
-        height: 350px;
+        width: 380px; 
+        height: 380px;
+        background-image: var(--flower-url);
         background-size: contain;
         background-repeat: no-repeat;
-        filter: drop-shadow(4px 8px 10px rgba(0,0,0,0.4));
-        background-image: var(--flower-src);
+        filter: drop-shadow(5px 10px 15px rgba(0,0,0,0.4));
     }
-    .f-tl { top: -40px; left: -40px; }
-    .f-tr { top: -40px; right: -40px; transform: scaleX(-1); }
-    .f-bl { bottom: -40px; left: -40px; transform: scaleY(-1); }
-    .f-br { bottom: -40px; right: -40px; transform: scale(-1); }
+    .f-tl { top: -50px; left: -50px; }
+    .f-tr { top: -50px; right: -50px; transform: scaleX(-1); }
+    .f-bl { bottom: -50px; left: -50px; transform: scaleY(-1); }
+    .f-br { bottom: -50px; right: -50px; transform: scale(-1); }
 
-    /* Corner images peeking half-way */
+    /* Corner images peeking */
     .corner-img {
         position: absolute;
         width: 160px;
@@ -80,7 +80,7 @@
     .bl { bottom: -50px; left: -50px; transform: rotate(10deg); }
     .br { bottom: -50px; right: -50px; transform: rotate(-10deg); }
 
-    /* Scrapbook Core */
+    /* SCRAPBOOK LAYOUT (UNCHANGED) */
     .scrapbook {
         position: relative;
         width: 340px;
@@ -161,7 +161,7 @@
     #noBtn {
         background: #8b2e2e; color: white; border: none;
         z-index: 9999;
-        transition: left 0.1s ease, top 0.1s ease; 
+        transition: all 0.15s ease-out; 
     }
 
     #L-Cover { z-index: 8; } #L1 { z-index: 7; } #L2 { z-index: 6; } #L3 { z-index: 5; } #L4 { z-index: 4; } #L5 { z-index: 3; }
@@ -169,9 +169,9 @@
 </head>
 <body>
 
-<div class="boundary-flowers">
-    <div class="vine-edge v-top"></div>
-    <div class="vine-edge v-bottom"></div>
+<div class="boundary-decoration">
+    <div class="floral-edge edge-t"></div>
+    <div class="floral-edge edge-b"></div>
     <div class="flower-cluster f-tl"></div>
     <div class="flower-cluster f-tr"></div>
     <div class="flower-cluster f-bl"></div>
@@ -252,17 +252,27 @@
         
         const vw = window.innerWidth;
         const vh = window.innerHeight;
-        const padding = 30;
+        
+        // Ensure button size is accounted for to prevent half-disappearing
+        const btnWidth = btn.offsetWidth || 60;
+        const btnHeight = btn.offsetHeight || 40;
 
-        const maxX = vw - btn.offsetWidth - padding;
-        const maxY = vh - btn.offsetHeight - padding;
+        // Safe zone margins (50px from any edge)
+        const padding = 50;
 
+        const maxX = vw - btnWidth - padding;
+        const maxY = vh - btnHeight - padding;
+
+        // Calculate random position within the visible viewport bounds
         const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
         const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
 
         btn.style.left = randomX + 'px';
         btn.style.top = randomY + 'px';
     }
+
+    // Also trigger on click for mobile users who might tap it
+    document.getElementById('noBtn').addEventListener('click', teleportNo);
 </script>
 </body>
 </html>
