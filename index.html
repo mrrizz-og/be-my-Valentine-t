@@ -19,8 +19,8 @@
     body, html {
         margin: 0;
         padding: 0;
-        height: 100vh;
-        width: 100vw;
+        height: 100%;
+        width: 100%;
         overflow: hidden; 
         display: flex;
         justify-content: center;
@@ -28,63 +28,65 @@
         background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), var(--old-paper-bg), var(--custom-bg);
         background-size: cover;
         background-position: center;
+        background-attachment: fixed;
         perspective: 2500px;
     }
 
-    /* --- DECORATION LAYER --- */
-    .decor-layer {
+    /* --- FULL SCREEN FLORAL FRAME --- */
+    .flower-frame {
         position: fixed;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
+        width: 100vw;
+        height: 100vh;
         pointer-events: none;
-        z-index: 5;
+        z-index: 15;
     }
 
-    /* Corner images - Pushed half-way off the corners */
-    .corner-img {
-        position: absolute;
-        width: 180px;
-        height: 180px;
-        object-fit: cover;
-        border: 6px solid #fff;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        z-index: 6;
-    }
-    .tl { top: -60px; left: -60px; transform: rotate(-15deg); }
-    .tr { top: -60px; right: -60px; transform: rotate(15deg); }
-    .bl { bottom: -60px; left: -60px; transform: rotate(10deg); }
-    .br { bottom: -60px; right: -60px; transform: rotate(-10deg); }
-
-    /* High-volume flower clusters (Overlapping the images) */
     .flower-cluster {
         position: absolute;
-        width: 420px;
-        height: 420px;
+        width: 40vw; 
+        height: 40vw;
+        max-width: 450px;
+        max-height: 450px;
         background-image: var(--flower-url);
         background-size: contain;
         background-repeat: no-repeat;
-        z-index: 7;
-        filter: drop-shadow(5px 5px 15px rgba(0,0,0,0.3));
+        filter: drop-shadow(5px 10px 15px rgba(0,0,0,0.4));
     }
-    .f-tl { top: -80px; left: -80px; }
-    .f-tr { top: -80px; right: -80px; transform: scaleX(-1); }
-    .f-bl { bottom: -80px; left: -80px; transform: scaleY(-1); }
-    .f-br { bottom: -80px; right: -80px; transform: scale(-1); }
+    /* Flowers slightly offset to cover the image edges */
+    .f-tl { top: -60px; left: -60px; }
+    .f-tr { top: -60px; right: -60px; transform: scaleX(-1); }
+    .f-bl { bottom: -60px; left: -60px; transform: scaleY(-1); }
+    .f-br { bottom: -60px; right: -60px; transform: scale(-1); }
 
-    /* Side flowers to eliminate free space */
-    .f-mid-l { top: 50%; left: -140px; transform: translateY(-50%) rotate(90deg); opacity: 0.8; }
-    .f-mid-r { top: 50%; right: -140px; transform: translateY(-50%) rotate(-90deg); opacity: 0.8; }
+    .f-mid-l { top: 50%; left: -120px; transform: translateY(-50%) rotate(90deg); opacity: 0.6; }
+    .f-mid-r { top: 50%; right: -120px; transform: translateY(-50%) rotate(-90deg); opacity: 0.6; }
 
-    /* --- SCRAPBOOK LAYOUT --- */
+    /* --- CORNER IMAGES (PEEKING FROM OFF-SCREEN) --- */
+    .corner-img {
+        position: absolute;
+        width: 220px;
+        height: 220px;
+        object-fit: cover;
+        border: 8px solid #fff;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+        z-index: 5;
+    }
+    /* Negative margins push them halfway off-screen */
+    .tl { top: -70px; left: -70px; transform: rotate(-15deg); }
+    .tr { top: -70px; right: -70px; transform: rotate(15deg); }
+    .bl { bottom: -70px; left: -70px; transform: rotate(10deg); }
+    .br { bottom: -70px; right: -70px; transform: rotate(-10deg); }
+
+    /* SCRAPBOOK CONTAINER */
     .scrapbook {
         position: relative;
         width: 360px;
         height: 500px;
         background: #2b1e16; 
         border-radius: 5px 15px 15px 5px;
-        box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+        box-shadow: 0 30px 70px rgba(0,0,0,0.8);
         transform-style: preserve-3d;
         z-index: 20; 
     }
@@ -140,25 +142,36 @@
     .page.back { transform: rotateY(180deg); background: #3d2b1f; clip-path: none; }
     .leaf.turned { transform: rotateY(-180deg); }
 
-    h1 { font-family: 'Dancing Script', cursive; color: #4a2c16; margin: 0; font-size: 2.1em; }
+    h1 { font-family: 'Dancing Script', cursive; color: #4a2c16; margin: 0; font-size: 2em; }
     p { font-family: 'Cormorant Garamond', serif; font-size: 1.1em; line-height: 1.4; color: var(--ink); font-weight: 700; }
     
     .polaroid {
-        background: #fff; padding: 10px; box-shadow: 2px 4px 15px rgba(0,0,0,0.3);
-        width: 90%; border: 1px solid #ddd;
+        background: #fff;
+        padding: 10px;
+        box-shadow: 2px 4px 15px rgba(0,0,0,0.3);
+        width: 90%;
+        border: 1px solid #ddd;
     }
     .polaroid img { width: 100%; height: 160px; object-fit: cover; filter: sepia(0.3); }
 
     .btn-wrap { display: flex; justify-content: center; gap: 20px; padding-bottom: 10px; width: 100%; }
     button { 
-        background: #fdfaf3; border: 2px solid #4a2c16; border-radius: 25px; padding: 10px 25px; 
-        font-family: 'Cormorant Garamond', serif; font-weight: bold; cursor: pointer; color: #4a2c16;
+        background: #fdfaf3; 
+        border: 2px solid #4a2c16; 
+        border-radius: 25px; 
+        padding: 10px 25px; 
+        font-family: 'Cormorant Garamond', serif; 
+        font-weight: bold; 
+        cursor: pointer; 
+        color: #4a2c16;
+        transition: transform 0.1s ease;
     }
     
     #noBtn {
         background: #8b2e2e; color: white; border: none;
+        position: relative; /* Starts relative, becomes fixed on teleport */
         z-index: 10000;
-        transition: all 0.2s ease-out; 
+        transition: none; /* Instant jump */
     }
 
     #L-Cover { z-index: 8; } #L1 { z-index: 7; } #L2 { z-index: 6; } #L3 { z-index: 5; } #L4 { z-index: 4; } #L5 { z-index: 3; }
@@ -166,12 +179,7 @@
 </head>
 <body>
 
-<div class="decor-layer">
-    <img class="corner-img tl" src="https://images.unsplash.com/photo-1526394112126-909505f0552a?w=400">
-    <img class="corner-img tr" src="https://images.unsplash.com/photo-1470058869958-2a77ade41c02?w=400">
-    <img class="corner-img bl" src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=400">
-    <img class="corner-img br" src="https://images.unsplash.com/photo-1516589174184-c68526574af4?w=400">
-
+<div class="flower-frame">
     <div class="flower-cluster f-tl"></div>
     <div class="flower-cluster f-tr"></div>
     <div class="flower-cluster f-bl"></div>
@@ -180,6 +188,11 @@
     <div class="flower-cluster f-mid-r"></div>
 </div>
 
+<img class="corner-img tl" src="https://images.unsplash.com/photo-1526394112126-909505f0552a?w=400">
+<img class="corner-img tr" src="https://images.unsplash.com/photo-1470058869958-2a77ade41c02?w=400">
+<img class="corner-img bl" src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=400">
+<img class="corner-img br" src="https://images.unsplash.com/photo-1516589174184-c68526574af4?w=400">
+
 <div class="scrapbook">
     <div class="spiral"></div>
 
@@ -187,7 +200,7 @@
         <div class="page cover-page">
             <h1 style="color: #dcc8a0; font-size: 2.8em;">Our Love</h1>
             <div class="polaroid" style="width: 75%;"><img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=500"></div>
-            <p style="color: #dcc8a0;">Tap to Open</p>
+            <p style="color: #dcc8a0;">Click to Open</p>
         </div>
         <div class="page back"></div>
     </div>
@@ -214,7 +227,7 @@
         <div class="page front">
             <h1>Loving You</h1>
             <div class="polaroid"><img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=500"></div>
-            <p>"Loving you is easy,<br>natural, and necessary."</p>
+            <p>"Loving you is like breathing...<br>Easy, natural, and necessary."</p>
         </div>
         <div class="page back"></div>
     </div>
@@ -246,16 +259,24 @@
     function teleportNo() {
         const btn = document.getElementById('noBtn');
         btn.style.position = 'fixed'; 
-        const vw = window.innerWidth;
-        const vh = window.innerHeight;
-        const padding = 70;
-        const maxX = vw - btn.offsetWidth - padding;
-        const maxY = vh - btn.offsetHeight - padding;
+        
+        const btnWidth = btn.offsetWidth;
+        const btnHeight = btn.offsetHeight;
+
+        // Ensure the button stays within the actual viewport minus its own size
+        // Padding of 20px so it's not glued to the edge
+        const padding = 20;
+        const maxX = window.innerWidth - btnWidth - padding;
+        const maxY = window.innerHeight - btnHeight - padding;
+
         const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
         const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+
         btn.style.left = randomX + 'px';
         btn.style.top = randomY + 'px';
     }
+
+    // Capture clicks too in case they are fast or on mobile
     document.getElementById('noBtn').addEventListener('click', (e) => {
         e.preventDefault();
         teleportNo();
