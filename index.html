@@ -11,6 +11,7 @@
         --custom-bg: url('https://files.catbox.moe/r46o7p.jpg'); 
         --paper-texture: url('https://www.transparenttextures.com/patterns/old-map.png');
         --old-paper-bg: url('https://www.transparenttextures.com/patterns/parchment.png');
+        --flower-src: url('https://png.pngtree.com/png-clipart/20220131/original/pngtree-watercolor-flower-border-png-image_7256660.png');
     }
 
     body {
@@ -27,6 +28,43 @@
         overflow: hidden;
     }
 
+    /* --- ADDED FLORAL BOUNDARIES --- */
+    .boundary-flowers {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 15;
+    }
+
+    /* Top and Bottom vines */
+    .vine-edge {
+        position: absolute;
+        width: 100%;
+        height: 80px;
+        background-image: url('https://www.transparenttextures.com/patterns/flowers.png');
+        opacity: 0.6;
+    }
+    .v-top { top: 0; border-bottom: 2px solid rgba(255,255,255,0.1); }
+    .v-bottom { bottom: 0; border-top: 2px solid rgba(255,255,255,0.1); }
+
+    /* High-volume corner flower clusters */
+    .flower-cluster {
+        position: absolute;
+        width: 350px; /* Increased size for high volume */
+        height: 350px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        filter: drop-shadow(4px 8px 10px rgba(0,0,0,0.4));
+        background-image: var(--flower-src);
+    }
+    .f-tl { top: -40px; left: -40px; }
+    .f-tr { top: -40px; right: -40px; transform: scaleX(-1); }
+    .f-bl { bottom: -40px; left: -40px; transform: scaleY(-1); }
+    .f-br { bottom: -40px; right: -40px; transform: scale(-1); }
+
     /* Corner images peeking half-way */
     .corner-img {
         position: absolute;
@@ -42,33 +80,7 @@
     .bl { bottom: -50px; left: -50px; transform: rotate(10deg); }
     .br { bottom: -50px; right: -50px; transform: rotate(-10deg); }
 
-    /* Floral Border Decorations */
-    .flowers {
-        position: fixed;
-        width: 100vw;
-        height: 100vh;
-        pointer-events: none;
-        z-index: 20;
-        background-image: 
-            url('https://www.transparenttextures.com/patterns/flowers.png'); /* Base texture */
-    }
-
-    /* High-volume corner flower clusters */
-    .flower-cluster {
-        position: absolute;
-        width: 300px;
-        height: 300px;
-        background-size: contain;
-        background-repeat: no-repeat;
-        filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
-    }
-    /* Using PNG flower clusters for corners */
-    .f-tl { top: -20px; left: -20px; background-image: url('https://png.pngtree.com/png-clipart/20220131/original/pngtree-watercolor-flower-border-png-image_7256660.png'); }
-    .f-tr { top: -20px; right: -20px; background-image: url('https://png.pngtree.com/png-clipart/20220131/original/pngtree-watercolor-flower-border-png-image_7256660.png'); transform: scaleX(-1); }
-    .f-bl { bottom: -20px; left: -20px; background-image: url('https://png.pngtree.com/png-clipart/20220131/original/pngtree-watercolor-flower-border-png-image_7256660.png'); transform: scaleY(-1); }
-    .f-br { bottom: -20px; right: -20px; background-image: url('https://png.pngtree.com/png-clipart/20220131/original/pngtree-watercolor-flower-border-png-image_7256660.png'); transform: scale(-1); }
-
-    /* Resized Scrapbook - Compact Version */
+    /* Scrapbook Core */
     .scrapbook {
         position: relative;
         width: 340px;
@@ -157,10 +169,14 @@
 </head>
 <body>
 
-<div class="flower-cluster f-tl"></div>
-<div class="flower-cluster f-tr"></div>
-<div class="flower-cluster f-bl"></div>
-<div class="flower-cluster f-br"></div>
+<div class="boundary-flowers">
+    <div class="vine-edge v-top"></div>
+    <div class="vine-edge v-bottom"></div>
+    <div class="flower-cluster f-tl"></div>
+    <div class="flower-cluster f-tr"></div>
+    <div class="flower-cluster f-bl"></div>
+    <div class="flower-cluster f-br"></div>
+</div>
 
 <img class="corner-img tl" src="https://images.unsplash.com/photo-1526394112126-909505f0552a?w=400">
 <img class="corner-img tr" src="https://images.unsplash.com/photo-1470058869958-2a77ade41c02?w=400">
