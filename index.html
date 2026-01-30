@@ -1,237 +1,239 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>A Journey to You 📖</title>
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Cormorant+Garamond:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
-<style>
-    :root {
-        --ink: #2b1e16;
-        --custom-bg: url('https://files.catbox.moe/r46o7p.jpg'); 
-        --paper-texture: url('https://www.transparenttextures.com/patterns/old-map.png');
-        --old-paper-bg: url('https://www.transparenttextures.com/patterns/parchment.png');
-        /* High quality floral PNG */
-        --flower-url: url('https://png.pngtree.com/png-clipart/20220131/original/pngtree-watercolor-flower-border-png-image_7256660.png');
-    }
-
-    * { box-sizing: border-box; }
-
-    body, html {
-        margin: 0; padding: 0;
-        height: 100vh; width: 100vw;
-        overflow: hidden; 
-        display: flex; justify-content: center; align-items: center;
-        background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), var(--old-paper-bg), var(--custom-bg);
-        background-size: cover; background-position: center;
-        perspective: 2500px;
-    }
-
-    /* --- FULL SCREEN FLOWER FRAME --- */
-    .flower-frame {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        pointer-events: none;
-        z-index: 30; /* Stays on top of everything */
-        border: 20px solid transparent; /* Buffer for flowers */
-    }
-
-    .flower-3d {
-        position: absolute;
-        background-image: var(--flower-url);
-        background-size: contain;
-        background-repeat: no-repeat;
-        filter: drop-shadow(10px 10px 20px rgba(0,0,0,0.5));
-    }
-
-    /* Corner Clusters */
-    .f-tl { width: 450px; height: 450px; top: -110px; left: -110px; }
-    .f-tr { width: 450px; height: 450px; top: -110px; right: -110px; transform: scaleX(-1); }
-    .f-bl { width: 450px; height: 450px; bottom: -110px; left: -110px; transform: scaleY(-1); }
-    .f-br { width: 450px; height: 450px; bottom: -110px; right: -110px; transform: scale(-1); }
-
-    /* Edge Fillers (The Frame Overlay) */
-    .f-top { width: 400px; height: 200px; top: -80px; left: 50%; transform: translateX(-50%); }
-    .f-bottom { width: 400px; height: 200px; bottom: -80px; left: 50%; transform: translateX(-50%) scaleY(-1); }
-    .f-left { width: 200px; height: 400px; left: -80px; top: 50%; transform: translateY(-50%) rotate(90deg); }
-    .f-right { width: 200px; height: 400px; right: -80px; top: 50%; transform: translateY(-50%) rotate(-90deg); }
-
-    /* --- PEEKING CORNER IMAGES --- */
-    .corner-img {
-        position: absolute;
-        width: 220px; height: 220px;
-        object-fit: cover;
-        border: 8px solid #fff;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.7);
-        z-index: 5; /* Behind flowers */
-    }
-    .tl { top: -60px; left: -60px; transform: rotate(-15deg); }
-    .tr { top: -60px; right: -60px; transform: rotate(15deg); }
-    .bl { bottom: -60px; left: -60px; transform: rotate(12deg); }
-    .br { bottom: -60px; right: -60px; transform: rotate(-12deg); }
-
-    /* --- SMALLER SCRAPBOOK --- */
-    .scrapbook {
-        position: relative;
-        width: 320px; height: 450px;
-        background: #2b1e16; 
-        border-radius: 5px 15px 15px 5px;
-        box-shadow: 0 40px 80px rgba(0,0,0,0.8);
-        transform-style: preserve-3d;
-        z-index: 20; 
-    }
-
-    .spiral {
-        position: absolute;
-        left: -12px; top: 20px;
-        height: 85%; width: 25px;
-        background: repeating-linear-gradient(to bottom, transparent, transparent 15px, #888 15px, #111 18px, transparent 18px);
-        z-index: 100;
-    }
-
-    .leaf {
-        position: absolute;
-        top: 8px; right: 8px;
-        width: 304px; height: 434px;
-        transform-origin: left;
-        transform-style: preserve-3d;
-        transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
-        cursor: pointer;
-    }
-
-    .page {
-        position: absolute;
-        width: 100%; height: 100%;
-        background-color: #e3d5b8;
-        background-image: linear-gradient(rgba(227, 213, 184, 0.8), rgba(227, 213, 184, 0.8)), var(--paper-texture);
-        background-size: cover;
-        padding: 20px;
-        backface-visibility: hidden;
-        clip-path: polygon(1% 1%, 98% 0%, 100% 100%, 0% 99%);
-        box-shadow: inset 0 0 40px rgba(74, 55, 40, 0.4);
-        display: flex; flex-direction: column; align-items: center; justify-content: space-between;
-        text-align: center;
-    }
-
-    .cover-page {
-        background: #3d2b1f; clip-path: none;
-        border-radius: 0 10px 10px 0; justify-content: center;
-        border-left: 5px solid #2b1e16;
-    }
-
-    .page.back { transform: rotateY(180deg); background: #3d2b1f; clip-path: none; }
-    .leaf.turned { transform: rotateY(-180deg); }
-
-    h1 { font-family: 'Dancing Script', cursive; color: #4a2c16; margin: 0; font-size: 1.8em; }
-    p { font-family: 'Cormorant Garamond', serif; font-size: 1.1em; color: var(--ink); font-weight: 700; }
-    
-    .polaroid {
-        background: #fff; padding: 8px;
-        box-shadow: 2px 5px 15px rgba(0,0,0,0.3);
-        width: 90%; border: 1px solid #ddd;
-    }
-    .polaroid img { width: 100%; height: 150px; object-fit: cover; filter: sepia(0.2); }
-
-    .btn-wrap { display: flex; justify-content: center; gap: 15px; width: 100%; }
-    button { 
-        background: #fdfaf3; border: 2px solid #4a2c16; border-radius: 20px; 
-        padding: 10px 20px; font-family: 'Cormorant Garamond', serif; 
-        font-weight: bold; cursor: pointer; color: #4a2c16;
-    }
-    
-    #noBtn {
-        background: #8b2e2e; color: white; border: none;
-        z-index: 10000; transition: none; 
-    }
-
-    #L-Cover { z-index: 8; } #L1 { z-index: 7; } #L2 { z-index: 6; } #L4 { z-index: 5; } #L5 { z-index: 4; }
-</style>
-</head>
-<body>
-
-<div class="flower-frame">
-    <div class="flower-3d f-tl"></div>
-    <div class="flower-3d f-tr"></div>
-    <div class="flower-3d f-bl"></div>
-    <div class="flower-3d f-br"></div>
-    <div class="flower-3d f-top"></div>
-    <div class="flower-3d f-bottom"></div>
-    <div class="flower-3d f-left"></div>
-    <div class="flower-3d f-right"></div>
-</div>
-
-<img class="corner-img tl" src="https://images.unsplash.com/photo-1526394112126-909505f0552a?w=400">
-<img class="corner-img tr" src="https://images.unsplash.com/photo-1470058869958-2a77ade41c02?w=400">
-<img class="corner-img bl" src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=400">
-<img class="corner-img br" src="https://images.unsplash.com/photo-1516589174184-c68526574af4?w=400">
-
-<div class="scrapbook">
-    <div class="spiral"></div>
-
-    <div class="leaf" id="L-Cover" onclick="this.classList.add('turned')">
-        <div class="page cover-page">
-            <h1 style="color: #dcc8a0; font-size: 2.5em;">Our Love</h1>
-            <div class="polaroid" style="width: 75%;"><img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=500"></div>
-            <p style="color: #dcc8a0; margin-top: 15px;">Click to Open</p>
-        </div>
-        <div class="page back"></div>
-    </div>
-
-    <div class="leaf" id="L1" onclick="this.classList.add('turned')">
-        <div class="page front">
-            <h1>Beautiful Eyes</h1>
-            <div class="polaroid"><img src="https://images.unsplash.com/photo-1516589174184-c68526574af4?w=500"></div>
-            <p>"In your eyes, I find a sea,<br>Where stars get lost."</p>
-        </div>
-        <div class="page back"></div>
-    </div>
-
-    <div class="leaf" id="L4">
-        <div class="page front">
-            <h1>Be Mine Forever?</h1>
-            <div class="polaroid"><img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=500"></div>
-            <p>Will you walk this journey<br>with me, forever?</p>
-            <div class="btn-wrap">
-                <button onclick="document.getElementById('L4').classList.add('turned')">Yes ❤️</button>
-                <button id="noBtn" onmouseover="teleportNo()" onclick="teleportNo()">No</button>
-            </div>
-        </div>
-        <div class="page back"></div>
-    </div>
-
-    <div class="leaf" id="L5">
-        <div class="page front">
-            <h1>Always Yours 🌹</h1>
-            <img src="https://media.tenor.com/W7S7F9C66oAAAAAi/cute-cat-flower.gif" style="width: 85%; border-radius: 15px;">
-            <p>You've made me the happiest person.</p>
-        </div>
-        <div class="page back"></div>
-    </div>
-</div>
-
 <script>
-    function teleportNo() {
-        const btn = document.getElementById('noBtn');
-        btn.style.position = 'fixed'; 
-        const vw = window.innerWidth;
-        const vh = window.innerHeight;
-        
-        // Stay away from the thick flower corners
-        const padding = 120; 
-        const maxX = vw - btn.offsetWidth - padding;
-        const maxY = vh - btn.offsetHeight - padding;
-        
-        const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
-        const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
-        
-        btn.style.left = randomX + 'px';
-        btn.style.top = randomY + 'px';
-    }
-    document.getElementById('noBtn').addEventListener('click', (e) => {
-        e.preventDefault();
-        teleportNo();
-    });
+const texts = [
+ "I LOVE YOU",
+ "YOU ARE MY SAFE PLACE",
+ "MY HEART CHOSE YOU",
+ "EVERY DAY FEELS BETTER WITH YOU"
+];
+
+let t = 0;
+
+function changeText(){
+ t = (t + 1) % texts.length;
+ document.getElementById('binaryBox').innerText = texts[t];
+}
 </script>
+
+</body>
+</html><script>
+function showPage(id){
+ document.querySelectorAll('section').forEach(s=>{
+   s.classList.remove('active');
+   s.style.display='none';
+ });
+ const page=document.getElementById(id);
+ page.style.display='flex';
+ setTimeout(()=>page.classList.add('active'),20);
+}
+
+document.getElementById('flipCard').onclick = () => {
+ document.getElementById('flipInner').style.transform = 'rotateY(180deg)';
+};
+</script><section id="code">
+<div class="glass">
+
+<div id="binaryBox" onclick="changeText()" style="
+ background:#000;
+ color:#00ff9c;
+ font-family:monospace;
+ padding:30px;
+ border-radius:20px;
+ cursor:pointer;
+ box-shadow:0 0 30px rgba(0,255,156,.35);
+">
+01001001 00100000 01001100 01001111 01010110 01000101 00100000 01011001 01001111 01010101
+</div>
+
+<p style="margin-top:18px;color:#d4af37">
+Tap the code ✨
+</p>
+
+</div>
+</section><section id="card">
+<div class="glass">
+
+<div id="flipCard" style="width:300px;height:200px;margin:auto;perspective:1000px;cursor:pointer;">
+<div id="flipInner" style="
+ width:100%;
+ height:100%;
+ background:linear-gradient(135deg,#d4af37,#fff2b2);
+ border-radius:25px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-weight:600;
+ color:#000;
+ transition:transform .9s;
+ transform-style:preserve-3d;
+">
+
+<div style="backface-visibility:hidden;">
+Tap to Open 💌
+</div>
+
+<div style="
+ position:absolute;
+ transform:rotateY(180deg);
+ backface-visibility:hidden;
+ text-align:center;
+ padding:18px;
+">
+
+<img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" width="85"><br><br>
+
+Thanks for listening to someone who overthinks,<br>
+feels too deeply, messes things up,<br>
+yet still chooses you every single day.<br><br>
+
+You stayed — and that means more than words 🤍
+
+</div>
+
+</div>
+</div>
+
+</div>
+</section><section id="scrap">
+<div class="glass">
+
+<p>✨ Some souls feel like home.</p><br>
+<p>✨ Your presence calms my storms.</p><br>
+<p>✨ Silence feels warmer with you.</p><br>
+<p>✨ I smile more because of you.</p>
+
+</div>
+</section><section id="poetry" class="active">
+<div class="glass">
+
+<p>
+Sochta hoon toh sirf tum hi yaad aati ho,<br>
+Jaise har dua ka jawaab ban jaati ho.
+</p><br>
+
+<p>
+Tumhari aankhon mein jo gehra sukoon hai,<br>
+Wahin meri har khamoshi ka junoon hai.
+</p><br>
+
+<p>
+Main perfect nahi, par ek baat sach hai,<br>
+Tum saath ho toh meri duniya best hai.
+</p>
+
+</div>
+</section><body>
+
+<header>
+<h1>My Golden Valentine</h1>
+<nav>
+<button onclick="showPage('poetry')">Poetry</button>
+<button onclick="showPage('scrap')">Scrapbook</button>
+<button onclick="showPage('card')">Greeting</button>
+<button onclick="showPage('code')">Love Code</button>
+</nav>
+</header><style>
+section{
+ display:none;
+ min-height:100vh;
+ padding:120px 20px 40px;
+}
+
+section.active{
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ animation:page .6s ease;
+}
+
+@keyframes page{
+ from{opacity:0;transform:scale(.96)}
+ to{opacity:1;transform:scale(1)}
+}
+
+.glass{
+ max-width:900px;
+ width:100%;
+ background:rgba(255,255,255,0.08);
+ border:1px solid rgba(212,175,55,0.45);
+ border-radius:28px;
+ padding:40px;
+ backdrop-filter:blur(18px);
+ box-shadow:0 0 45px rgba(212,175,55,0.2);
+ text-align:center;
+}
+</style>
+</head><style>
+header{
+ position:fixed;
+ top:0;
+ width:100%;
+ z-index:10;
+ text-align:center;
+ padding:20px;
+ background:rgba(0,0,0,0.75);
+ backdrop-filter:blur(14px);
+}
+
+header h1{
+ font-family:'Playfair Display',serif;
+ font-size:2.6rem;
+ background:linear-gradient(90deg,#d4af37,#fff2b2,#d4af37);
+ -webkit-background-clip:text;
+ -webkit-text-fill-color:transparent;
+}
+
+nav{
+ margin-top:12px;
+}
+
+nav button{
+ background:transparent;
+ border:1px solid #d4af37;
+ color:#d4af37;
+ padding:8px 18px;
+ margin:6px;
+ border-radius:30px;
+ cursor:pointer;
+ transition:.3s;
+}
+
+nav button:hover{
+ background:#d4af37;
+ color:#000;
+}
+</style><style>
+*{
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
+}
+
+body{
+ font-family:'Poppins',sans-serif;
+ background:radial-gradient(circle at top,#1a1a1a,#000);
+ color:#f5f5f5;
+ overflow:hidden;
+}
+
+button{
+ font-family:'Poppins',sans-serif;
+}
+</style>
+<script>
+const texts = [
+ "I LOVE YOU",
+ "YOU ARE MY SAFE PLACE",
+ "MY HEART CHOSE YOU",
+ "EVERY DAY FEELS BETTER WITH YOU"
+];
+
+let t = 0;
+
+function changeText(){
+ t = (t + 1) % texts.length;
+ document.getElementById('binaryBox').innerText = texts[t];
+}
+</script>
+
 </body>
 </html>
