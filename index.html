@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>My Legendary Valentine ✨</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     
@@ -23,113 +23,111 @@
             background: var(--bg);
             color: #fff;
             overflow: hidden;
-            height: 100vh;
-            perspective: 1500px;
+            width: 100vw;
+            height: 100dvh; /* Dynamic viewport height for mobile browsers */
         }
 
-        /* --- Engine Layers --- */
         #dynamic-bg { position: fixed; inset: 0; background: radial-gradient(circle at 50% 50%, #151515 0%, #000 100%); z-index: -1; }
         canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 1; }
 
-        /* --- Luxury Header --- */
+        /* --- Mobile Responsive Header --- */
         header {
             position: fixed; top: 0; width: 100%; z-index: 100;
-            padding: 20px 10px; text-align: center;
+            padding: 15px 10px; text-align: center;
             background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(212, 175, 55, 0.2);
         }
 
         header h1 {
-            font-family: 'Playfair Display', serif; font-size: clamp(1.4rem, 6vw, 2.4rem);
+            font-family: 'Playfair Display', serif; font-size: clamp(1.2rem, 5vw, 2rem);
             background: linear-gradient(90deg, var(--gold), #fff, var(--gold));
             background-size: 200% auto; -webkit-background-clip: text;
             -webkit-text-fill-color: transparent; animation: goldShimmer 5s linear infinite;
         }
 
-        @keyframes goldShimmer { to { background-position: 200% center; } }
+        nav { 
+            margin-top: 10px; display: flex; justify-content: center; 
+            gap: 5px; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 5px;
+            -ms-overflow-style: none; scrollbar-width: none;
+        }
+        nav::-webkit-scrollbar { display: none; }
 
-        nav { margin-top: 12px; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
         .nav-btn {
             background: none; border: 1px solid var(--gold-fade);
-            color: var(--gold); padding: 8px 16px; border-radius: 30px;
-            cursor: pointer; font-size: 0.75rem; letter-spacing: 1.5px;
-            transition: 0.4s var(--curve); text-transform: uppercase;
+            color: var(--gold); padding: 6px 12px; border-radius: 20px;
+            cursor: pointer; font-size: 0.65rem; white-space: nowrap;
+            transition: 0.3s var(--curve); text-transform: uppercase;
         }
-        .nav-btn.active, .nav-btn:hover { background: var(--gold); color: #000; box-shadow: 0 0 15px var(--gold-fade); }
+        .nav-btn.active { background: var(--gold); color: #000; }
 
-        /* --- Global Section Control --- */
+        /* --- Sections Fix --- */
         section {
-            display: none; height: 100vh; width: 100%;
-            padding: 160px 20px 60px; position: absolute;
+            display: none; height: 100dvh; width: 100%;
+            padding: 140px 15px 40px; position: absolute;
             align-items: center; justify-content: center; z-index: 2;
         }
-        section.active { display: flex; animation: revealSection 0.8s var(--curve) forwards; }
+        section.active { display: flex; animation: revealSection 0.6s var(--curve) forwards; }
 
         @keyframes revealSection {
-            from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
-            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .glass-card {
-            max-width: 800px; width: 100%;
+            width: 100%; max-width: 360px; /* Perfect for mobile portrait */
             background: var(--glass);
             border: 1px solid rgba(212, 175, 55, 0.25);
-            border-radius: 40px; padding: 50px 30px;
-            backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-            box-shadow: 0 40px 100px rgba(0,0,0,0.7);
+            border-radius: 30px; padding: 30px 20px;
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             text-align: center; position: relative;
         }
 
-        .stack { display: flex; flex-direction: column; gap: 20px; align-items: center; }
+        .stack { display: flex; flex-direction: column; gap: 15px; align-items: center; }
         .badge {
-            display: inline-block; padding: 6px 18px; border-radius: 50px;
+            display: inline-block; padding: 4px 12px; border-radius: 50px;
             border: 1px solid var(--gold); color: var(--gold);
-            font-size: 0.65rem; text-transform: uppercase; letter-spacing: 3px;
-            margin-bottom: 10px; background: rgba(212, 175, 55, 0.1);
+            font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px;
         }
 
-        .quote { font-size: 1.15rem; line-height: 1.8; font-weight: 300; color: #f0f0f0; }
-        .divider { height: 1px; width: 120px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+        .quote { font-size: 1rem; line-height: 1.6; color: #f0f0f0; }
+        .divider { height: 1px; width: 80px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
 
-        /* --- CHOICE SECTION (SIDE BY SIDE) --- */
+        /* --- Choice Button Logic (Mobile Centered) --- */
         .choice-wrapper {
-            position: relative; margin-top: 40px; width: 100%; height: 120px;
+            position: relative; margin-top: 25px; width: 100%; height: 100px;
             display: flex; justify-content: center; align-items: center;
         }
-        .buttons-container { display: flex; gap: 20px; align-items: center; }
+        .buttons-container { display: flex; gap: 15px; align-items: center; }
 
         .btn-yes {
-            padding: 15px 45px; border-radius: 50px; background: var(--gold);
+            padding: 12px 30px; border-radius: 50px; background: var(--gold);
             color: #000; border: none; font-weight: 700; cursor: pointer;
-            font-size: 1.1rem; transition: 0.3s var(--curve);
-            box-shadow: 0 10px 30px var(--gold-fade); z-index: 10;
+            font-size: 0.9rem; z-index: 10;
         }
 
         .btn-no {
-            padding: 15px 45px; border-radius: 50px; background: transparent;
+            padding: 12px 30px; border-radius: 50px; background: transparent;
             color: #fff; border: 1px solid rgba(255,255,255,0.3);
-            font-weight: 400; cursor: pointer; font-size: 1rem;
-            transition: transform 0.2s var(--curve); white-space: nowrap; z-index: 5;
+            font-size: 0.9rem; transition: 0.2s var(--curve); z-index: 5;
         }
 
-        /* --- FLIP CARD --- */
-        .flip-box { width: 300px; height: 200px; perspective: 1000px; cursor: pointer; margin: 20px auto; }
-        .flip-inner { position: relative; width: 100%; height: 100%; transition: 0.8s var(--curve); transform-style: preserve-3d; }
+        /* --- Flip Card Mobile size --- */
+        .flip-box { width: 260px; height: 160px; perspective: 1000px; margin: 10px auto; }
+        .flip-inner { position: relative; width: 100%; height: 100%; transition: 0.8s; transform-style: preserve-3d; }
         .flip-box.open .flip-inner { transform: rotateY(180deg); }
-        .face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 20px; display: flex; align-items: center; justify-content: center; padding: 25px; }
-        .front { background: linear-gradient(135deg, var(--gold), var(--gold-bright)); color: #000; font-weight: 700; }
-        .back { background: #111; transform: rotateY(180deg); border: 1px solid var(--gold); font-size: 0.95rem; }
+        .face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; display: flex; align-items: center; justify-content: center; padding: 15px; font-size: 0.85rem; }
+        .front { background: var(--gold); color: #000; font-weight: 700; }
+        .back { background: #111; transform: rotateY(180deg); border: 1px solid var(--gold); }
 
-        /* --- BINARY BOX --- */
         #binary-box {
             background: #000; color: #00ff9c; font-family: monospace;
-            padding: 25px; border-radius: 15px; border: 1px solid rgba(0, 255, 156, 0.3);
-            cursor: pointer; transition: 0.3s; word-break: break-all; min-height: 100px;
+            padding: 15px; border-radius: 12px; border: 1px solid rgba(0, 255, 156, 0.3);
+            word-break: break-all; font-size: 0.8rem; min-height: 80px;
             display: flex; align-items: center; justify-content: center;
         }
 
-        /* --- FX --- */
         .heart {
             position: fixed; bottom: -50px; background: #ff4d4d;
             clip-path: polygon(50% 0%, 100% 35%, 82% 100%, 50% 80%, 18% 100%, 0% 35%);
@@ -160,8 +158,6 @@
                 <div class="quote">Sochta hoon toh sirf tum hi yaad aati ho,<br>Jaise har dua ka jawaab ban jaati ho.</div>
                 <div class="divider"></div>
                 <div class="quote">Tumhari aankhon mein jo sukoon hai,<br>Wahin meri har kahani shuru hoti hai.</div>
-                <div class="divider"></div>
-                <div class="quote">Main perfect nahi,<br>par tum saath ho toh zindagi perfect lagti hai.</div>
             </div>
         </section>
 
@@ -173,23 +169,20 @@
                 <div class="quote">📌 Your smile fixes my chaos instantly.</div>
                 <div class="divider"></div>
                 <div class="quote">📌 I didn’t plan this, my heart just chose you.</div>
-                <div class="divider"></div>
-                <div class="quote">📌 Even silence feels safe when I'm with you.</div>
             </div>
         </section>
 
         <section id="choice">
             <div class="glass-card stack">
                 <span class="badge">A Heart's Decision</span>
-                <div class="quote" style="font-style: italic; color: var(--gold-bright); font-size: 1.4rem;">"I'll choose you in a world full of billions..."</div>
-                <div class="quote">Iss bheed mein, mera dil sirf tumhara naam pukarta hai.</div>
+                <div class="quote" style="font-style: italic; color: var(--gold-bright); font-size: 1.1rem;">"I'll choose you in a world full of billions..."</div>
                 <div class="choice-wrapper">
                     <div class="buttons-container">
-                        <button class="btn-yes" id="yesBtn" onclick="onAccepted()">Yes, I would</button>
+                        <button class="btn-yes" id="yesBtn" onclick="onAccepted()">Yes ❤️</button>
                         <button class="btn-no" id="noBtn" onmouseover="moveNo()" ontouchstart="moveNo()">No</button>
                     </div>
                 </div>
-                <p id="final-msg" style="display:none; color: var(--gold); font-style: italic; margin-top: 20px; font-weight: 600;">I knew it. Our souls are tethered forever. 🤍</p>
+                <p id="final-msg" style="display:none; color: var(--gold); font-size: 0.9rem; margin-top: 10px;">I knew it. Forever tethered. 🤍</p>
             </div>
         </section>
 
@@ -200,34 +193,31 @@
                     <div class="flip-inner">
                         <div class="face front">Click to Reveal 💌</div>
                         <div class="face back">
-                            Thanks for listening to someone who overthinks, who isn’t perfect, yet always chooses you.<br><br>
-                            <b>You staying mattered more than you'll ever know.</b>
+                            Thanks for listening to someone who overthinks, who isn’t perfect, yet always chooses you.
                         </div>
                     </div>
                 </div>
-                <p style="opacity: 0.5; font-size: 0.8rem;">Tap to see the truth.</p>
             </div>
         </section>
 
         <section id="code">
             <div class="glass-card stack">
                 <span class="badge">Binary Heart</span>
-                <div id="binary-box">01001001 00100000 01001100 01001111 01010110 01000101 00100000 01011001 01001111 01010101</div>
-                <p style="color: var(--gold); font-size: 0.8rem; margin-top: 10px;">TAP TO DECRYPT MY FEELINGS ✨</p>
+                <div id="binary-box">01001001 00100000 01001100 01001111 01010110 01000101</div>
+                <p style="color: var(--gold); font-size: 0.7rem;">TAP TO DECRYPT 🔐</p>
             </div>
         </section>
     </main>
 
     <script>
-        // --- Particle Engine ---
         const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
         function initParticles() {
             canvas.width = window.innerWidth; canvas.height = window.innerHeight;
             particles = [];
-            for (let i = 0; i < 90; i++) {
-                particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 2 + 0.5, s: Math.random() * 0.8 + 0.2, o: Math.random() * 0.5 + 0.2 });
+            for (let i = 0; i < 50; i++) {
+                particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 1.5 + 0.5, s: Math.random() * 0.5 + 0.1, o: Math.random() * 0.5 + 0.1 });
             }
         }
         function drawParticles() {
@@ -240,48 +230,37 @@
             requestAnimationFrame(drawParticles);
         }
 
-        // --- Choice Trick ---
         function moveNo() {
             const btn = document.getElementById('noBtn');
-            const yesBtn = document.getElementById('yesBtn');
-            const x = (Math.random() - 0.5) * 400;
-            const y = (Math.random() - 0.5) * 200;
+            const container = document.querySelector('.choice-wrapper').getBoundingClientRect();
+            // Keep the "No" button within the visible area of the card
+            const x = (Math.random() - 0.5) * (container.width - 80);
+            const y = (Math.random() - 0.5) * 150;
             btn.style.position = "absolute";
             btn.style.transform = `translate(${x}px, ${y}px)`;
-            const scale = parseFloat(yesBtn.style.transform.replace('scale(', '')) || 1;
-            yesBtn.style.transform = `scale(${Math.min(scale + 0.08, 1.5)})`;
         }
 
         function onAccepted() {
             document.getElementById('final-msg').style.display = 'block';
             document.getElementById('noBtn').style.visibility = 'hidden';
-            document.getElementById('yesBtn').innerText = "Confirmed ❤️";
-            for(let i=0; i<30; i++) setTimeout(createHeart, i * 150);
+            document.getElementById('yesBtn').innerText = "Yours Forever";
+            for(let i=0; i<20; i++) setTimeout(createHeart, i * 150);
         }
 
         function createHeart() {
             const h = document.createElement('div');
             h.className = 'heart'; h.style.left = Math.random() * 100 + 'vw';
-            const size = Math.random() * 15 + 15;
+            const size = Math.random() * 10 + 10;
             h.style.width = size + 'px'; h.style.height = size + 'px';
             h.style.background = (Math.random() > 0.5) ? '#d4af37' : '#ff4d4d';
-            const dur = Math.random() * 3000 + 2000;
-            h.animate([{ bottom: '-50px', opacity: 1 }, { bottom: '110vh', opacity: 0 }], { duration: dur });
+            const dur = Math.random() * 2000 + 2000;
+            h.animate([{ bottom: '-20px', opacity: 1 }, { bottom: '110vh', opacity: 0 }], { duration: dur });
             document.body.appendChild(h);
             setTimeout(() => h.remove(), dur);
         }
 
-        // --- Love Code Logic ---
         const binBox = document.getElementById('binary-box');
-        const loveLines = [
-            "I LOVE YOU",
-            "YOU ARE MY SAFE PLACE",
-            "MERI PEHLI AUR AAKHRI PASAND",
-            "CHOSEN FOREVER",
-            "TERE BIN JEENA SAZAA HAI",
-            "YOUR SMILE IS MY FAVORITE SIGHT",
-            "01001100 01001111 01010110 01000101"
-        ];
+        const loveLines = ["I LOVE YOU", "SAFE PLACE", "MERA SUKOON", "CHOSEN", "TERE BIN...", "MY EVERYTHING"];
         let mIdx = 0;
         binBox.onclick = () => {
             binBox.style.opacity = 0;
@@ -296,6 +275,7 @@
         }
 
         window.onload = () => { initParticles(); drawParticles(); };
+        window.onresize = initParticles;
     </script>
 </body>
 </html>
