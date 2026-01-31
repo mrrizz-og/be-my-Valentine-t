@@ -2,280 +2,500 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>My Legendary Valentine ✨</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Legendary Valentine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --gold: #d4af37;
-            --gold-bright: #fff2b2;
-            --gold-fade: rgba(212, 175, 55, 0.3);
-            --bg: #050505;
-            --glass: rgba(255, 255, 255, 0.06);
-            --curve: cubic-bezier(0.23, 1, 0.32, 1);
+            /* Luxury Color Palette */
+            --gold-primary: #D4AF37;
+            --gold-light: #F8E7B6;
+            --gold-shadow: #AA8A29;
+            --obsidian: #080808;
+            --glass-bg: rgba(20, 20, 20, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-main: #EAEAEA;
+            --text-muted: #888888;
+            --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--bg);
-            color: #fff;
+            background-color: var(--obsidian);
+            color: var(--text-main);
+            font-family: 'Manrope', sans-serif;
+            height: 100dvh;
             overflow: hidden;
-            width: 100vw;
-            height: 100dvh; /* Dynamic viewport height for mobile browsers */
+            display: flex;
+            flex-direction: column;
         }
 
-        #dynamic-bg { position: fixed; inset: 0; background: radial-gradient(circle at 50% 50%, #151515 0%, #000 100%); z-index: -1; }
-        canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 1; }
+        /* --- BACKGROUND FX --- */
+        #canvas-layer { position: fixed; inset: 0; z-index: 0; opacity: 0.6; }
+        
+        /* Film Grain Overlay for Texture */
+        .noise-overlay {
+            position: fixed; inset: 0; z-index: 1; pointer-events: none;
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
 
-        /* --- Mobile Responsive Header --- */
+        /* --- HEADER --- */
         header {
-            position: fixed; top: 0; width: 100%; z-index: 100;
-            padding: 15px 10px; text-align: center;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            position: relative; z-index: 10;
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
         }
 
-        header h1 {
-            font-family: 'Playfair Display', serif; font-size: clamp(1.2rem, 5vw, 2rem);
-            background: linear-gradient(90deg, var(--gold), #fff, var(--gold));
-            background-size: 200% auto; -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; animation: goldShimmer 5s linear infinite;
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 400;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            background: linear-gradient(135deg, var(--gold-light), var(--gold-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            letter-spacing: -0.02em;
         }
 
-        nav { 
-            margin-top: 10px; display: flex; justify-content: center; 
-            gap: 5px; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 5px;
-            -ms-overflow-style: none; scrollbar-width: none;
+        /* --- NAVIGATION --- */
+        nav {
+            display: inline-flex;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 5px;
+            border-radius: 100px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
         }
-        nav::-webkit-scrollbar { display: none; }
 
         .nav-btn {
-            background: none; border: 1px solid var(--gold-fade);
-            color: var(--gold); padding: 6px 12px; border-radius: 20px;
-            cursor: pointer; font-size: 0.65rem; white-space: nowrap;
-            transition: 0.3s var(--curve); text-transform: uppercase;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 8px 16px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.5s var(--ease-luxury);
         }
-        .nav-btn.active { background: var(--gold); color: #000; }
 
-        /* --- Sections Fix --- */
+        .nav-btn.active {
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--gold-light);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+        }
+
+        /* --- MAIN CONTENT AREA --- */
+        main {
+            flex: 1;
+            position: relative;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
         section {
-            display: none; height: 100dvh; width: 100%;
-            padding: 140px 15px 40px; position: absolute;
-            align-items: center; justify-content: center; z-index: 2;
+            position: absolute;
+            width: 100%;
+            padding: 20px;
+            display: none;
+            opacity: 0;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.8s var(--ease-luxury);
         }
-        section.active { display: flex; animation: revealSection 0.6s var(--curve) forwards; }
 
-        @keyframes revealSection {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        section.active {
+            display: flex;
+            opacity: 1;
+            animation: floatUp 0.8s var(--ease-luxury) forwards;
         }
 
+        @keyframes floatUp {
+            from { opacity: 0; transform: translateY(40px) scale(0.95); filter: blur(10px); }
+            to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+        }
+
+        /* --- THE GLASS CARD --- */
         .glass-card {
-            width: 100%; max-width: 360px; /* Perfect for mobile portrait */
-            background: var(--glass);
-            border: 1px solid rgba(212, 175, 55, 0.25);
-            border-radius: 30px; padding: 30px 20px;
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            text-align: center; position: relative;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            width: 100%;
+            max-width: 420px;
+            border-radius: 30px;
+            padding: 40px 30px;
+            text-align: center;
+            backdrop-filter: blur(40px); /* Heavy blur for premium look */
+            -webkit-backdrop-filter: blur(40px);
+            box-shadow: 
+                0 40px 80px -10px rgba(0,0,0,0.8),
+                inset 0 0 0 1px rgba(255,255,255,0.05);
+            position: relative;
+            overflow: hidden;
         }
 
-        .stack { display: flex; flex-direction: column; gap: 15px; align-items: center; }
-        .badge {
-            display: inline-block; padding: 4px 12px; border-radius: 50px;
-            border: 1px solid var(--gold); color: var(--gold);
-            font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px;
+        /* Shine effect on card */
+        .glass-card::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
+            transform: skewX(-25deg);
+            animation: shine 8s infinite;
         }
 
-        .quote { font-size: 1rem; line-height: 1.6; color: #f0f0f0; }
-        .divider { height: 1px; width: 80px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+        @keyframes shine { 0% { left: -100%; } 20% { left: 100%; } 100% { left: 100%; } }
 
-        /* --- Choice Button Logic (Mobile Centered) --- */
-        .choice-wrapper {
-            position: relative; margin-top: 25px; width: 100%; height: 100px;
-            display: flex; justify-content: center; align-items: center;
-        }
-        .buttons-container { display: flex; gap: 15px; align-items: center; }
-
-        .btn-yes {
-            padding: 12px 30px; border-radius: 50px; background: var(--gold);
-            color: #000; border: none; font-weight: 700; cursor: pointer;
-            font-size: 0.9rem; z-index: 10;
-        }
-
-        .btn-no {
-            padding: 12px 30px; border-radius: 50px; background: transparent;
-            color: #fff; border: 1px solid rgba(255,255,255,0.3);
-            font-size: 0.9rem; transition: 0.2s var(--curve); z-index: 5;
+        /* Typography inside Card */
+        .label {
+            display: inline-block;
+            font-size: 0.6rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold-primary);
+            margin-bottom: 20px;
+            opacity: 0.8;
+            border-bottom: 1px solid rgba(212,175,55,0.3);
+            padding-bottom: 5px;
         }
 
-        /* --- Flip Card Mobile size --- */
-        .flip-box { width: 260px; height: 160px; perspective: 1000px; margin: 10px auto; }
-        .flip-inner { position: relative; width: 100%; height: 100%; transition: 0.8s; transform-style: preserve-3d; }
-        .flip-box.open .flip-inner { transform: rotateY(180deg); }
-        .face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; display: flex; align-items: center; justify-content: center; padding: 15px; font-size: 0.85rem; }
-        .front { background: var(--gold); color: #000; font-weight: 700; }
-        .back { background: #111; transform: rotateY(180deg); border: 1px solid var(--gold); }
-
-        #binary-box {
-            background: #000; color: #00ff9c; font-family: monospace;
-            padding: 15px; border-radius: 12px; border: 1px solid rgba(0, 255, 156, 0.3);
-            word-break: break-all; font-size: 0.8rem; min-height: 80px;
-            display: flex; align-items: center; justify-content: center;
+        .text-body {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            line-height: 1.5;
+            color: #fff;
+            margin-bottom: 20px;
         }
 
-        .heart {
-            position: fixed; bottom: -50px; background: #ff4d4d;
-            clip-path: polygon(50% 0%, 100% 35%, 82% 100%, 50% 80%, 18% 100%, 0% 35%);
-            pointer-events: none; z-index: 1000;
+        .text-sub {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            line-height: 1.6;
         }
+
+        /* --- INTERACTIVE ELEMENTS --- */
+        
+        /* 1. The Choice Buttons */
+        .btn-group {
+            margin-top: 40px;
+            position: relative;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 14px 35px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-luxury);
+        }
+
+        .btn-primary {
+            background: var(--gold-primary);
+            color: #000;
+            border: none;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+        }
+        .btn-primary:hover { transform: scale(1.05); background: var(--gold-light); }
+
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--text-muted);
+        }
+
+        /* 2. Binary Decoder */
+        .decoder-box {
+            font-family: 'Courier New', monospace;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 20px;
+            border-radius: 12px;
+            color: var(--gold-light);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.3s;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .decoder-box:active { transform: scale(0.98); background: rgba(212, 175, 55, 0.05); }
+
+        /* 3. Envelope Flip */
+        .flip-container { perspective: 1000px; width: 100%; height: 200px; cursor: pointer; }
+        .flipper { position: relative; width: 100%; height: 100%; transition: 0.8s var(--ease-luxury); transform-style: preserve-3d; }
+        .flip-container.flipped .flipper { transform: rotateY(180deg); }
+        .front, .back {
+            position: absolute; width: 100%; height: 100%;
+            backface-visibility: hidden; border-radius: 20px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 30px;
+        }
+        .front { background: linear-gradient(135deg, #1a1a1a, #000); border: 1px solid var(--gold-shadow); }
+        .back { background: #fff; color: #000; transform: rotateY(180deg); text-align: left; }
+        .handwriting { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.1rem; color: #111; }
+
+        /* --- HEARTS ANIMATION --- */
+        .heart-fx {
+            position: fixed;
+            color: var(--gold-primary);
+            font-size: 20px;
+            pointer-events: none;
+            z-index: 100;
+            animation: floatHeart 4s ease-out forwards;
+        }
+        @keyframes floatHeart {
+            0% { transform: translateY(0) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1.5) rotate(45deg); opacity: 0; }
+        }
+
     </style>
 </head>
 <body>
 
-    <div id="dynamic-bg"></div>
-    <canvas id="particleCanvas"></canvas>
+    <div class="noise-overlay"></div>
+    <canvas id="canvas-layer"></canvas>
 
     <header>
-        <h1>My Legendary Valentine</h1>
+        <h1>Valentine Pro</h1>
         <nav>
-            <button class="nav-btn active" onclick="showSection('poetry', this)">Poetry</button>
-            <button class="nav-btn" onclick="showSection('scrap', this)">Scrapbook</button>
-            <button class="nav-btn" onclick="showSection('choice', this)">The Choice</button>
-            <button class="nav-btn" onclick="showSection('card', this)">Greeting</button>
-            <button class="nav-btn" onclick="showSection('code', this)">Love Code</button>
+            <button class="nav-btn active" onclick="nav('poetry', this)">Verses</button>
+            <button class="nav-btn" onclick="nav('memories', this)">Memories</button>
+            <button class="nav-btn" onclick="nav('ask', this)">The Ask</button>
+            <button class="nav-btn" onclick="nav('code', this)">Decrypt</button>
+            <button class="nav-btn" onclick="nav('note', this)">Note</button>
         </nav>
     </header>
 
     <main>
         <section id="poetry" class="active">
-            <div class="glass-card stack">
-                <span class="badge">Ethereal Verses</span>
-                <div class="quote">Sochta hoon toh sirf tum hi yaad aati ho,<br>Jaise har dua ka jawaab ban jaati ho.</div>
-                <div class="divider"></div>
-                <div class="quote">Tumhari aankhon mein jo sukoon hai,<br>Wahin meri har kahani shuru hoti hai.</div>
+            <div class="glass-card">
+                <span class="label">The Muse</span>
+                <p class="text-body">"In a gallery of art,<br>I would still stare<br>at you."</p>
+                <div style="width: 50px; height: 1px; background: var(--gold-primary); margin: 20px auto; opacity: 0.5;"></div>
+                <p class="text-sub">My chaos found its quiet the moment our paths crossed. You are the poetry I never knew how to write.</p>
             </div>
         </section>
 
-        <section id="scrap">
-            <div class="glass-card stack">
-                <span class="badge">Soul Fragments</span>
-                <div class="quote">📌 Some people feel like home. You are my home.</div>
-                <div class="divider"></div>
-                <div class="quote">📌 Your smile fixes my chaos instantly.</div>
-                <div class="divider"></div>
-                <div class="quote">📌 I didn’t plan this, my heart just chose you.</div>
-            </div>
-        </section>
-
-        <section id="choice">
-            <div class="glass-card stack">
-                <span class="badge">A Heart's Decision</span>
-                <div class="quote" style="font-style: italic; color: var(--gold-bright); font-size: 1.1rem;">"I'll choose you in a world full of billions..."</div>
-                <div class="choice-wrapper">
-                    <div class="buttons-container">
-                        <button class="btn-yes" id="yesBtn" onclick="onAccepted()">Yes ❤️</button>
-                        <button class="btn-no" id="noBtn" onmouseover="moveNo()" ontouchstart="moveNo()">No</button>
+        <section id="memories">
+            <div class="glass-card">
+                <span class="label">Core Memories</span>
+                <div style="text-align: left; display: flex; flex-direction: column; gap: 15px;">
+                    <div style="border-left: 2px solid var(--gold-primary); padding-left: 15px;">
+                        <p class="text-sub" style="color: #fff;">01. The way you laugh.</p>
+                        <p class="text-sub" style="font-size: 0.8rem;">It's my favorite sound in the universe.</p>
+                    </div>
+                    <div style="border-left: 2px solid var(--gold-primary); padding-left: 15px;">
+                        <p class="text-sub" style="color: #fff;">02. Your resilience.</p>
+                        <p class="text-sub" style="font-size: 0.8rem;">You face the world with a grace I envy.</p>
+                    </div>
+                    <div style="border-left: 2px solid var(--gold-primary); padding-left: 15px;">
+                        <p class="text-sub" style="color: #fff;">03. Us.</p>
+                        <p class="text-sub" style="font-size: 0.8rem;">Every second we spend together.</p>
                     </div>
                 </div>
-                <p id="final-msg" style="display:none; color: var(--gold); font-size: 0.9rem; margin-top: 10px;">I knew it. Forever tethered. 🤍</p>
             </div>
         </section>
 
-        <section id="card">
-            <div class="glass-card stack">
-                <span class="badge">Secret Keepsake</span>
-                <div class="flip-box" onclick="this.classList.toggle('open')">
-                    <div class="flip-inner">
-                        <div class="face front">Click to Reveal 💌</div>
-                        <div class="face back">
-                            Thanks for listening to someone who overthinks, who isn’t perfect, yet always chooses you.
+        <section id="ask">
+            <div class="glass-card">
+                <span class="label">The Question</span>
+                <p class="text-body">Will you be my Valentine?</p>
+                <p class="text-sub">There is no Plan B. It's you. It's always been you.</p>
+                
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="btnYes" onclick="acceptLove()">Yes, Forever</button>
+                    <button class="btn btn-ghost" id="btnNo" onmouseover="dodge(this)" ontouchstart="dodge(this)">No</button>
+                </div>
+                
+                <p id="success-msg" style="display:none; margin-top: 25px; color: var(--gold-light); font-weight: 600; letter-spacing: 1px;">
+                    DESTINY CONFIRMED. ❤️
+                </p>
+            </div>
+        </section>
+
+        <section id="code">
+            <div class="glass-card">
+                <span class="label">Encrypted Feelings</span>
+                <div class="decoder-box" id="decoder" onclick="decrypt()">
+                    01001001 00100000 01001100 01001111 01010110 01000101 00100000 01011001 01001111 01010101
+                </div>
+                <p class="text-sub" style="margin-top: 15px;">Tap the terminal to decrypt.</p>
+            </div>
+        </section>
+
+        <section id="note">
+            <div class="glass-card">
+                <span class="label">For Your Eyes Only</span>
+                <div class="flip-container" onclick="this.classList.toggle('flipped')">
+                    <div class="flipper">
+                        <div class="front">
+                            <span style="font-size: 2rem;">💌</span>
+                            <p style="margin-top: 10px; color: var(--gold-primary); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;">Open Letter</p>
+                        </div>
+                        <div class="back">
+                            <p class="handwriting">
+                                "Thank you for being my peace, my partner, and my best friend. Life is simply better with you in it."
+                            </p>
+                            <p class="handwriting" style="margin-top: 20px; text-align: right;">- Yours</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
-        <section id="code">
-            <div class="glass-card stack">
-                <span class="badge">Binary Heart</span>
-                <div id="binary-box">01001001 00100000 01001100 01001111 01010110 01000101</div>
-                <p style="color: var(--gold); font-size: 0.7rem;">TAP TO DECRYPT 🔐</p>
-            </div>
-        </section>
     </main>
 
     <script>
-        const canvas = document.getElementById('particleCanvas');
+        // --- 1. NAVIGATION LOGIC ---
+        function nav(id, btn) {
+            // Remove active classes
+            document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            
+            // Add active classes
+            document.getElementById(id).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        // --- 2. CANVAS BACKGROUND (Gold Dust) ---
+        const canvas = document.getElementById('canvas-layer');
         const ctx = canvas.getContext('2d');
         let particles = [];
-        function initParticles() {
-            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-            particles = [];
-            for (let i = 0; i < 50; i++) {
-                particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 1.5 + 0.5, s: Math.random() * 0.5 + 0.1, o: Math.random() * 0.5 + 0.1 });
+        
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2;
+                this.speedX = (Math.random() - 0.5) * 0.2;
+                this.speedY = (Math.random() - 0.5) * 0.2;
+                this.opacity = Math.random() * 0.5;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+            }
+            draw() {
+                ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
             }
         }
-        function drawParticles() {
+
+        // Create initial particles
+        for(let i=0; i<60; i++) particles.push(new Particle());
+
+        function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                ctx.fillStyle = `rgba(212, 175, 55, ${p.o})`;
-                ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
-                p.y += p.s; if (p.y > canvas.height) p.y = -10;
-            });
-            requestAnimationFrame(drawParticles);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
         }
+        animate();
 
-        function moveNo() {
-            const btn = document.getElementById('noBtn');
-            const container = document.querySelector('.choice-wrapper').getBoundingClientRect();
-            // Keep the "No" button within the visible area of the card
-            const x = (Math.random() - 0.5) * (container.width - 80);
-            const y = (Math.random() - 0.5) * 150;
-            btn.style.position = "absolute";
+        // --- 3. THE "NO" BUTTON PHYSICS ---
+        function dodge(btn) {
+            const container = document.querySelector('.btn-group');
+            const rect = container.getBoundingClientRect();
+            
+            // Calculate boundaries relative to the container
+            const x = (Math.random() - 0.5) * 250; 
+            const y = (Math.random() - 0.5) * 250;
+            
+            btn.style.position = 'absolute';
+            btn.style.transition = 'all 0.4s cubic-bezier(0.1, 0.9, 0.2, 1)'; // Snappy transition
             btn.style.transform = `translate(${x}px, ${y}px)`;
+            
+            // Subtle pulse on the Yes button
+            const yesBtn = document.getElementById('btnYes');
+            yesBtn.animate([
+                { transform: 'scale(1)' },
+                { transform: 'scale(1.1)' },
+                { transform: 'scale(1)' }
+            ], { duration: 300 });
         }
 
-        function onAccepted() {
-            document.getElementById('final-msg').style.display = 'block';
-            document.getElementById('noBtn').style.visibility = 'hidden';
-            document.getElementById('yesBtn').innerText = "Yours Forever";
-            for(let i=0; i<20; i++) setTimeout(createHeart, i * 150);
+        // --- 4. ACCEPTANCE SEQUENCE ---
+        function acceptLove() {
+            const noBtn = document.getElementById('btnNo');
+            const yesBtn = document.getElementById('btnYes');
+            
+            noBtn.style.opacity = '0';
+            noBtn.style.pointerEvents = 'none';
+            yesBtn.innerText = "❤️";
+            
+            document.getElementById('success-msg').style.display = 'block';
+            
+            // Burst of hearts
+            for(let i=0; i<30; i++) {
+                setTimeout(() => createHeart(), i * 100);
+            }
         }
 
         function createHeart() {
             const h = document.createElement('div');
-            h.className = 'heart'; h.style.left = Math.random() * 100 + 'vw';
-            const size = Math.random() * 10 + 10;
-            h.style.width = size + 'px'; h.style.height = size + 'px';
-            h.style.background = (Math.random() > 0.5) ? '#d4af37' : '#ff4d4d';
-            const dur = Math.random() * 2000 + 2000;
-            h.animate([{ bottom: '-20px', opacity: 1 }, { bottom: '110vh', opacity: 0 }], { duration: dur });
+            h.innerHTML = Math.random() > 0.5 ? '❤️' : '✨';
+            h.className = 'heart-fx';
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.bottom = '-50px';
+            h.style.animationDuration = (Math.random() * 2 + 3) + 's';
             document.body.appendChild(h);
-            setTimeout(() => h.remove(), dur);
+            setTimeout(() => h.remove(), 5000);
         }
 
-        const binBox = document.getElementById('binary-box');
-        const loveLines = ["I LOVE YOU", "SAFE PLACE", "MERA SUKOON", "CHOSEN", "TERE BIN...", "MY EVERYTHING"];
-        let mIdx = 0;
-        binBox.onclick = () => {
-            binBox.style.opacity = 0;
-            setTimeout(() => { binBox.innerText = loveLines[mIdx]; binBox.style.opacity = 1; mIdx = (mIdx + 1) % loveLines.length; }, 200);
-        };
-
-        function showSection(id, btn) {
-            document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+        // --- 5. DECRYPTION EFFECT ---
+        const messages = ["I LOVE YOU", "ALWAYS", "MY SOULMATE", "FOREVER"];
+        let msgIndex = 0;
+        
+        function decrypt() {
+            const box = document.getElementById('decoder');
+            const targetText = messages[msgIndex];
+            let iterations = 0;
+            
+            const interval = setInterval(() => {
+                box.innerText = targetText.split('')
+                    .map((letter, index) => {
+                        if(index < iterations) return targetText[index];
+                        return String.fromCharCode(65 + Math.floor(Math.random() * 26)); // Random char
+                    })
+                    .join('');
+                
+                if(iterations >= targetText.length) { 
+                    clearInterval(interval);
+                    msgIndex = (msgIndex + 1) % messages.length;
+                }
+                
+                iterations += 1/3; 
+            }, 30);
         }
 
-        window.onload = () => { initParticles(); drawParticles(); };
-        window.onresize = initParticles;
     </script>
 </body>
 </html>
