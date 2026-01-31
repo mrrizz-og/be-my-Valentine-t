@@ -3,22 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>The Legendary Valentine</title>
+    <title>My Legendary Valentine</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            /* Luxury Color Palette */
             --gold-primary: #D4AF37;
             --gold-light: #F8E7B6;
-            --gold-shadow: #AA8A29;
-            --obsidian: #080808;
-            --glass-bg: rgba(20, 20, 20, 0.4);
-            --glass-border: rgba(255, 255, 255, 0.08);
+            --gold-glow: #ffd700;
+            --obsidian: #050505;
+            --glass-bg: rgba(10, 10, 10, 0.75);
+            --glass-border: rgba(212, 175, 55, 0.2);
             --text-main: #EAEAEA;
-            --text-muted: #888888;
+            --text-muted: #999999;
             --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -35,239 +34,96 @@
         }
 
         /* --- BACKGROUND FX --- */
-        #canvas-layer { position: fixed; inset: 0; z-index: 0; opacity: 0.6; }
-        
-        /* Film Grain Overlay for Texture */
-        .noise-overlay {
-            position: fixed; inset: 0; z-index: 1; pointer-events: none;
-            opacity: 0.05;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        }
+        #canvas-layer { position: fixed; inset: 0; z-index: 0; opacity: 0.95; filter: blur(0.4px); }
+        .noise-overlay { position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.04; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); }
 
-        /* --- HEADER --- */
         header {
-            position: relative; z-index: 10;
-            padding: 20px;
-            text-align: center;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            padding: 10px 0; text-align: center;
+            background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
         }
 
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-weight: 400;
-            font-size: clamp(1.8rem, 5vw, 2.5rem);
-            background: linear-gradient(135deg, var(--gold-light), var(--gold-primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-            letter-spacing: -0.02em;
-        }
+        h1 { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(1.4rem, 5vw, 1.8rem); color: var(--gold-light); margin-bottom: 8px; display: flex; justify-content: center; align-items: center; gap: 10px; }
+        .beating-heart { display: inline-block; animation: heartBeat 1.5s infinite; filter: drop-shadow(0 0 8px var(--gold-primary)); }
 
-        /* --- NAVIGATION --- */
-        nav {
-            display: inline-flex;
-            gap: 5px;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 5px;
-            border-radius: 100px;
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(10px);
-        }
+        @keyframes heartBeat { 0%, 70%, 100% { transform: scale(1); } 14%, 42% { transform: scale(1.3); } }
+
+        nav { display: flex; overflow-x: auto; gap: 12px; padding: 5px 20px 15px; width: 100%; scrollbar-width: none; }
+        nav::-webkit-scrollbar { display: none; }
+        .nav-inner { display: flex; gap: 10px; margin: 0 auto; }
 
         .nav-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            padding: 8px 16px;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
-            cursor: pointer;
-            border-radius: 50px;
-            transition: all 0.5s var(--ease-luxury);
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255,255,255,0.1); color: var(--text-muted);
+            padding: 8px 18px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px;
+            font-weight: 600; cursor: pointer; border-radius: 50px; transition: 0.3s var(--ease-luxury); white-space: nowrap;
         }
 
         .nav-btn.active {
-            background: rgba(212, 175, 55, 0.15);
-            color: var(--gold-light);
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+            background: rgba(212, 175, 55, 0.15); color: #fff; border-color: var(--gold-primary);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+            text-shadow: 0 0 5px var(--gold-light); transform: scale(1.05);
         }
 
-        /* --- MAIN CONTENT AREA --- */
-        main {
-            flex: 1;
-            position: relative;
-            z-index: 5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            perspective: 1000px;
-        }
-
-        section {
-            position: absolute;
-            width: 100%;
-            padding: 20px;
-            display: none;
-            opacity: 0;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.8s var(--ease-luxury);
-        }
-
-        section.active {
-            display: flex;
-            opacity: 1;
-            animation: floatUp 0.8s var(--ease-luxury) forwards;
-        }
-
-        @keyframes floatUp {
-            from { opacity: 0; transform: translateY(40px) scale(0.95); filter: blur(10px); }
-            to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
-        }
-
-        /* --- THE GLASS CARD --- */
-        .glass-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            width: 100%;
-            max-width: 420px;
-            border-radius: 30px;
-            padding: 40px 30px;
-            text-align: center;
-            backdrop-filter: blur(40px); /* Heavy blur for premium look */
-            -webkit-backdrop-filter: blur(40px);
-            box-shadow: 
-                0 40px 80px -10px rgba(0,0,0,0.8),
-                inset 0 0 0 1px rgba(255,255,255,0.05);
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Shine effect on card */
-        .glass-card::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
-            transform: skewX(-25deg);
-            animation: shine 8s infinite;
-        }
-
-        @keyframes shine { 0% { left: -100%; } 20% { left: 100%; } 100% { left: 100%; } }
-
-        /* Typography inside Card */
-        .label {
-            display: inline-block;
-            font-size: 0.6rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--gold-primary);
-            margin-bottom: 20px;
-            opacity: 0.8;
-            border-bottom: 1px solid rgba(212,175,55,0.3);
-            padding-bottom: 5px;
-        }
-
-        .text-body {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            line-height: 1.5;
-            color: #fff;
-            margin-bottom: 20px;
-        }
-
-        .text-sub {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            font-weight: 300;
-            line-height: 1.6;
-        }
-
-        /* --- INTERACTIVE ELEMENTS --- */
+        main { flex: 1; position: relative; z-index: 5; height: 100%; width: 100%; }
+        section { position: absolute; inset: 0; padding: 160px 20px 40px; display: none; opacity: 0; justify-content: center; align-items: center; transition: 0.8s var(--ease-luxury); overflow-y: auto; }
+        section.active { display: flex; opacity: 1; animation: floatUp 0.7s var(--ease-luxury) forwards; }
         
-        /* 1. The Choice Buttons */
-        .btn-group {
-            margin-top: 40px;
-            position: relative;
-            height: 60px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
+        @keyframes floatUp { from { opacity: 0; transform: translateY(20px); filter: blur(10px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+
+        .glass-card {
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            width: 100%; max-width: 400px; border-radius: 30px; padding: 40px 25px;
+            text-align: center; position: relative; box-shadow: 0 30px 60px -10px rgba(0,0,0,0.8);
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
         }
 
-        .btn {
-            padding: 14px 35px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s var(--ease-luxury);
+        .label { display: inline-block; font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold-primary); margin-bottom: 25px; padding: 5px 15px; border-radius: 20px; background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.2); }
+        .text-verse { font-family: 'Playfair Display', serif; font-size: 1.1rem; line-height: 1.6; color: #fff; margin-bottom: 15px; }
+        .text-sub { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+
+        /* --- BUTTONS: REFINED GLOW --- */
+        .btn-yes { 
+            padding: 14px 45px; border-radius: 50px; 
+            background: linear-gradient(135deg, var(--gold-primary), #B8860B); 
+            color: #000; border: none; font-weight: 800; cursor: pointer; 
+            text-transform: uppercase; letter-spacing: 1.5px; position: relative; overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(212, 175, 55, 0.4), 0 10px 25px -5px rgba(212, 175, 55, 0.3);
+            transition: all 0.4s var(--ease-luxury);
         }
 
-        .btn-primary {
-            background: var(--gold-primary);
-            color: #000;
-            border: none;
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
-        }
-        .btn-primary:hover { transform: scale(1.05); background: var(--gold-light); }
-
-        .btn-ghost {
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.2);
-            color: var(--text-muted);
+        .btn-yes:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(212, 175, 55, 0.6), 0 15px 35px -5px rgba(212, 175, 55, 0.5);
+            filter: brightness(1.1);
         }
 
-        /* 2. Binary Decoder */
-        .decoder-box {
-            font-family: 'Courier New', monospace;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            padding: 20px;
-            border-radius: 12px;
-            color: var(--gold-light);
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: 0.3s;
-            min-height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+        .btn-yes::after {
+            content: ''; position: absolute; top: -50%; left: -100%; width: 100%; height: 200%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: rotate(35deg); animation: shimmer 4s infinite;
         }
-        .decoder-box:active { transform: scale(0.98); background: rgba(212, 175, 55, 0.05); }
 
-        /* 3. Envelope Flip */
-        .flip-container { perspective: 1000px; width: 100%; height: 200px; cursor: pointer; }
+        @keyframes shimmer { 0% { left: -100%; } 30% { left: 150%; } 100% { left: 150%; } }
+
+        .btn-no { 
+            padding: 14px 40px; border-radius: 50px; background: rgba(255, 255, 255, 0.05); 
+            color: var(--text-muted); border: 1px solid rgba(255,255,255,0.1); 
+            font-weight: 400; transition: 0.3s;
+        }
+
+        /* --- OTHER UI --- */
+        .front { background: linear-gradient(135deg, #1a1a1a, #0a0a0a); }
+        .back { background: linear-gradient(135deg, #252525, #050505); color: var(--gold-light); transform: rotateY(180deg); }
+        .flip-container { perspective: 1000px; width: 100%; height: 220px; cursor: pointer; }
         .flipper { position: relative; width: 100%; height: 100%; transition: 0.8s var(--ease-luxury); transform-style: preserve-3d; }
         .flip-container.flipped .flipper { transform: rotateY(180deg); }
-        .front, .back {
-            position: absolute; width: 100%; height: 100%;
-            backface-visibility: hidden; border-radius: 20px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 30px;
-        }
-        .front { background: linear-gradient(135deg, #1a1a1a, #000); border: 1px solid var(--gold-shadow); }
-        .back { background: #fff; color: #000; transform: rotateY(180deg); text-align: left; }
-        .handwriting { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.1rem; color: #111; }
+        .front, .back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 20px; padding: 25px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid var(--glass-border); }
 
-        /* --- HEARTS ANIMATION --- */
-        .heart-fx {
-            position: fixed;
-            color: var(--gold-primary);
-            font-size: 20px;
-            pointer-events: none;
-            z-index: 100;
-            animation: floatHeart 4s ease-out forwards;
-        }
-        @keyframes floatHeart {
-            0% { transform: translateY(0) scale(0.5); opacity: 1; }
-            100% { transform: translateY(-100vh) scale(1.5) rotate(45deg); opacity: 0; }
-        }
+        .heart-fx { position: fixed; pointer-events: none; z-index: 999; font-size: 24px; animation: floatUpHeart 3s ease-out forwards; filter: drop-shadow(0 0 10px var(--gold-primary)); }
+        @keyframes floatUpHeart { 0% { transform: translateY(0) scale(0.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(-100vh) scale(1.5) rotate(45deg); opacity: 0; } }
 
+        .decoder-box { font-family: 'Courier New', monospace; background: #000; border: 1px solid var(--gold-primary); padding: 20px; border-radius: 12px; color: var(--gold-light); cursor: pointer; min-height: 80px; display: flex; align-items: center; justify-content: center; text-shadow: 0 0 8px var(--gold-primary); box-shadow: inset 0 0 15px rgba(212, 175, 55, 0.1); }
     </style>
 </head>
 <body>
@@ -276,107 +132,89 @@
     <canvas id="canvas-layer"></canvas>
 
     <header>
-        <h1>Valentine Pro</h1>
+        <h1>My <span class="beating-heart">💖</span> Valentine</h1>
         <nav>
-            <button class="nav-btn active" onclick="nav('poetry', this)">Verses</button>
-            <button class="nav-btn" onclick="nav('memories', this)">Memories</button>
-            <button class="nav-btn" onclick="nav('ask', this)">The Ask</button>
-            <button class="nav-btn" onclick="nav('code', this)">Decrypt</button>
-            <button class="nav-btn" onclick="nav('note', this)">Note</button>
+            <div class="nav-inner">
+                <button class="nav-btn active" onclick="nav('poetry', this)">Poetry</button>
+                <button class="nav-btn" onclick="nav('scrapbook', this)">Scrapbook</button>
+                <button class="nav-btn" onclick="nav('choice', this)">The Choice</button>
+                <button class="nav-btn" onclick="nav('greeting', this)">Greeting</button>
+                <button class="nav-btn" onclick="nav('lovecode', this)">Love Code</button>
+            </div>
         </nav>
     </header>
 
     <main>
         <section id="poetry" class="active">
             <div class="glass-card">
-                <span class="label">The Muse</span>
-                <p class="text-body">"In a gallery of art,<br>I would still stare<br>at you."</p>
-                <div style="width: 50px; height: 1px; background: var(--gold-primary); margin: 20px auto; opacity: 0.5;"></div>
-                <p class="text-sub">My chaos found its quiet the moment our paths crossed. You are the poetry I never knew how to write.</p>
+                <span class="label">Ethereal Verses</span>
+                <p class="text-verse">"Sochta hoon toh sirf tum hi yaad aati ho,<br>Jaise har dua ka jawaab ban jaati ho."</p>
+                <div class="divider" style="height:1px; width:60px; background:var(--gold-primary); margin:15px auto; opacity:0.4;"></div>
+                <p class="text-verse">"Tumhari aankhon mein jo sukoon hai,<br>Wahin meri har kahani shuru hoti hai."</p>
+                <div class="divider" style="height:1px; width:60px; background:var(--gold-primary); margin:15px auto; opacity:0.4;"></div>
+                <p class="text-verse">"Kahin toh likha hai humara saath,<br>Zameen se falak tak, tera mera raasta."</p>
             </div>
         </section>
 
-        <section id="memories">
+        <section id="scrapbook">
             <div class="glass-card">
-                <span class="label">Core Memories</span>
+                <span class="label">Soul Fragments</span>
                 <div style="text-align: left; display: flex; flex-direction: column; gap: 15px;">
-                    <div style="border-left: 2px solid var(--gold-primary); padding-left: 15px;">
-                        <p class="text-sub" style="color: #fff;">01. The way you laugh.</p>
-                        <p class="text-sub" style="font-size: 0.8rem;">It's my favorite sound in the universe.</p>
-                    </div>
-                    <div style="border-left: 2px solid var(--gold-primary); padding-left: 15px;">
-                        <p class="text-sub" style="color: #fff;">02. Your resilience.</p>
-                        <p class="text-sub" style="font-size: 0.8rem;">You face the world with a grace I envy.</p>
-                    </div>
-                    <div style="border-left: 2px solid var(--gold-primary); padding-left: 15px;">
-                        <p class="text-sub" style="color: #fff;">03. Us.</p>
-                        <p class="text-sub" style="font-size: 0.8rem;">Every second we spend together.</p>
-                    </div>
+                    <p class="text-sub" style="color:#fff;">📌 Some people feel like home. <br><span style="color:var(--text-muted); font-size:0.75rem;">You are my permanent residence.</span></p>
+                    <p class="text-sub" style="color:#fff;">📌 Your smile fixes my chaos instantly.</p>
+                    <p class="text-sub" style="color:#fff;">📌 I didn't plan this—my heart just chose you.</p>
+                    <p class="text-sub" style="color:#fff;">📌 In a room full of art, I'd still stare at you.</p>
                 </div>
             </div>
         </section>
 
-        <section id="ask">
+        <section id="choice">
             <div class="glass-card">
                 <span class="label">The Question</span>
-                <p class="text-body">Will you be my Valentine?</p>
-                <p class="text-sub">There is no Plan B. It's you. It's always been you.</p>
-                
-                <div class="btn-group">
-                    <button class="btn btn-primary" id="btnYes" onclick="acceptLove()">Yes, Forever</button>
-                    <button class="btn btn-ghost" id="btnNo" onmouseover="dodge(this)" ontouchstart="dodge(this)">No</button>
+                <p class="text-verse" style="font-size: 1.4rem;">Will you be my Valentine?</p>
+                <p class="text-sub" style="margin-top: -10px; font-style: italic;">"I'll choose you in a world full of billions..."</p>
+                <div style="display:flex; gap:15px; justify-content:center; margin-top:30px; position: relative; height: 60px; align-items: center;">
+                    <button class="btn-yes" id="btnYes" onclick="acceptLove()">Yes ❤️</button>
+                    <button class="btn-no" id="btnNo" onmouseover="dodge(this)" ontouchstart="dodge(this)">No</button>
                 </div>
-                
-                <p id="success-msg" style="display:none; margin-top: 25px; color: var(--gold-light); font-weight: 600; letter-spacing: 1px;">
-                    DESTINY CONFIRMED. ❤️
-                </p>
+                <p id="success-msg" style="display:none; margin-top:25px; color:var(--gold-light); font-weight: 600; letter-spacing: 1px;">FOREVER TETHERED. 🤍</p>
             </div>
         </section>
 
-        <section id="code">
+        <section id="greeting">
             <div class="glass-card">
-                <span class="label">Encrypted Feelings</span>
-                <div class="decoder-box" id="decoder" onclick="decrypt()">
-                    01001001 00100000 01001100 01001111 01010110 01000101 00100000 01011001 01001111 01010101
-                </div>
-                <p class="text-sub" style="margin-top: 15px;">Tap the terminal to decrypt.</p>
-            </div>
-        </section>
-
-        <section id="note">
-            <div class="glass-card">
-                <span class="label">For Your Eyes Only</span>
+                <span class="label">Secret Note</span>
                 <div class="flip-container" onclick="this.classList.toggle('flipped')">
                     <div class="flipper">
-                        <div class="front">
-                            <span style="font-size: 2rem;">💌</span>
-                            <p style="margin-top: 10px; color: var(--gold-primary); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;">Open Letter</p>
-                        </div>
+                        <div class="front"><span>💌</span><p style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; margin-top: 10px;">Tap to Reveal</p></div>
                         <div class="back">
-                            <p class="handwriting">
-                                "Thank you for being my peace, my partner, and my best friend. Life is simply better with you in it."
-                            </p>
-                            <p class="handwriting" style="margin-top: 20px; text-align: right;">- Yours</p>
+                            <p style="line-height: 1.6; font-size: 0.95rem;">"Thanks for staying. Even when I overthink, even when the world gets loud, you are my quiet place."</p>
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <section id="lovecode">
+            <div class="glass-card">
+                <span class="label">Binary Heart</span>
+                <div class="decoder-box" id="decoder" onclick="decrypt()">01001001 00100000 01001100 01010101 01010110</div>
+                <p style="font-size: 0.65rem; color: var(--gold-primary); margin-top: 15px; letter-spacing: 1px;">TAP TO DECODE MY FREQUENCY</p>
             </div>
         </section>
     </main>
 
     <script>
-        // --- 1. NAVIGATION LOGIC ---
+        // Navigation Logic
         function nav(id, btn) {
-            // Remove active classes
             document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            
-            // Add active classes
             document.getElementById(id).classList.add('active');
             btn.classList.add('active');
+            btn.scrollIntoView({ behavior: 'smooth', inline: 'center' });
         }
 
-        // --- 2. CANVAS BACKGROUND (Gold Dust) ---
+        // Particle Canvas Logic
         const canvas = document.getElementById('canvas-layer');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -386,77 +224,58 @@
         resize();
 
         class Particle {
-            constructor() {
-                this.reset();
-            }
+            constructor() { this.reset(); }
             reset() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2;
-                this.speedX = (Math.random() - 0.5) * 0.2;
-                this.speedY = (Math.random() - 0.5) * 0.2;
-                this.opacity = Math.random() * 0.5;
+                this.size = Math.random() * 1.8 + 0.6; 
+                this.speedX = (Math.random() - 0.5) * 0.15;
+                this.speedY = (Math.random() - 0.5) * 0.15;
+                this.opacity = 0;
+                this.maxOpacity = Math.random() * 0.7 + 0.3;
+                this.fadeSpeed = Math.random() * 0.008 + 0.003;
+                this.isFadingOut = false;
             }
             update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
+                this.x += this.speedX; this.y += this.speedY;
+                if (!this.isFadingOut) {
+                    this.opacity += this.fadeSpeed;
+                    if (this.opacity >= this.maxOpacity) this.isFadingOut = true;
+                } else {
+                    this.opacity -= this.fadeSpeed;
+                    if (this.opacity <= 0) this.reset();
+                }
                 if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
             }
             draw() {
-                ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.globalCompositeOperation = 'lighter';
+                const wideGrad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 18);
+                wideGrad.addColorStop(0, `rgba(212, 175, 55, ${this.opacity * 0.3})`);
+                wideGrad.addColorStop(1, 'rgba(212, 175, 55, 0)');
+                ctx.fillStyle = wideGrad;
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size * 18, 0, Math.PI * 2); ctx.fill();
+
+                ctx.fillStyle = `rgba(255, 255, 240, ${this.opacity})`;
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+                ctx.globalCompositeOperation = 'source-over';
             }
         }
 
-        // Create initial particles
-        for(let i=0; i<60; i++) particles.push(new Particle());
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            requestAnimationFrame(animate);
-        }
+        for(let i=0; i<85; i++) particles.push(new Particle());
+        function animate() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
         animate();
 
-        // --- 3. THE "NO" BUTTON PHYSICS ---
+        // Interaction Logic
         function dodge(btn) {
-            const container = document.querySelector('.btn-group');
-            const rect = container.getBoundingClientRect();
-            
-            // Calculate boundaries relative to the container
-            const x = (Math.random() - 0.5) * 250; 
-            const y = (Math.random() - 0.5) * 250;
-            
             btn.style.position = 'absolute';
-            btn.style.transition = 'all 0.4s cubic-bezier(0.1, 0.9, 0.2, 1)'; // Snappy transition
-            btn.style.transform = `translate(${x}px, ${y}px)`;
-            
-            // Subtle pulse on the Yes button
-            const yesBtn = document.getElementById('btnYes');
-            yesBtn.animate([
-                { transform: 'scale(1)' },
-                { transform: 'scale(1.1)' },
-                { transform: 'scale(1)' }
-            ], { duration: 300 });
+            btn.style.left = Math.random() * 70 + '%';
+            btn.style.top = Math.random() * 70 + '%';
         }
 
-        // --- 4. ACCEPTANCE SEQUENCE ---
         function acceptLove() {
-            const noBtn = document.getElementById('btnNo');
-            const yesBtn = document.getElementById('btnYes');
-            
-            noBtn.style.opacity = '0';
-            noBtn.style.pointerEvents = 'none';
-            yesBtn.innerText = "❤️";
-            
+            document.getElementById('btnNo').style.display = 'none';
             document.getElementById('success-msg').style.display = 'block';
-            
-            // Burst of hearts
-            for(let i=0; i<30; i++) {
-                setTimeout(() => createHeart(), i * 100);
-            }
+            for(let i=0; i<40; i++) setTimeout(createHeart, i * 150);
         }
 
         function createHeart() {
@@ -465,37 +284,34 @@
             h.className = 'heart-fx';
             h.style.left = Math.random() * 100 + 'vw';
             h.style.bottom = '-50px';
-            h.style.animationDuration = (Math.random() * 2 + 3) + 's';
             document.body.appendChild(h);
-            setTimeout(() => h.remove(), 5000);
+            setTimeout(() => h.remove(), 3000);
         }
 
-        // --- 5. DECRYPTION EFFECT ---
-        const messages = ["I LOVE YOU", "ALWAYS", "MY SOULMATE", "FOREVER"];
-        let msgIndex = 0;
-        
+        // Love Code Logic
+        const phrases = ["I LOVE YOU", "MY EVERYTHING", "FOREVER YOURS", "MERI DUNIYA", "MY SAFE PLACE"];
+        let pIdx = 0;
+        let isDecoding = false;
+
         function decrypt() {
+            if (isDecoding) return;
+            isDecoding = true;
             const box = document.getElementById('decoder');
-            const targetText = messages[msgIndex];
-            let iterations = 0;
-            
+            const target = phrases[pIdx];
+            let iter = 0;
             const interval = setInterval(() => {
-                box.innerText = targetText.split('')
-                    .map((letter, index) => {
-                        if(index < iterations) return targetText[index];
-                        return String.fromCharCode(65 + Math.floor(Math.random() * 26)); // Random char
-                    })
-                    .join('');
-                
-                if(iterations >= targetText.length) { 
+                box.innerText = target.split('').map((char, index) => {
+                    if (index < iter) return target[index];
+                    return Math.random() > 0.5 ? "0" : "1";
+                }).join('');
+                if (iter >= target.length) {
                     clearInterval(interval);
-                    msgIndex = (msgIndex + 1) % messages.length;
+                    pIdx = (pIdx + 1) % phrases.length;
+                    isDecoding = false;
                 }
-                
-                iterations += 1/3; 
-            }, 30);
+                iter += 1/3;
+            }, 50);
         }
-
     </script>
 </body>
 </html>
